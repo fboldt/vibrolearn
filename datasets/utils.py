@@ -1,7 +1,9 @@
 import os
 import requests
-
 import urllib.parse
+import csv
+from pathlib import Path
+import pprint
 
 def is_file_downloaded(url, folder_path):
     # Parse the URL to get the file name
@@ -11,6 +13,7 @@ def is_file_downloaded(url, folder_path):
     # Check if the file exists in the specified folder
     file_path = os.path.join(folder_path, file_name)
     return os.path.isfile(file_path)
+
 
 def is_file_size_same(url, file_path):    
     # Check if the file exists
@@ -27,3 +30,27 @@ def is_file_size_same(url, file_path):
     url_file_size = int(response.headers.get('Content-Length', 0))
     
     return local_file_size == url_file_size
+
+
+def read_registers_from_config(config_path):
+    registers = []
+    with open(config_path, newline='') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            row = {k.strip(): v.strip() if v is not None else v for k, v in row.items()}
+            registers.append(row)
+    return registers
+
+def filter_registers_by_key_value(registers, key, value):
+    return [reg for reg in registers if reg.get(key) == value]
+
+def filter_registers_by_key_value_sequence(registers, key_value_sequence):
+    return [reg for reg in registers if all(reg.get(k) in v for k, v in key_value_sequence)]
+
+if __name__ == "__main__":
+    config_file = Path(__file__).parent / "cwru/config.csv"
+    registers = read_registers_from_config(config_file)
+    filtered_registers = filter_registers_by_key_value_sequence(registers, [('sample_rate', ['48000']), ('load', ['0', '1'])])
+    pprint.pprint(filtered_registers)
+    print(f"Filtered registers: {len(filtered_registers)}")
+
