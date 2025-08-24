@@ -47,10 +47,18 @@ def filter_registers_by_key_value(registers, key, value):
 def filter_registers_by_key_value_sequence(registers, key_value_sequence):
     return [reg for reg in registers if all(reg.get(k) in v for k, v in key_value_sequence)]
 
+def get_values_by_key(registers, key):
+    return set([reg.get(key) for reg in registers if key in reg])
+
 if __name__ == "__main__":
     config_file = Path(__file__).parent / "cwru/config.csv"
     registers = read_registers_from_config(config_file)
-    filtered_registers = filter_registers_by_key_value_sequence(registers, [('sample_rate', ['48000']), ('load', ['0', '1'])])
+    filtered_registers = filter_registers_by_key_value_sequence(registers, [('sample_rate', ['12000']), ('faulty_bearing', ['None', 'Drive End']), ('load', ['0']), ('condition', ['Normal'])])
     pprint.pprint(filtered_registers)
     print(f"Filtered registers: {len(filtered_registers)}")
+    for key in filtered_registers[0].keys():
+        if key == 'filename':
+            continue
+        values = get_values_by_key(filtered_registers, key)
+        print(f"{key}: {values}")
 
