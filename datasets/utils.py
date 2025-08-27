@@ -41,9 +41,6 @@ def read_registers_from_config(config_path):
             registers.append(row)
     return registers
 
-def filter_registers_by_key_value(registers, key, value):
-    return [reg for reg in registers if reg.get(key) == value]
-
 def filter_registers_by_key_value_sequence(registers, key_value_sequence):
     return [reg for reg in registers if all(reg.get(k) in v for k, v in key_value_sequence)]
 
