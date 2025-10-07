@@ -2,6 +2,8 @@ import os
 import requests
 import urllib.parse
 import csv
+import scipy.io
+import numpy as np
 
 
 def is_file_downloaded(url, folder_path):
@@ -52,4 +54,37 @@ def get_all_keys_and_values(registers):
         values = get_values_by_key(registers, key)
         print(f"{key}: {values}")
 
+
+def load_matlab_file(file_path):
+    mat = scipy.io.loadmat(file_path)
+    return mat
+
+
+def get_matlab_acquisition(mat, source):
+    variable_name = None
+    for key in mat.keys():
+        if source in key:
+            variable_name = key
+            break
+    if variable_name is not None:
+        return mat[variable_name]
+    else:
+        raise KeyError(f"Variable '{variable_name}' not found in the MATLAB file.")
+
+
+def load_acquisition(register, raw_dir_path, channel):
+    filename = register['filename']
+    file_path =  f"{raw_dir_path}/{filename}"
+    mat = load_matlab_file(file_path)
+    return get_matlab_acquisition(mat, channel)
+
+
+def split_acquisition(acquisition, segment_length):
+    num_segments = acquisition.shape[0] // segment_length
+    segments = np.empty((num_segments, segment_length, acquisition.shape[1]), dtype=acquisition.dtype)
+    for i in range(num_segments):
+        start = i * segment_length
+        end = start + segment_length
+        segments[i] = acquisition[start:end, :]
+    return segments
 
