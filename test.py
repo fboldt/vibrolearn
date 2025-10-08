@@ -1,20 +1,22 @@
-from pathlib import Path
 from pprint import pprint
-from datasets.utils import filter_registers_by_key_value_sequence, read_registers_from_config, load_acquisition, split_acquisition
-from datasets.cwru.utils import get_raw_dir_path, get_code_from_faulty_bearing
-
+from datasets.cwru.utils import get_code_from_faulty_bearing, get_list_of_folds_rauber_loca_et_al
+from datasets.utils import concatenate_data, get_X_y, get_train_test_split
 
 if __name__ == "__main__":
-    config_file = Path(__file__).parent / "datasets/cwru/config.csv"
-    registers = read_registers_from_config(config_file)
-    filtered_registers = filter_registers_by_key_value_sequence(registers, [('sample_rate', ['12000']), ('faulty_bearing', ['None', 'Drive End', 'Fan End']), ('load', ['0']), ('condition', ['Normal', 'Inner Race'])])
-    pprint(filtered_registers)
-    print(f"Filtered registers: {len(filtered_registers)}")
-    # get_all_keys_and_values(registers)
-    first_register = filtered_registers[0]
-    acquisition = load_acquisition(first_register, 
-                                   get_raw_dir_path(), 
-                                   channel=get_code_from_faulty_bearing(first_register['faulty_bearing']))
-    print(f"Acquisition shape: {acquisition.shape}")
-    segments = split_acquisition(acquisition, segment_length=2048)
-    print(f"Segments shape: {segments.shape}")
+    faulty_bearing='Drive End'
+    sample_rate='12000'
+    folds = get_list_of_folds_rauber_loca_et_al(faulty_bearing=faulty_bearing, sample_rate=sample_rate)
+    channel = get_code_from_faulty_bearing(faulty_bearing)
+    list_of_X_y = []
+    for fold in folds:
+        # pprint(fold)
+        print(f"Number of acquisitions: {len(fold)}")
+        X, y = get_X_y(fold, raw_dir_path="raw_data/cwru", channel=channel)
+        list_of_X_y.append((X, y))
+    for i in range(len(folds)):
+        print(f"{'#'*3} Fold {i}:")
+        X_train, y_train, X_test, y_test = get_train_test_split(list_of_X_y, test_fold_index=i)
+        print(f"X_train shape: {X_train.shape}, y_train shape: {y_train.shape}")
+        print(f"Unique classes in y_train: {set(y_train)}")
+        print(f"X_test shape: {X_test.shape}, y_test shape: {y_test.shape}")
+        print(f"Unique classes in y_test: {set(y_test)}")

@@ -88,3 +88,36 @@ def split_acquisition(acquisition, segment_length):
         segments[i] = acquisition[start:end, :]
     return segments
 
+
+def target_array(value, length):
+    target_type = type(value)
+    if target_type == str:
+        target_type = np.dtype('U' + str(len(value)))
+    return np.full(length, value, dtype=target_type)
+
+
+def get_X_y(registers, raw_dir_path, channel, segment_length=2048):
+    X_list = []
+    y_list = []
+    if len(registers) == 0:
+        return np.empty((0, segment_length, 1)), np.empty((0,), dtype='U10')
+    for register in registers:
+        acquisition = load_acquisition(register, raw_dir_path, channel=channel)
+        segments = split_acquisition(acquisition, segment_length=segment_length)
+        targets = target_array(register['condition'], segments.shape[0])
+        X_list.append(segments)
+        y_list.append(targets)
+    X = np.concatenate(X_list, axis=0)
+    y = np.concatenate(y_list, axis=0)
+    return X, y
+
+
+def concatenate_data(list_of_X_y):
+    X_all = np.concatenate([X for X, y in list_of_X_y], axis=0)
+    y_all = np.concatenate([y for X, y in list_of_X_y], axis=0)
+    return X_all, y_all
+
+def get_train_test_split(list_of_X_y, test_fold_index=0):
+    X_test, y_test = list_of_X_y[test_fold_index]
+    X_train, y_train = concatenate_data([list_of_X_y[i] for i in range(len(list_of_X_y)) if i != test_fold_index])
+    return X_train, y_train, X_test, y_test
