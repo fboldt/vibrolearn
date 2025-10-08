@@ -117,7 +117,8 @@ def concatenate_data(list_of_X_y):
     y_all = np.concatenate([y for X, y in list_of_X_y], axis=0)
     return X_all, y_all
 
-def get_train_test_split(list_of_X_y, test_fold_index=0):
+
+def get_train_test_split(list_of_X_y, test_fold_index):
     X_test, y_test = list_of_X_y[test_fold_index]
     X_train, y_train = concatenate_data([list_of_X_y[i] for i in range(len(list_of_X_y)) if i != test_fold_index])
     return X_train, y_train, X_test, y_test

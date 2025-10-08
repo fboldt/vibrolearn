@@ -1,6 +1,6 @@
 from pprint import pprint
 from datasets.cwru.utils import get_code_from_faulty_bearing, get_list_of_folds_rauber_loca_et_al
-from datasets.utils import concatenate_data, get_X_y, get_train_test_split
+from datasets.utils import get_X_y, get_train_test_split
 
 if __name__ == "__main__":
     faulty_bearing='Drive End'
@@ -17,6 +17,6 @@ if __name__ == "__main__":
         print(f"{'#'*3} Fold {i}:")
         X_train, y_train, X_test, y_test = get_train_test_split(list_of_X_y, test_fold_index=i)
         print(f"X_train shape: {X_train.shape}, y_train shape: {y_train.shape}")
-        print(f"Unique classes in y_train: {set(y_train)}")
+        # print(f"Unique classes in y_train: {set(y_train)}")
         print(f"X_test shape: {X_test.shape}, y_test shape: {y_test.shape}")
-        print(f"Unique classes in y_test: {set(y_test)}")
+    #     print(f"Unique classes in y_test: {set(y_test)}")
