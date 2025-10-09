@@ -122,3 +122,12 @@ def get_train_test_split(list_of_X_y, test_fold_index):
     X_test, y_test = list_of_X_y[test_fold_index]
     X_train, y_train = concatenate_data([list_of_X_y[i] for i in range(len(list_of_X_y)) if i != test_fold_index])
     return X_train, y_train, X_test, y_test
+
+
+def get_list_of_X_y(list_of_folds, raw_dir_path, channel, segment_length=2048):
+    list_of_X_y = []
+    for fold in list_of_folds:
+        X, y = get_X_y(fold, raw_dir_path=raw_dir_path, channel=channel, segment_length=segment_length)
+        list_of_X_y.append((X, y))
+    return list_of_X_y
+

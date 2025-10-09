@@ -1,5 +1,5 @@
 from pathlib import Path
-from datasets.utils import filter_registers_by_key_value_sequence, read_registers_from_config
+from dataset.utils import filter_registers_by_key_value_sequence, read_registers_from_config
 
 
 def get_code_from_faulty_bearing(faulty_bearing):
