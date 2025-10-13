@@ -9,3 +9,9 @@ def performance(model, list_of_X_y, list_metrics):
         scores = traintest.performance(model, X_train, y_train, X_test, y_test, list_metrics)
         scores_per_fold.append(scores)
     return scores_per_fold
+
+def print_scores_per_fold(scores_per_fold):
+    for test_fold, scores in enumerate(scores_per_fold):
+        print(f"Scores for fold {test_fold}:")
+        traintest.print_scores(scores)
+        print()

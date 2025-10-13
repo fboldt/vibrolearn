@@ -5,3 +5,7 @@ def performance(model, X_train, y_train, X_test, y_test, list_metrics):
     for metric in list_metrics:
         scores[metric] = metric(y_test, y_test_pred)
     return scores
+
+def print_scores(scores):
+    for metric, score in scores.items():
+        print(f"{metric.__name__}:\n{score}")
