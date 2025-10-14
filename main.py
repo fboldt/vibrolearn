@@ -1,4 +1,4 @@
-from experiment.test import run
+from experiment.cwru_rauber_loca_et_al import run
 from utils.time import measure_time
 
 if __name__ == "__main__":
