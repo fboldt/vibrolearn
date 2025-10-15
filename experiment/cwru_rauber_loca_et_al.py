@@ -1,5 +1,4 @@
 from sklearn.metrics import accuracy_score, f1_score, confusion_matrix
-from assesment.crossvalidation import  print_scores_per_fold
 from dataset.cwru.experiment import rauber_loca_et_al
 
 
