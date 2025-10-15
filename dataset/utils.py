@@ -131,3 +131,11 @@ def get_list_of_X_y(list_of_folds, raw_dir_path, channel, segment_length=2048):
         list_of_X_y.append((X, y))
     return list_of_X_y
 
+
+def merge_X_y_from_lists(lists):
+    merged_list = []
+    for fold_from_0, fold_from_1 in zip(lists[0], lists[1]):
+        X_all = np.concatenate([fold_from_0[0], fold_from_1[0]], axis=0)
+        y_all = np.concatenate([fold_from_0[1], fold_from_1[1]], axis=0)
+        merged_list.append((X_all, y_all))
+    return merged_list
