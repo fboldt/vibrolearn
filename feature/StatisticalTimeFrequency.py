@@ -1,11 +1,10 @@
 
 import numpy as np
 from sklearn.base import TransformerMixin
-from feature.statisticaltime import StatisticalTime
-from feature.statisticalfrequency import StatisticalFrequency
-from feature.wavelet import WaveletPackage
+from feature.StatisticalTime import StatisticalTime
+from feature.StatisticalFrequency import StatisticalFrequency
 
-class Heterogeneous(TransformerMixin):
+class StatisticalTimeFrequency(TransformerMixin):
   '''
   Extracts statistical features from both time and frequency domain.
   '''
@@ -16,6 +15,5 @@ class Heterogeneous(TransformerMixin):
     stfeats = st.transform(X)
     sf = StatisticalFrequency()
     sffeats = sf.transform(X)
-    wp = WaveletPackage()
-    wpfeats = wp.transform(X)
-    return np.concatenate((stfeats, sffeats, wpfeats), axis=1)
+    features = np.concatenate((stfeats, sffeats), axis=1)
+    return features

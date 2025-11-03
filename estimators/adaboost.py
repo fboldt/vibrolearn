@@ -1,13 +1,11 @@
 
 from sklearn.ensemble import AdaBoostClassifier, RandomForestClassifier
 from sklearn.pipeline import Pipeline
-from feature.wavelet import WaveletPackage
-from preprocessing.flatten import Flatten
+from feature.StatisticalTime import StatisticalTime as FeatureExtractor
 
 
 model = Pipeline([
-    ('flatten', Flatten()),
-    ('feature_extractor', WaveletPackage()),
+    ('feature_extractor', FeatureExtractor()),
     ('classifier', AdaBoostClassifier(
         estimator=RandomForestClassifier(
             n_estimators=100,

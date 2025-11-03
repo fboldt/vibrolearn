@@ -1,7 +1,7 @@
 
 import numpy as np
 import scipy.stats as stats
-from sklearn.base import TransformerMixin
+from feature.BaseFeatureExtractor import BaseFeatureExtractor
 
 def rms(x):
   '''
@@ -60,25 +60,26 @@ def kf(x):
   return stats.kurtosis(x)/(np.mean(x**2)**2)
 
 
-class StatisticalTime(TransformerMixin):
+def extract_features(X):
+  return np.array([
+                    [
+                    rms(x), # root mean square
+                    sra(x), # square root amplitude
+                    stats.kurtosis(x), # kurtosis
+                    stats.skew(x), # skewness
+                    ppv(x), # peak to peak value
+                    cf(x), # crest factor
+                    ifa(x), # impact factor
+                    mf(x), # margin factor
+                    sf(x), # shape factor
+                    kf(x), # kurtosis factor
+                    ] for x in X[:]
+                  ])
+
+
+class StatisticalTime(BaseFeatureExtractor):
   '''
   Extracts statistical features from the time domain.
   '''
-  def fit(self, X, y=None):
-    return self
-  def transform(self, X, y=None):
-    return np.array([
-                     [
-                      rms(x), # root mean square
-                      sra(x), # square root amplitude
-                      stats.kurtosis(x), # kurtosis
-                      stats.skew(x), # skewness
-                      ppv(x), # peak to peak value
-                      cf(x), # crest factor
-                      ifa(x), # impact factor
-                      mf(x), # margin factor
-                      sf(x), # shape factor
-                      kf(x), # kurtosis factor
-                      ] for x in X[:]
-                     ])
-
+  def __init__(self):
+    super().__init__(extract_features=extract_features)

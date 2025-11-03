@@ -43,6 +43,10 @@ def filter_registers_by_key_value_sequence(registers, key_value_sequence):
     return [reg for reg in registers if all(reg.get(k) in v for k, v in key_value_sequence)]
 
 
+def filter_registers_by_key_value_absence(registers, key_value_sequence):
+    return [reg for reg in registers if all(reg.get(k) not in v for k, v in key_value_sequence)]
+
+
 def get_values_by_key(registers, key):
     return set([reg.get(key) for reg in registers if key in reg])
 
@@ -60,23 +64,18 @@ def load_matlab_file(file_path):
     return mat
 
 
-def get_matlab_acquisition(mat, source):
-    variable_name = None
-    for key in mat.keys():
-        if source in key:
-            variable_name = key
-            break
-    if variable_name is not None:
-        return mat[variable_name]
-    else:
-        raise KeyError(f"Variable '{variable_name}' not found in the MATLAB file.")
-
-
-def load_acquisition(register, raw_dir_path, channel):
-    filename = register['filename']
-    file_path =  f"{raw_dir_path}/{filename}"
+def load_matlab_acquisition(file_path, channels):
     mat = load_matlab_file(file_path)
-    return get_matlab_acquisition(mat, channel)
+    acquisition = []
+    for channel in channels:
+        for key in mat.keys():
+            if channel in key:
+                acquisition.append(mat[key])
+                break
+    if acquisition:
+        return np.concatenate(acquisition, axis=1)
+    else:
+        raise KeyError(f"Variables '{channels}' not found in the MATLAB file.")
 
 
 def split_acquisition(acquisition, segment_length):
@@ -96,15 +95,14 @@ def target_array(value, length):
     return np.full(length, value, dtype=target_type)
 
 
-def get_X_y(registers, raw_dir_path, channel, segment_length=2048):
+def get_X_y(registers, raw_dir_path, channels_columns, segment_length, load_acquisition_func=load_matlab_acquisition):
     X_list = []
     y_list = []
     if len(registers) == 0:
         return np.empty((0, segment_length, 1)), np.empty((0,), dtype='U10')
     for register in registers:
-        acquisition = load_acquisition(register, raw_dir_path, channel=channel)
-        segments = split_acquisition(acquisition, segment_length=segment_length)
-        targets = target_array(register['condition'], segments.shape[0])
+        acquisition = get_acquisition_data(raw_dir_path, channels_columns, load_acquisition_func, register)
+        segments, targets = prepare_segments_and_targets(segment_length, register, acquisition)
         X_list.append(segments)
         y_list.append(targets)
     X = np.concatenate(X_list, axis=0)
@@ -112,9 +110,31 @@ def get_X_y(registers, raw_dir_path, channel, segment_length=2048):
     return X, y
 
 
+def prepare_segments_and_targets(segment_length, register, acquisition):
+    segments = split_acquisition(acquisition, segment_length=segment_length)
+    targets = target_array(register['condition'], segments.shape[0])
+    return segments,targets
+
+
+def get_acquisition_data(raw_dir_path, channels_columns, load_acquisition_func, register):
+    file_path = os.path.join(raw_dir_path, register['filename'])
+    channels = get_channels_from_register(channels_columns, register)
+    acquisition = load_acquisition_func(file_path, channels=channels)
+    return acquisition
+
+
+def get_channels_from_register(channels_columns, register):
+    channels = []
+    for channel_column in channels_columns:
+        if channel_column not in register:
+            raise KeyError(f"Channel column '{channel_column}' not found in register.")
+        channels.append(register[channel_column])
+    return channels
+
+
 def concatenate_data(list_of_X_y):
-    X_all = np.concatenate([X for X, y in list_of_X_y], axis=0)
-    y_all = np.concatenate([y for X, y in list_of_X_y], axis=0)
+    X_all = np.concatenate([X for X, _ in list_of_X_y], axis=0)
+    y_all = np.concatenate([y for _, y in list_of_X_y], axis=0)
     return X_all, y_all
 
 
@@ -124,10 +144,10 @@ def get_train_test_split(list_of_X_y, test_fold_index):
     return X_train, y_train, X_test, y_test
 
 
-def get_list_of_X_y(list_of_folds, raw_dir_path, channel, segment_length=2048):
+def get_list_of_X_y(list_of_folds, raw_dir_path, channels_columns, segment_length=2048, load_acquisition_func=load_matlab_acquisition):
     list_of_X_y = []
     for fold in list_of_folds:
-        X, y = get_X_y(fold, raw_dir_path=raw_dir_path, channel=channel, segment_length=segment_length)
+        X, y = get_X_y(fold, raw_dir_path=raw_dir_path, channels_columns=channels_columns, segment_length=segment_length, load_acquisition_func=load_acquisition_func)
         list_of_X_y.append((X, y))
     return list_of_X_y
 
