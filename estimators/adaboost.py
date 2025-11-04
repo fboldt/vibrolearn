@@ -1,7 +1,7 @@
 
 from sklearn.ensemble import AdaBoostClassifier, RandomForestClassifier
 from sklearn.pipeline import Pipeline
-from feature.Heterogeneous import Heterogeneous as FeatureExtractor
+from feature.extractor import Heterogeneous as FeatureExtractor
 
 
 model = Pipeline([

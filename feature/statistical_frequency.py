@@ -1,11 +1,11 @@
 
 import numpy as np
-from feature.StatisticalTime import rms
-from feature.BaseFeatureExtractor import BaseFeatureExtractor
+from feature.statistical_time import rms
+
 
 def extract_features(X):
     features = []
-    for x in X[:]:
+    for x in X:
       fx = np.absolute(np.fft.fft(x)) # transform x from time to frequency domain
       fc = np.mean(fx) # frequency center
       features.append([
@@ -15,10 +15,3 @@ def extract_features(X):
                 ])
     features = np.array(features)
     return features
-
-class StatisticalFrequency(BaseFeatureExtractor):
-  '''
-  Extracts statistical features from the frequency domain.
-  '''
-  def __init__(self):
-    super().__init__(extract_features=extract_features)

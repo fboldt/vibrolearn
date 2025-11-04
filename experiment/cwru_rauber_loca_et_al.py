@@ -1,5 +1,6 @@
+import pprint
 from sklearn.metrics import accuracy_score, f1_score, confusion_matrix
-from dataset.utils import filter_registers_by_key_value_sequence, read_registers_from_config, filter_registers_by_key_value_absence, get_list_of_X_y
+from dataset.utils import filter_registers_by_key_value_sequence, load_matlab_acquisition, merge_X_y_from_lists, read_registers_from_config, filter_registers_by_key_value_absence, get_list_of_X_y
 from assesment.crossvalidation import performance
 
 
@@ -8,14 +9,15 @@ def f1_macro(y_true, y_pred):
 
 
 list_of_metrics = [accuracy_score, f1_macro, confusion_matrix]
-'''
+#'''
 faulty_bearing = ['Drive End', 'Fan End']
 channels_columns = ["DE", "FE"]
+sample_rate = '12000'
 '''
 faulty_bearing = ['Drive End']
 channels_columns = ["DE"]
+sample_rate = '48000'
 #'''
-sample_rate = '12000'
 segment_length = 2048
 
 
@@ -31,7 +33,7 @@ rauber_loca_et_al_combination_rounds = [
 ]
 
 
-def get_fold_rauber_loca_et_al(normal_load, fault_bearing_severity, faulty_bearing, sample_rate='12000'):
+def get_fold_rauber_loca_et_al(normal_load, fault_bearing_severity, faulty_bearing, sample_rate):
     config_file = "dataset/cwru/config.csv"
     registers = read_registers_from_config(config_file)
     normal = filter_registers_by_key_value_sequence(registers, [('sample_rate', [sample_rate]), ('faulty_bearing', ['None']), ('load', [str(normal_load)]), ('condition', ['Normal'])])
@@ -42,24 +44,25 @@ def get_fold_rauber_loca_et_al(normal_load, fault_bearing_severity, faulty_beari
     return fold
 
 
-def get_list_of_folds_rauber_loca_et_al(faulty_bearing, sample_rate='12000', combination=0):
+def get_list_of_folds_rauber_loca_et_al(faulty_bearing, sample_rate, combination):
     folds = []
     for normal_load, fault_bearing_severity in rauber_loca_et_al_combination_rounds[combination%len(rauber_loca_et_al_combination_rounds)]:
         fold = get_fold_rauber_loca_et_al(normal_load=normal_load, fault_bearing_severity=fault_bearing_severity, faulty_bearing=faulty_bearing, sample_rate=sample_rate)
-        folds.append(fold)
+        if len(fold) > 0:
+            folds.append(fold)
     return folds
 
 
-def perform_fold_combination(model, combination, verbose=False):
+def perform_fold_combination_for_all_channels_available(model, combination, verbose=False):
     list_of_folds = get_list_of_folds_rauber_loca_et_al(faulty_bearing=faulty_bearing, sample_rate=sample_rate, combination=combination)
     filter_folds_by_channel_absence(list_of_folds)
     list_of_folds = filter_folds_by_length(list_of_folds, min_length=2)
-    list_of_X_y = get_list_of_X_y(list_of_folds, raw_dir_path="raw_data/cwru", channels_columns=channels_columns, segment_length=segment_length)
+    list_of_X_y = get_list_of_X_y(list_of_folds, raw_dir_path="raw_data/cwru", channels_columns=channels_columns, segment_length=segment_length, load_acquisition_func=load_matlab_acquisition)
     scores_per_fold = performance(model, list_of_X_y, list_of_metrics, verbose=verbose)
     return scores_per_fold
 
 
-def filter_folds_by_length(list_of_folds, min_length=2):
+def filter_folds_by_length(list_of_folds, min_length):
     list_of_folds = [fold for fold in list_of_folds if len(fold) >= min_length]
     return list_of_folds
 
@@ -70,7 +73,21 @@ def filter_folds_by_channel_absence(list_of_folds):
             list_of_folds[f] = filter_registers_by_key_value_absence(list_of_folds[f], [(channel_column, ['None'])])
 
 
-def run(model, verbose=False):
-    combination = 0
-    scores_per_fold = perform_fold_combination(model, combination, verbose=verbose)
+def perform_fold_combination_for_single_channel(model, combination, verbose=False):
+    list_of_list_of_X_y = []
+    for faulty in faulty_bearing:
+        list_of_folds = get_list_of_folds_rauber_loca_et_al(faulty_bearing=[faulty], sample_rate=sample_rate, combination=combination)
+        channel_column = 'DE' if faulty == 'Drive End' else 'FE'
+        list_of_X_y = get_list_of_X_y(list_of_folds, raw_dir_path="raw_data/cwru", channels_columns=[channel_column], segment_length=segment_length, load_acquisition_func=load_matlab_acquisition)
+        list_of_list_of_X_y.append(list_of_X_y)
+    if len(list_of_list_of_X_y) > 1:
+        list_of_X_y = merge_X_y_from_lists(list_of_list_of_X_y)
+    else:
+        list_of_X_y = list_of_list_of_X_y[0]
+    scores_per_fold = performance(model, list_of_X_y, list_of_metrics, verbose=verbose)
+    return scores_per_fold
+
+
+def run(model, combination, verbose=False):
+    scores_per_fold = perform_fold_combination_for_single_channel(model, combination, verbose=verbose)
     return scores_per_fold

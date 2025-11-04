@@ -1,7 +1,6 @@
 
 import numpy as np
 import scipy.stats as stats
-from feature.BaseFeatureExtractor import BaseFeatureExtractor
 
 def rms(x):
   '''
@@ -73,13 +72,7 @@ def extract_features(X):
                     mf(x), # margin factor
                     sf(x), # shape factor
                     kf(x), # kurtosis factor
-                    ] for x in X[:]
+                    ] for x in X
                   ])
 
 
-class StatisticalTime(BaseFeatureExtractor):
-  '''
-  Extracts statistical features from the time domain.
-  '''
-  def __init__(self):
-    super().__init__(extract_features=extract_features)

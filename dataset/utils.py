@@ -95,7 +95,7 @@ def target_array(value, length):
     return np.full(length, value, dtype=target_type)
 
 
-def get_X_y(registers, raw_dir_path, channels_columns, segment_length, load_acquisition_func=load_matlab_acquisition):
+def get_X_y(registers, raw_dir_path, channels_columns, segment_length, load_acquisition_func):
     X_list = []
     y_list = []
     if len(registers) == 0:
@@ -144,7 +144,7 @@ def get_train_test_split(list_of_X_y, test_fold_index):
     return X_train, y_train, X_test, y_test
 
 
-def get_list_of_X_y(list_of_folds, raw_dir_path, channels_columns, segment_length=2048, load_acquisition_func=load_matlab_acquisition):
+def get_list_of_X_y(list_of_folds, raw_dir_path, channels_columns, segment_length, load_acquisition_func):
     list_of_X_y = []
     for fold in list_of_folds:
         X, y = get_X_y(fold, raw_dir_path=raw_dir_path, channels_columns=channels_columns, segment_length=segment_length, load_acquisition_func=load_acquisition_func)
