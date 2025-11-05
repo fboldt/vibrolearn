@@ -6,5 +6,7 @@ from sklearn.pipeline import Pipeline
 model = Pipeline([
     ('flatten', Flatten()),
     ('normalizer', Normalizer()),
-    ('classifier', RandomForestClassifier(n_estimators=100, random_state=42))
+    ('classifier', RandomForestClassifier(
+        n_estimators=100, 
+        random_state=42))
 ])

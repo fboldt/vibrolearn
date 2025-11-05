@@ -36,8 +36,17 @@ rauber_loca_et_al_combination_rounds = [
 def get_fold_rauber_loca_et_al(normal_load, fault_bearing_severity, faulty_bearing, sample_rate):
     config_file = "dataset/cwru/config.csv"
     registers = read_registers_from_config(config_file)
-    normal = filter_registers_by_key_value_sequence(registers, [('sample_rate', [sample_rate]), ('faulty_bearing', ['None']), ('load', [str(normal_load)]), ('condition', ['Normal'])])
-    faulty = filter_registers_by_key_value_sequence(registers, [('sample_rate', [sample_rate]), ('faulty_bearing', faulty_bearing), ('severity', [f"{fault_bearing_severity:.3f}"])])
+    normal = filter_registers_by_key_value_sequence(
+        registers, 
+        [('sample_rate', [sample_rate]), 
+         ('faulty_bearing', ['None']), 
+         ('load', [str(normal_load)]), 
+         ('condition', ['Normal'])])
+    faulty = filter_registers_by_key_value_sequence(
+        registers, 
+        [('sample_rate', [sample_rate]), 
+         ('faulty_bearing', faulty_bearing), 
+         ('severity', [f"{fault_bearing_severity:.3f}"])])
     fold = []
     fold.extend(normal)
     fold.extend(faulty)
@@ -73,21 +82,3 @@ def filter_folds_by_channel_absence(list_of_folds):
             list_of_folds[f] = filter_registers_by_key_value_absence(list_of_folds[f], [(channel_column, ['None'])])
 
 
-def perform_fold_combination_for_single_channel(model, combination, verbose=False):
-    list_of_list_of_X_y = []
-    for faulty in faulty_bearing:
-        list_of_folds = get_list_of_folds_rauber_loca_et_al(faulty_bearing=[faulty], sample_rate=sample_rate, combination=combination)
-        channel_column = 'DE' if faulty == 'Drive End' else 'FE'
-        list_of_X_y = get_list_of_X_y(list_of_folds, raw_dir_path="raw_data/cwru", channels_columns=[channel_column], segment_length=segment_length, load_acquisition_func=load_matlab_acquisition)
-        list_of_list_of_X_y.append(list_of_X_y)
-    if len(list_of_list_of_X_y) > 1:
-        list_of_X_y = merge_X_y_from_lists(list_of_list_of_X_y)
-    else:
-        list_of_X_y = list_of_list_of_X_y[0]
-    scores_per_fold = performance(model, list_of_X_y, list_of_metrics, verbose=verbose)
-    return scores_per_fold
-
-
-def run(model, combination, verbose=False):
-    scores_per_fold = perform_fold_combination_for_single_channel(model, combination, verbose=verbose)
-    return scores_per_fold
