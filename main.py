@@ -1,8 +1,7 @@
 from dataset.cwru.rauber_loca_et_al import single_channel_X_y_DE_FE_12k
-from estimators import rfwfe, adaboost, randomforest
 from assesment.crossvalidation import performance
 from sklearn.metrics import accuracy_score, f1_score, confusion_matrix
-from pprint import pprint
+from estimator.AutoRFWaveletPackage import RandomForest 
 
 
 def f1_macro(y_true, y_pred):
@@ -20,14 +19,12 @@ def run(model, verbose=False):
 
 
 if __name__ == "__main__":
-    # print("Running Random Forest with Raw Features...")
-    # result  = run(randomforest.model, verbose=True)
+    result  = run(RandomForest(), verbose=True)
 
-    print("\nRunning Random Forest with Heterogeneous Features...")
-    result  = run(rfwfe.model, verbose=True)
-
-    # print("\nRunning AdaBoost with Heterogeneous Features...")
-    # result = run(adaboost.model, verbose=True)
-
-    # registers = read_registers_from_config("dataset/cwru/config.csv")
-    # pprint(registers[:4])    
+    # registers = read_registers_from_config("dataset/cwru/config.csv")[:1]
+    # # pprint(registers[:4])    
+    # X, y = get_X_y(registers, "raw_data/cwru/", ["DE"], 2048, load_matlab_acquisition)
+    # print(f"X shape: {X.shape}, y shape: {y.shape}")
+    # festextractor = WaveletPackage(wavelet='db4', mode='symmetric', maxlevel=4)
+    # features = festextractor.transform(X)
+    # print(f"Extracted features shape: {features.shape}")
