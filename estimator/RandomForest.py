@@ -1,17 +1,21 @@
 from sklearn.base import BaseEstimator, ClassifierMixin
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import f1_score
-from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import Normalizer
-from feature.statistical_frequency import StatisticalFrequency as FeatureExtractor
-import optuna
+from feature.heterogeneous import Heterogeneous as FeatureExtractor
+from feature.statistical_time import StatisticalTime
+from feature.statistical_frequency import StatisticalFrequency
+from feature.wavelet_package import WaveletPackage
 
+featureExtractor = FeatureExtractor([
+    StatisticalTime,
+    StatisticalFrequency,
+    WaveletPackage
+])
 
 class RandomForest(BaseEstimator, ClassifierMixin):
     def fit(self, X, y):
         self.pipeline = Pipeline([
-            ('feature_extractor', FeatureExtractor()),
+            ('feature_extractor', featureExtractor),
             ('classifier', RandomForestClassifier())
         ])
         self.pipeline.fit(X, y)
