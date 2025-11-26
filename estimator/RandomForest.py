@@ -4,14 +4,14 @@ from sklearn.metrics import f1_score
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import Normalizer
-from feature.extractor import Heterogeneous as FeatureExtractor
+from feature.statistical_frequency import StatisticalFrequency as FeatureExtractor
 import optuna
+
 
 class RandomForest(BaseEstimator, ClassifierMixin):
     def fit(self, X, y):
         self.pipeline = Pipeline([
             ('feature_extractor', FeatureExtractor()),
-            ('normalizer', Normalizer()),
             ('classifier', RandomForestClassifier())
         ])
         self.pipeline.fit(X, y)

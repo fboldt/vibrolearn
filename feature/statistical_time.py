@@ -1,6 +1,9 @@
 
 import numpy as np
 import scipy.stats as stats
+from sklearn.base import TransformerMixin
+
+from feature.utils import transform_channels_to_features
 
 def rms(x):
   '''
@@ -76,3 +79,10 @@ def extract_features(X):
                   ])
 
 
+
+class StatisticalTime(TransformerMixin):
+  def fit(self, X, y=None):
+    return self
+  def transform(self, X, y=None):
+    return transform_channels_to_features(X, extract_features=extract_features)
+  

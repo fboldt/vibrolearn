@@ -6,6 +6,26 @@ import scipy.io
 import numpy as np
 
 
+check_if_downloaded=False
+
+
+def download_file_from_register(raw_dir_path, register):
+    os.makedirs(raw_dir_path, exist_ok=True)
+    file_url = urllib.parse.urljoin(register['base_url'], register['filename'])
+    file_path = os.path.join(raw_dir_path, register['filename'])
+    if not is_file_downloaded(file_url, raw_dir_path):
+        print(f"Downloading {file_url} to {file_path}...")
+        response = requests.get(file_url)
+        with open(file_path, 'wb') as f:
+            f.write(response.content)
+    else:
+        if not is_file_size_same(file_url, file_path):
+            print(f"File {file_path} is incomplete. Re-downloading...")
+            response = requests.get(file_url)
+            with open(file_path, 'wb') as f:
+                f.write(response.content)
+                    
+                    
 def is_file_downloaded(url, folder_path):
     # Parse the URL to get the file name
     parsed_url = urllib.parse.urlparse(url)
@@ -101,13 +121,18 @@ def get_X_y(registers, raw_dir_path, channels_columns, segment_length, load_acqu
     if len(registers) == 0:
         return np.empty((0, segment_length, 1)), np.empty((0,), dtype='U10')
     for register in registers:
-        acquisition = get_acquisition_data(raw_dir_path, channels_columns, load_acquisition_func, register)
-        segments, targets = prepare_segments_and_targets(segment_length, register, acquisition)
+        segments, targets = extract_segments_and_targets(raw_dir_path, channels_columns, segment_length, load_acquisition_func, register)
         X_list.append(segments)
         y_list.append(targets)
     X = np.concatenate(X_list, axis=0)
     y = np.concatenate(y_list, axis=0)
     return X, y
+
+
+def extract_segments_and_targets(raw_dir_path, channels_columns, segment_length, load_acquisition_func, register):
+    acquisition = get_acquisition_data(raw_dir_path, channels_columns, load_acquisition_func, register)
+    segments, targets = prepare_segments_and_targets(segment_length, register, acquisition)
+    return segments,targets
 
 
 def prepare_segments_and_targets(segment_length, register, acquisition):
@@ -117,6 +142,8 @@ def prepare_segments_and_targets(segment_length, register, acquisition):
 
 
 def get_acquisition_data(raw_dir_path, channels_columns, load_acquisition_func, register):
+    if check_if_downloaded:
+        download_file_from_register(raw_dir_path, register)
     file_path = os.path.join(raw_dir_path, register['filename'])
     channels = get_channels_from_register(channels_columns, register)
     acquisition = load_acquisition_func(file_path, channels=channels)

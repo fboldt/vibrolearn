@@ -1,6 +1,8 @@
 
 import numpy as np
+from sklearn.base import TransformerMixin
 from feature.statistical_time import rms
+from feature.utils import transform_channels_to_features
 
 
 def extract_features(X):
@@ -15,3 +17,11 @@ def extract_features(X):
                 ])
     features = np.array(features)
     return features
+
+
+class StatisticalFrequency(TransformerMixin):
+  def fit(self, X, y=None):
+    return self
+  def transform(self, X, y=None):
+    return transform_channels_to_features(X, extract_features=extract_features)
+  

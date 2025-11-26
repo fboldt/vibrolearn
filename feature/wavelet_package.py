@@ -18,8 +18,10 @@ def extract_features(X, wavelet='db4', mode='symmetric', maxlevel=4):
     features = np.array([getEnergy(wp_i) for wp_i in wp])
     return features
 
+
 def wavelist(kind='discrete'):
     return pywt.wavelist(kind=kind)
+
 
 class WaveletPackage(TransformerMixin):
     def __init__(self, wavelet='db4', mode='symmetric', maxlevel=4):

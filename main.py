@@ -1,7 +1,7 @@
 from dataset.cwru.rauber_loca_et_al import single_channel_X_y_DE_FE_12k
 from assesment.crossvalidation import performance
 from sklearn.metrics import accuracy_score, f1_score, confusion_matrix
-from estimator.AutoRFWaveletPackage import RandomForest 
+from estimator.RandomForest import RandomForest 
 
 
 def f1_macro(y_true, y_pred):
