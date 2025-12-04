@@ -8,7 +8,7 @@ import optuna
 
 
 class AutoWaveletPackage(BaseEstimator, ClassifierMixin):
-    def __init__(self, estimator, trials=100, verbose=True):
+    def __init__(self, estimator, trials=200, verbose=True):
         self.estimator = estimator
         self.trials = trials
         self.verbose = verbose
@@ -27,7 +27,7 @@ class AutoWaveletPackage(BaseEstimator, ClassifierMixin):
                                               'reflect', 
                                               'antisymmetric', 
                                               'antireflect'])
-            maxlevel = trial.suggest_int('maxlevel', 1, 7)
+            maxlevel = trial.suggest_int('maxlevel', 1, 10)
             pipeline = Pipeline([
                 ('feature_extractor', WaveletPackage(
                     wavelet=wavelet,
