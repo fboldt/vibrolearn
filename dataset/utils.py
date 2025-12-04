@@ -7,23 +7,26 @@ import numpy as np
 
 
 def download_file_from_register(raw_dir_path, register):
+    def download_from_url(url, file_path):
+        try:
+            response = requests.get(url)
+            response.raise_for_status()
+            with open(file_path, 'wb') as f:
+                f.write(response.content)
+        except requests.exceptions.RequestException as e:
+            print(f"Error downloading file from {url}: {e}")
+            print(f"Trying again...")
     os.makedirs(raw_dir_path, exist_ok=True)
     file_url = urllib.parse.urljoin(register['base_url'], register['filename'])
     file_path = os.path.join(raw_dir_path, register['filename'])
-    if not is_file_downloaded(file_url, raw_dir_path):
-        print(f"Downloading {file_url} to {file_path}...")
-        response = requests.get(file_url)
-        with open(file_path, 'wb') as f:
-            f.write(response.content)
-    else:
-        max_trials = 5
-        while not is_file_size_same(file_url, file_path) and max_trials > 0:
-            print(f"File {file_path} is incomplete. Re-downloading...")
-            response = requests.get(file_url)
-            with open(file_path, 'wb') as f:
-                f.write(response.content)
-            max_trials -= 1
-                    
+    max_trials = 5
+    while (not is_file_downloaded(file_url, raw_dir_path) or 
+            not is_file_size_same(file_url, file_path)) and max_trials > 0:
+        print(f"Downloading file {file_path}...")
+        download_from_url(file_url, file_path)
+        max_trials -= 1
+
+
 def is_file_downloaded(url, folder_path):
     # Parse the URL to get the file name
     parsed_url = urllib.parse.urlparse(url)
