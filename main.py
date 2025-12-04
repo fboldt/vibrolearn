@@ -17,14 +17,5 @@ def run(model, verbose=False):
     return scores
 
 
-
 if __name__ == "__main__":
     result  = run(RandomForest(), verbose=True)
-
-    # registers = read_registers_from_config("dataset/cwru/config.csv")[:1]
-    # # pprint(registers[:4])    
-    # X, y = get_X_y(registers, "raw_data/cwru/", ["DE"], 2048, load_matlab_acquisition)
-    # print(f"X shape: {X.shape}, y shape: {y.shape}")
-    # festextractor = WaveletPackage(wavelet='db4', mode='symmetric', maxlevel=4)
-    # features = festextractor.transform(X)
-    # print(f"Extracted features shape: {features.shape}")

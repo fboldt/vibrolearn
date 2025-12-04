@@ -12,16 +12,27 @@ def optimize_metric(y_true, y_pred):
     return f1_score(y_true, y_pred, average='macro')
 
 class RandomForest(BaseEstimator, ClassifierMixin):
-    def __init__(self, optimization_metric=optimize_metric, trials=20):
+    def __init__(self, optimization_metric=optimize_metric, trials=200, verbose=False):
         self.model = None
         self.optimization_metric = optimization_metric
         self.trials = trials
+        self.verbose = verbose
 
     def fit(self, X, y):
         X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.3, shuffle=False)
         def objective(trial):
-            wavelet = trial.suggest_categorical('wavelet', wavelist(kind='discrete'))
-            mode = trial.suggest_categorical('mode', ['zero', 'constant', 'symmetric', 'periodic', 'smooth', 'periodization', 'reflect', 'antisymmetric', 'antireflect'])
+            wavelet = trial.suggest_categorical('wavelet', 
+                                                wavelist(kind='discrete'))
+            mode = trial.suggest_categorical('mode', 
+                                             ['zero', 
+                                              'constant', 
+                                              'symmetric', 
+                                              'periodic', 
+                                              'smooth', 
+                                              'periodization', 
+                                              'reflect', 
+                                              'antisymmetric', 
+                                              'antireflect'])
             maxlevel = trial.suggest_int('maxlevel', 2, 5)
             pipeline = Pipeline([
                 ('feature_extractor', WaveletPackage(
@@ -36,14 +47,15 @@ class RandomForest(BaseEstimator, ClassifierMixin):
             ypred = pipeline.predict(X_val)
             performance_metric = self.optimization_metric(y_val, ypred)
             return performance_metric
-        # optuna.logging.set_verbosity(optuna.logging.WARNING)
+        
+        if not self.verbose:
+            optuna.logging.set_verbosity(optuna.logging.WARNING)
         study = optuna.create_study(direction='maximize')
         study.optimize(objective, n_trials=self.trials)
         pprint(study.best_params)
         feature_extractor = WaveletPackage(**study.best_params)
         self.pipeline = Pipeline([
             ('feature_extractor', feature_extractor),
-            ('normalizer', Normalizer()),
             ('classifier', RandomForestClassifier())
         ])
         self.pipeline.fit(X, y)
