@@ -1,5 +1,4 @@
 from sklearn.base import BaseEstimator, ClassifierMixin
-from sklearn.metrics import f1_score, make_scorer
 from sklearn.model_selection import cross_validate
 from sklearn.pipeline import Pipeline
 from feature.wavelet_package import WaveletPackage, wavelist
