@@ -25,6 +25,9 @@ def download_file_from_register(raw_dir_path, register):
         print(f"Downloading file {file_path}...")
         download_from_url(file_url, file_path)
         max_trials -= 1
+    else:
+        if max_trials == 0:
+            raise Exception(f"Failed to download file {file_path} correctly after multiple attempts.")
 
 
 def is_file_downloaded(url, folder_path):
