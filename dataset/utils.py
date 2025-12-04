@@ -16,12 +16,13 @@ def download_file_from_register(raw_dir_path, register):
         with open(file_path, 'wb') as f:
             f.write(response.content)
     else:
-        if not is_file_size_same(file_url, file_path):
+        max_trials = 5
+        while not is_file_size_same(file_url, file_path) and max_trials > 0:
             print(f"File {file_path} is incomplete. Re-downloading...")
             response = requests.get(file_url)
             with open(file_path, 'wb') as f:
                 f.write(response.content)
-                    
+            max_trials -= 1
                     
 def is_file_downloaded(url, folder_path):
     # Parse the URL to get the file name
