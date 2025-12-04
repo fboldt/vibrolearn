@@ -6,9 +6,6 @@ import scipy.io
 import numpy as np
 
 
-check_if_downloaded=False
-
-
 def download_file_from_register(raw_dir_path, register):
     os.makedirs(raw_dir_path, exist_ok=True)
     file_url = urllib.parse.urljoin(register['base_url'], register['filename'])
@@ -80,12 +77,19 @@ def get_all_keys_and_values(registers):
 
 
 def load_matlab_file(file_path):
-    mat = scipy.io.loadmat(file_path)
-    return mat
+    try:
+        mat = scipy.io.loadmat(file_path)
+        return mat
+    except Exception as e:
+        print(f"Error loading MATLAB file {file_path}: {e}")
+        raise e
 
 
 def load_matlab_acquisition(file_path, channels):
-    mat = load_matlab_file(file_path)
+    try:
+        mat = load_matlab_file(file_path)
+    except Exception as e:
+        raise e
     acquisition = []
     for channel in channels:
         for key in mat.keys():
@@ -142,11 +146,13 @@ def prepare_segments_and_targets(segment_length, register, acquisition):
 
 
 def get_acquisition_data(raw_dir_path, channels_columns, load_acquisition_func, register):
-    if check_if_downloaded:
-        download_file_from_register(raw_dir_path, register)
     file_path = os.path.join(raw_dir_path, register['filename'])
     channels = get_channels_from_register(channels_columns, register)
-    acquisition = load_acquisition_func(file_path, channels=channels)
+    try:
+        acquisition = load_acquisition_func(file_path, channels=channels)
+    except Exception as e:
+        download_file_from_register(raw_dir_path, register)
+        acquisition = load_acquisition_func(file_path, channels=channels)
     return acquisition
 
 
