@@ -1,7 +1,11 @@
 from dataset.cwru.rauber_loca_et_al import single_channel_X_y_DE_FE_12k
 from assesment.crossvalidation import performance
 from sklearn.metrics import accuracy_score, f1_score, confusion_matrix
-from estimator.RandomForest import RandomForest 
+from estimator.HeterogeneuousFeatures import HeterogeneuousFeatures as FeatureExtractor
+from sklearn.ensemble import RandomForestClassifier as Estimator
+
+
+model = FeatureExtractor(estimator=Estimator())
 
 
 def f1_macro(y_true, y_pred):
@@ -18,4 +22,4 @@ def run(model, verbose=False):
 
 
 if __name__ == "__main__":
-    result  = run(RandomForest(), verbose=True)
+    result  = run(model, verbose=True)
