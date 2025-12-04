@@ -1,162 +1,162 @@
-condition,  filename,   load,   severity,   sample_rate,    prlz,   faulty_bearing
-Normal,     97.mat,     0,      0,          12000,          None,   None
-Normal,     98.mat,     1,      0,          12000,          None,   None
-Normal,     99.mat,     2,      0,          12000,          None,   None
-Normal,     100.mat,    3,      0,          12000,          None,   None
-Inner Race, 105.mat,    0,      0.007,      12000,          None,   Drive End
-Inner Race, 106.mat,    1,      0.007,      12000,          None,   Drive End
-Inner Race, 107.mat,    2,      0.007,      12000,          None,   Drive End
-Inner Race, 108.mat,    3,      0.007,      12000,          None,   Drive End
-Inner Race, 169.mat,    0,      0.014,      12000,          None,   Drive End
-Inner Race, 170.mat,    1,      0.014,      12000,          None,   Drive End
-Inner Race, 171.mat,    2,      0.014,      12000,          None,   Drive End
-Inner Race, 172.mat,    3,      0.014,      12000,          None,   Drive End
-Inner Race, 209.mat,    0,      0.021,      12000,          None,   Drive End
-Inner Race, 210.mat,    1,      0.021,      12000,          None,   Drive End
-Inner Race, 211.mat,    2,      0.021,      12000,          None,   Drive End
-Inner Race, 212.mat,    3,      0.021,      12000,          None,   Drive End
-Inner Race, 3001.mat,   0,      0.028,      12000,          None,   Drive End
-Inner Race, 3002.mat,   1,      0.028,      12000,          None,   Drive End
-Inner Race, 3003.mat,   2,      0.028,      12000,          None,   Drive End
-Inner Race, 3004.mat,   3,      0.028,      12000,          None,   Drive End
-Ball,       118.mat,    0,      0.007,      12000,          None,   Drive End
-Ball,       119.mat,    1,      0.007,      12000,          None,   Drive End
-Ball,       120.mat,    2,      0.007,      12000,          None,   Drive End
-Ball,       121.mat,    3,      0.007,      12000,          None,   Drive End
-Ball,       185.mat,    0,      0.014,      12000,          None,   Drive End
-Ball,       186.mat,    1,      0.014,      12000,          None,   Drive End
-Ball,       187.mat,    2,      0.014,      12000,          None,   Drive End
-Ball,       188.mat,    3,      0.014,      12000,          None,   Drive End
-Ball,       222.mat,    0,      0.021,      12000,          None,   Drive End
-Ball,       223.mat,    1,      0.021,      12000,          None,   Drive End
-Ball,       224.mat,    2,      0.021,      12000,          None,   Drive End
-Ball,       225.mat,    3,      0.021,      12000,          None,   Drive End
-Ball,       3005.mat,   0,      0.028,      12000,          None,   Drive End
-Ball,       3006.mat,   1,      0.028,      12000,          None,   Drive End
-Ball,       3007.mat,   2,      0.028,      12000,          None,   Drive End
-Ball,       3008.mat,   3,      0.028,      12000,          None,   Drive End
-Outer Race, 130.mat,    0,      0.007,      12000,          6,      Drive End
-Outer Race, 131.mat,    1,      0.007,      12000,          6,      Drive End
-Outer Race, 132.mat,    2,      0.007,      12000,          6,      Drive End
-Outer Race, 133.mat,    3,      0.007,      12000,          6,      Drive End
-Outer Race, 197.mat,    0,      0.014,      12000,          6,      Drive End
-Outer Race, 198.mat,    1,      0.014,      12000,          6,      Drive End
-Outer Race, 199.mat,    2,      0.014,      12000,          6,      Drive End
-Outer Race, 200.mat,    3,      0.014,      12000,          6,      Drive End
-Outer Race, 234.mat,    0,      0.021,      12000,          6,      Drive End
-Outer Race, 235.mat,    1,      0.021,      12000,          6,      Drive End
-Outer Race, 236.mat,    2,      0.021,      12000,          6,      Drive End
-Outer Race, 237.mat,    3,      0.021,      12000,          6,      Drive End
-Outer Race, 144.mat,    0,      0.007,      12000,          3,      Drive End
-Outer Race, 145.mat,    1,      0.007,      12000,          3,      Drive End
-Outer Race, 146.mat,    2,      0.007,      12000,          3,      Drive End
-Outer Race, 147.mat,    3,      0.007,      12000,          3,      Drive End
-Outer Race, 246.mat,    0,      0.021,      12000,          3,      Drive End
-Outer Race, 247.mat,    1,      0.021,      12000,          3,      Drive End
-Outer Race, 248.mat,    2,      0.021,      12000,          3,      Drive End
-Outer Race, 249.mat,    3,      0.021,      12000,          3,      Drive End
-Outer Race, 156.mat,    0,      0.007,      12000,          12,     Drive End
-Outer Race, 158.mat,    1,      0.007,      12000,          12,     Drive End
-Outer Race, 159.mat,    2,      0.007,      12000,          12,     Drive End
-Outer Race, 160.mat,    3,      0.007,      12000,          12,     Drive End
-Outer Race, 258.mat,    0,      0.021,      12000,          12,     Drive End
-Outer Race, 259.mat,    1,      0.021,      12000,          12,     Drive End
-Outer Race, 260.mat,    2,      0.021,      12000,          12,     Drive End
-Outer Race, 261.mat,    3,      0.021,      12000,          12,     Drive End
-Inner Race, 278.mat,    0,      0.007,      12000,          None,   Fan End
-Inner Race, 279.mat,    1,      0.007,      12000,          None,   Fan End
-Inner Race, 280.mat,    2,      0.007,      12000,          None,   Fan End
-Inner Race, 281.mat,    3,      0.007,      12000,          None,   Fan End
-Inner Race, 274.mat,    0,      0.014,      12000,          None,   Fan End
-Inner Race, 275.mat,    1,      0.014,      12000,          None,   Fan End
-Inner Race, 276.mat,    2,      0.014,      12000,          None,   Fan End
-Inner Race, 277.mat,    3,      0.014,      12000,          None,   Fan End
-Inner Race, 270.mat,    0,      0.021,      12000,          None,   Fan End
-Inner Race, 271.mat,    1,      0.021,      12000,          None,   Fan End
-Inner Race, 272.mat,    2,      0.021,      12000,          None,   Fan End
-Inner Race, 273.mat,    3,      0.021,      12000,          None,   Fan End
-Ball,       282.mat,    0,      0.007,      12000,          None,   Fan End
-Ball,       283.mat,    1,      0.007,      12000,          None,   Fan End
-Ball,       284.mat,    2,      0.007,      12000,          None,   Fan End
-Ball,       285.mat,    3,      0.007,      12000,          None,   Fan End 
-Ball,       286.mat,    0,      0.014,      12000,          None,   Fan End
-Ball,       287.mat,    1,      0.014,      12000,          None,   Fan End
-Ball,       288.mat,    2,      0.014,      12000,          None,   Fan End
-Ball,       289.mat,    3,      0.014,      12000,          None,   Fan End
-Ball,       290.mat,    0,      0.021,      12000,          None,   Fan End
-Ball,       291.mat,    1,      0.021,      12000,          None,   Fan End
-Ball,       292.mat,    2,      0.021,      12000,          None,   Fan End
-Ball,       293.mat,    3,      0.021,      12000,          None,   Fan End
-Outer Race, 294.mat,    0,      0.007,      12000,          6,      Fan End
-Outer Race, 295.mat,    1,      0.007,      12000,          6,      Fan End
-Outer Race, 296.mat,    2,      0.007,      12000,          6,      Fan End
-Outer Race, 297.mat,    3,      0.007,      12000,          6,      Fan End
-Outer Race, 313.mat,    0,      0.014,      12000,          6,      Fan End
-Outer Race, 315.mat,    1,      0.021,      12000,          6,      Fan End
-Outer Race, 298.mat,    0,      0.007,      12000,          3,      Fan End
-Outer Race, 299.mat,    1,      0.007,      12000,          3,      Fan End
-Outer Race, 300.mat,    2,      0.007,      12000,          3,      Fan End
-Outer Race, 301.mat,    3,      0.007,      12000,          3,      Fan End
-Outer Race, 310.mat,    0,      0.014,      12000,          3,      Fan End
-Outer Race, 309.mat,    1,      0.014,      12000,          3,      Fan End
-Outer Race, 311.mat,    2,      0.014,      12000,          3,      Fan End
-Outer Race, 312.mat,    3,      0.014,      12000,          3,      Fan End
-Outer Race, 316.mat,    1,      0.021,      12000,          3,      Fan End
-Outer Race, 317.mat,    2,      0.021,      12000,          3,      Fan End
-Outer Race, 318.mat,    3,      0.021,      12000,          3,      Fan End
-Outer Race, 302.mat,    0,      0.007,      12000,          12,     Fan End
-Outer Race, 305.mat,    1,      0.007,      12000,          12,     Fan End
-Outer Race, 306.mat,    2,      0.007,      12000,          12,     Fan End
-Outer Race, 307.mat,    3,      0.007,      12000,          12,     Fan End
-Inner Race, 109.mat,    0,      0.007,      48000,          None,   Drive End
-Inner Race, 110.mat,    1,      0.007,      48000,          None,   Drive End
-Inner Race, 111.mat,    2,      0.007,      48000,          None,   Drive End
-Inner Race, 112.mat,    3,      0.007,      48000,          None,   Drive End
-Inner Race, 174.mat,    0,      0.014,      48000,          None,   Drive End
-Inner Race, 175.mat,    1,      0.014,      48000,          None,   Drive End
-Inner Race, 176.mat,    2,      0.014,      48000,          None,   Drive End
-Inner Race, 177.mat,    3,      0.014,      48000,          None,   Drive End
-Inner Race, 213.mat,    0,      0.021,      48000,          None,   Drive End
-Inner Race, 214.mat,    1,      0.021,      48000,          None,   Drive End
-Inner Race, 215.mat,    2,      0.021,      48000,          None,   Drive End
-Inner Race, 217.mat,    3,      0.021,      48000,          None,   Drive End
-Ball,       122.mat,    0,      0.007,      48000,          None,   Drive End
-Ball,       123.mat,    1,      0.007,      48000,          None,   Drive End
-Ball,       124.mat,    2,      0.007,      48000,          None,   Drive End
-Ball,       125.mat,    3,      0.007,      48000,          None,   Drive End
-Ball,       189.mat,    0,      0.014,      48000,          None,   Drive End
-Ball,       190.mat,    1,      0.014,      48000,          None,   Drive End
-Ball,       191.mat,    2,      0.014,      48000,          None,   Drive End
-Ball,       192.mat,    3,      0.014,      48000,          None,   Drive End
-Ball,       226.mat,    0,      0.021,      48000,          None,   Drive End
-Ball,       227.mat,    1,      0.021,      48000,          None,   Drive End
-Ball,       228.mat,    2,      0.021,      48000,          None,   Drive End
-Ball,       229.mat,    3,      0.021,      48000,          None,   Drive End
-Outer Race, 135.mat,    0,      0.007,      48000,          6,      Drive End
-Outer Race, 136.mat,    1,      0.007,      48000,          6,      Drive End
-Outer Race, 137.mat,    2,      0.007,      48000,          6,      Drive End
-Outer Race, 138.mat,    3,      0.007,      48000,          6,      Drive End
-Outer Race, 201.mat,    0,      0.014,      48000,          6,      Drive End
-Outer Race, 202.mat,    1,      0.014,      48000,          6,      Drive End
-Outer Race, 203.mat,    2,      0.014,      48000,          6,      Drive End
-Outer Race, 204.mat,    3,      0.014,      48000,          6,      Drive End
-Outer Race, 238.mat,    0,      0.021,      48000,          6,      Drive End
-Outer Race, 239.mat,    1,      0.021,      48000,          6,      Drive End
-Outer Race, 240.mat,    2,      0.021,      48000,          6,      Drive End
-Outer Race, 241.mat,    3,      0.021,      48000,          6,      Drive End
-Outer Race, 148.mat,    0,      0.007,      48000,          3,      Drive End
-Outer Race, 149.mat,    1,      0.007,      48000,          3,      Drive End
-Outer Race, 150.mat,    2,      0.007,      48000,          3,      Drive End
-Outer Race, 151.mat,    3,      0.007,      48000,          3,      Drive End
-Outer Race, 250.mat,    0,      0.021,      48000,          3,      Drive End
-Outer Race, 251.mat,    1,      0.021,      48000,          3,      Drive End
-Outer Race, 252.mat,    2,      0.021,      48000,          3,      Drive End
-Outer Race, 253.mat,    3,      0.021,      48000,          3,      Drive End
-Outer Race, 161.mat,    0,      0.007,      48000,          12,     Drive End
-Outer Race, 162.mat,    1,      0.007,      48000,          12,     Drive End
-Outer Race, 163.mat,    2,      0.007,      48000,          12,     Drive End   
-Outer Race, 164.mat,    3,      0.007,      48000,          12,     Drive End
-Outer Race, 262.mat,    0,      0.021,      48000,          12,     Drive End
-Outer Race, 263.mat,    1,      0.021,      48000,          12,     Drive End
-Outer Race, 264.mat,    2,      0.021,      48000,          12,     Drive End
-Outer Race, 265.mat,    3,      0.021,      48000,          12,     Drive End
+condition,  base_url,                                          filename,   load,   severity,   sample_rate,    prlz,   faulty_bearing, DE,           FE,           BA
+Normal,     https://engineering.case.edu/sites/default/files/, 97.mat,     0,      0,          12000,          None,   None,           X097_DE_time, X097_FE_time, None
+Normal,     https://engineering.case.edu/sites/default/files/, 98.mat,     1,      0,          12000,          None,   None,           X098_DE_time, X098_FE_time, None
+Normal,     https://engineering.case.edu/sites/default/files/, 99.mat,     2,      0,          12000,          None,   None,           X099_DE_time, X099_FE_time, None
+Normal,     https://engineering.case.edu/sites/default/files/, 100.mat,    3,      0,          12000,          None,   None,           X100_DE_time, X100_FE_time, None
+Inner Race, https://engineering.case.edu/sites/default/files/, 105.mat,    0,      0.007,      12000,          None,   Drive End,      X105_DE_time, X105_FE_time, X105_BA_time
+Inner Race, https://engineering.case.edu/sites/default/files/, 106.mat,    1,      0.007,      12000,          None,   Drive End,      X106_DE_time, X106_FE_time, X106_BA_time
+Inner Race, https://engineering.case.edu/sites/default/files/, 107.mat,    2,      0.007,      12000,          None,   Drive End,      X107_DE_time, X107_FE_time, X107_BA_time
+Inner Race, https://engineering.case.edu/sites/default/files/, 108.mat,    3,      0.007,      12000,          None,   Drive End,      X108_DE_time, X108_FE_time, X108_BA_time
+Inner Race, https://engineering.case.edu/sites/default/files/, 169.mat,    0,      0.014,      12000,          None,   Drive End,      X169_DE_time, X169_FE_time, X169_BA_time
+Inner Race, https://engineering.case.edu/sites/default/files/, 170.mat,    1,      0.014,      12000,          None,   Drive End,      X170_DE_time, X170_FE_time, X170_BA_time
+Inner Race, https://engineering.case.edu/sites/default/files/, 171.mat,    2,      0.014,      12000,          None,   Drive End,      X171_DE_time, X171_FE_time, X171_BA_time
+Inner Race, https://engineering.case.edu/sites/default/files/, 172.mat,    3,      0.014,      12000,          None,   Drive End,      X172_DE_time, X172_FE_time, X172_BA_time
+Inner Race, https://engineering.case.edu/sites/default/files/, 209.mat,    0,      0.021,      12000,          None,   Drive End,      X209_DE_time, X209_FE_time, X209_BA_time
+Inner Race, https://engineering.case.edu/sites/default/files/, 210.mat,    1,      0.021,      12000,          None,   Drive End,      X210_DE_time, X210_FE_time, X210_BA_time
+Inner Race, https://engineering.case.edu/sites/default/files/, 211.mat,    2,      0.021,      12000,          None,   Drive End,      X211_DE_time, X211_FE_time, X211_BA_time
+Inner Race, https://engineering.case.edu/sites/default/files/, 212.mat,    3,      0.021,      12000,          None,   Drive End,      X212_DE_time, X212_FE_time, X212_BA_time
+Inner Race, https://engineering.case.edu/sites/default/files/, 3001.mat,   0,      0.028,      12000,          None,   Drive End,      X056_DE_time, None,         None
+Inner Race, https://engineering.case.edu/sites/default/files/, 3002.mat,   1,      0.028,      12000,          None,   Drive End,      X057_DE_time, None,         None
+Inner Race, https://engineering.case.edu/sites/default/files/, 3003.mat,   2,      0.028,      12000,          None,   Drive End,      X058_DE_time, None,         None
+Inner Race, https://engineering.case.edu/sites/default/files/, 3004.mat,   3,      0.028,      12000,          None,   Drive End,      X059_DE_time, None,         None
+Ball,       https://engineering.case.edu/sites/default/files/, 118.mat,    0,      0.007,      12000,          None,   Drive End,      X118_DE_time, X118_FE_time, X118_BA_time
+Ball,       https://engineering.case.edu/sites/default/files/, 119.mat,    1,      0.007,      12000,          None,   Drive End,      X119_DE_time, X119_FE_time, X119_BA_time
+Ball,       https://engineering.case.edu/sites/default/files/, 120.mat,    2,      0.007,      12000,          None,   Drive End,      X120_DE_time, X120_FE_time, X120_BA_time
+Ball,       https://engineering.case.edu/sites/default/files/, 121.mat,    3,      0.007,      12000,          None,   Drive End,      X121_DE_time, X121_FE_time, X121_BA_time
+Ball,       https://engineering.case.edu/sites/default/files/, 185.mat,    0,      0.014,      12000,          None,   Drive End,      X185_DE_time, X185_FE_time, X185_BA_time
+Ball,       https://engineering.case.edu/sites/default/files/, 186.mat,    1,      0.014,      12000,          None,   Drive End,      X186_DE_time, X186_FE_time, X186_BA_time
+Ball,       https://engineering.case.edu/sites/default/files/, 187.mat,    2,      0.014,      12000,          None,   Drive End,      X187_DE_time, X187_FE_time, X187_BA_time
+Ball,       https://engineering.case.edu/sites/default/files/, 188.mat,    3,      0.014,      12000,          None,   Drive End,      X188_DE_time, X188_FE_time, X188_BA_time
+Ball,       https://engineering.case.edu/sites/default/files/, 222.mat,    0,      0.021,      12000,          None,   Drive End,      X222_DE_time, X222_FE_time, X222_BA_time
+Ball,       https://engineering.case.edu/sites/default/files/, 223.mat,    1,      0.021,      12000,          None,   Drive End,      X223_DE_time, X223_FE_time, X223_BA_time
+Ball,       https://engineering.case.edu/sites/default/files/, 224.mat,    2,      0.021,      12000,          None,   Drive End,      X224_DE_time, X224_FE_time, X224_BA_time
+Ball,       https://engineering.case.edu/sites/default/files/, 225.mat,    3,      0.021,      12000,          None,   Drive End,      X225_DE_time, X225_FE_time, X225_BA_time
+Ball,       https://engineering.case.edu/sites/default/files/, 3005.mat,   0,      0.028,      12000,          None,   Drive End,      X048_DE_time, None,         None
+Ball,       https://engineering.case.edu/sites/default/files/, 3006.mat,   1,      0.028,      12000,          None,   Drive End,      X049_DE_time, None,         None
+Ball,       https://engineering.case.edu/sites/default/files/, 3007.mat,   2,      0.028,      12000,          None,   Drive End,      X050_DE_time, None,         None
+Ball,       https://engineering.case.edu/sites/default/files/, 3008.mat,   3,      0.028,      12000,          None,   Drive End,      X051_DE_time, None,         None
+Outer Race, https://engineering.case.edu/sites/default/files/, 130.mat,    0,      0.007,      12000,          6,      Drive End,      X130_DE_time, X130_FE_time, X130_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 131.mat,    1,      0.007,      12000,          6,      Drive End,      X131_DE_time, X131_FE_time, X131_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 132.mat,    2,      0.007,      12000,          6,      Drive End,      X132_DE_time, X132_FE_time, X132_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 133.mat,    3,      0.007,      12000,          6,      Drive End,      X133_DE_time, X133_FE_time, X133_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 197.mat,    0,      0.014,      12000,          6,      Drive End,      X197_DE_time, X197_FE_time, X197_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 198.mat,    1,      0.014,      12000,          6,      Drive End,      X198_DE_time, X198_FE_time, X198_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 199.mat,    2,      0.014,      12000,          6,      Drive End,      X199_DE_time, X199_FE_time, X199_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 200.mat,    3,      0.014,      12000,          6,      Drive End,      X200_DE_time, X200_FE_time, X200_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 234.mat,    0,      0.021,      12000,          6,      Drive End,      X234_DE_time, X234_FE_time, X234_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 235.mat,    1,      0.021,      12000,          6,      Drive End,      X235_DE_time, X235_FE_time, X235_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 236.mat,    2,      0.021,      12000,          6,      Drive End,      X236_DE_time, X236_FE_time, X236_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 237.mat,    3,      0.021,      12000,          6,      Drive End,      X237_DE_time, X237_FE_time, X237_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 144.mat,    0,      0.007,      12000,          3,      Drive End,      X144_DE_time, X144_FE_time, X144_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 145.mat,    1,      0.007,      12000,          3,      Drive End,      X145_DE_time, X145_FE_time, X145_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 146.mat,    2,      0.007,      12000,          3,      Drive End,      X146_DE_time, X146_FE_time, X146_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 147.mat,    3,      0.007,      12000,          3,      Drive End,      X147_DE_time, X147_FE_time, X147_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 246.mat,    0,      0.021,      12000,          3,      Drive End,      X246_DE_time, X246_FE_time, X246_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 247.mat,    1,      0.021,      12000,          3,      Drive End,      X247_DE_time, X247_FE_time, X247_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 248.mat,    2,      0.021,      12000,          3,      Drive End,      X248_DE_time, X248_FE_time, X248_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 249.mat,    3,      0.021,      12000,          3,      Drive End,      X249_DE_time, X249_FE_time, X249_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 156.mat,    0,      0.007,      12000,          12,     Drive End,      X156_DE_time, X156_FE_time, X156_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 158.mat,    1,      0.007,      12000,          12,     Drive End,      X158_DE_time, X158_FE_time, X158_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 159.mat,    2,      0.007,      12000,          12,     Drive End,      X159_DE_time, X159_FE_time, X159_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 160.mat,    3,      0.007,      12000,          12,     Drive End,      X160_DE_time, X160_FE_time, X160_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 258.mat,    0,      0.021,      12000,          12,     Drive End,      X258_DE_time, X258_FE_time, X258_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 259.mat,    1,      0.021,      12000,          12,     Drive End,      X259_DE_time, X259_FE_time, X259_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 260.mat,    2,      0.021,      12000,          12,     Drive End,      X260_DE_time, X260_FE_time, X260_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 261.mat,    3,      0.021,      12000,          12,     Drive End,      X261_DE_time, X261_FE_time, X261_BA_time
+Inner Race, https://engineering.case.edu/sites/default/files/, 278.mat,    0,      0.007,      12000,          None,   Fan End,        X278_DE_time, X278_FE_time, X278_BA_time
+Inner Race, https://engineering.case.edu/sites/default/files/, 279.mat,    1,      0.007,      12000,          None,   Fan End,        X279_DE_time, X279_FE_time, X279_BA_time
+Inner Race, https://engineering.case.edu/sites/default/files/, 280.mat,    2,      0.007,      12000,          None,   Fan End,        X280_DE_time, X280_FE_time, X280_BA_time
+Inner Race, https://engineering.case.edu/sites/default/files/, 281.mat,    3,      0.007,      12000,          None,   Fan End,        X281_DE_time, X281_FE_time, X281_BA_time
+Inner Race, https://engineering.case.edu/sites/default/files/, 274.mat,    0,      0.014,      12000,          None,   Fan End,        X274_DE_time, X274_FE_time, X274_BA_time
+Inner Race, https://engineering.case.edu/sites/default/files/, 275.mat,    1,      0.014,      12000,          None,   Fan End,        X275_DE_time, X275_FE_time, X275_BA_time
+Inner Race, https://engineering.case.edu/sites/default/files/, 276.mat,    2,      0.014,      12000,          None,   Fan End,        X276_DE_time, X276_FE_time, X276_BA_time
+Inner Race, https://engineering.case.edu/sites/default/files/, 277.mat,    3,      0.014,      12000,          None,   Fan End,        X277_DE_time, X277_FE_time, X277_BA_time
+Inner Race, https://engineering.case.edu/sites/default/files/, 270.mat,    0,      0.021,      12000,          None,   Fan End,        X270_DE_time, X270_FE_time, X270_BA_time
+Inner Race, https://engineering.case.edu/sites/default/files/, 271.mat,    1,      0.021,      12000,          None,   Fan End,        X271_DE_time, X271_FE_time, X271_BA_time
+Inner Race, https://engineering.case.edu/sites/default/files/, 272.mat,    2,      0.021,      12000,          None,   Fan End,        X272_DE_time, X272_FE_time, X272_BA_time
+Inner Race, https://engineering.case.edu/sites/default/files/, 273.mat,    3,      0.021,      12000,          None,   Fan End,        X273_DE_time, X273_FE_time, X273_BA_time
+Ball,       https://engineering.case.edu/sites/default/files/, 282.mat,    0,      0.007,      12000,          None,   Fan End,        X282_DE_time, X282_FE_time, X282_BA_time
+Ball,       https://engineering.case.edu/sites/default/files/, 283.mat,    1,      0.007,      12000,          None,   Fan End,        X283_DE_time, X283_FE_time, X283_BA_time
+Ball,       https://engineering.case.edu/sites/default/files/, 284.mat,    2,      0.007,      12000,          None,   Fan End,        X284_DE_time, X284_FE_time, X284_BA_time
+Ball,       https://engineering.case.edu/sites/default/files/, 285.mat,    3,      0.007,      12000,          None,   Fan End,        X285_DE_time, X285_FE_time, X285_BA_time
+Ball,       https://engineering.case.edu/sites/default/files/, 286.mat,    0,      0.014,      12000,          None,   Fan End,        X286_DE_time, X286_FE_time, X286_BA_time
+Ball,       https://engineering.case.edu/sites/default/files/, 287.mat,    1,      0.014,      12000,          None,   Fan End,        X287_DE_time, X287_FE_time, X287_BA_time
+Ball,       https://engineering.case.edu/sites/default/files/, 288.mat,    2,      0.014,      12000,          None,   Fan End,        X288_DE_time, X288_FE_time, X288_BA_time
+Ball,       https://engineering.case.edu/sites/default/files/, 289.mat,    3,      0.014,      12000,          None,   Fan End,        X289_DE_time, X289_FE_time, X289_BA_time
+Ball,       https://engineering.case.edu/sites/default/files/, 290.mat,    0,      0.021,      12000,          None,   Fan End,        X290_DE_time, X290_FE_time, X290_BA_time
+Ball,       https://engineering.case.edu/sites/default/files/, 291.mat,    1,      0.021,      12000,          None,   Fan End,        X291_DE_time, X291_FE_time, X291_BA_time
+Ball,       https://engineering.case.edu/sites/default/files/, 292.mat,    2,      0.021,      12000,          None,   Fan End,        X292_DE_time, X292_FE_time, X292_BA_time
+Ball,       https://engineering.case.edu/sites/default/files/, 293.mat,    3,      0.021,      12000,          None,   Fan End,        X293_DE_time, X293_FE_time, X293_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 294.mat,    0,      0.007,      12000,          6,      Fan End,        X294_DE_time, X294_FE_time, X294_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 295.mat,    1,      0.007,      12000,          6,      Fan End,        X295_DE_time, X295_FE_time, X295_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 296.mat,    2,      0.007,      12000,          6,      Fan End,        X296_DE_time, X296_FE_time, X296_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 297.mat,    3,      0.007,      12000,          6,      Fan End,        X297_DE_time, X297_FE_time, X297_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 313.mat,    0,      0.014,      12000,          6,      Fan End,        X313_DE_time, X313_FE_time, X313_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 315.mat,    1,      0.021,      12000,          6,      Fan End,        X315_DE_time, X315_FE_time, X315_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 298.mat,    0,      0.007,      12000,          3,      Fan End,        X298_DE_time, X298_FE_time, X298_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 299.mat,    1,      0.007,      12000,          3,      Fan End,        X299_DE_time, X299_FE_time, X299_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 300.mat,    2,      0.007,      12000,          3,      Fan End,        X300_DE_time, X300_FE_time, X300_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 301.mat,    3,      0.007,      12000,          3,      Fan End,        X301_DE_time, X301_FE_time, X301_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 310.mat,    0,      0.014,      12000,          3,      Fan End,        X310_DE_time, X310_FE_time, X310_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 309.mat,    1,      0.014,      12000,          3,      Fan End,        X309_DE_time, X309_FE_time, X309_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 311.mat,    2,      0.014,      12000,          3,      Fan End,        X311_DE_time, X311_FE_time, X311_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 312.mat,    3,      0.014,      12000,          3,      Fan End,        X312_DE_time, X312_FE_time, X312_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 316.mat,    1,      0.021,      12000,          3,      Fan End,        X316_DE_time, X316_FE_time, X316_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 317.mat,    2,      0.021,      12000,          3,      Fan End,        X317_DE_time, X317_FE_time, X317_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 318.mat,    3,      0.021,      12000,          3,      Fan End,        X318_DE_time, X318_FE_time, X318_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 302.mat,    0,      0.007,      12000,          12,     Fan End,        X302_DE_time, X302_FE_time, X302_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 305.mat,    1,      0.007,      12000,          12,     Fan End,        X305_DE_time, X305_FE_time, X305_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 306.mat,    2,      0.007,      12000,          12,     Fan End,        X306_DE_time, X306_FE_time, X306_BA_time
+Outer Race, https://engineering.case.edu/sites/default/files/, 307.mat,    3,      0.007,      12000,          12,     Fan End,        X307_DE_time, X307_FE_time, X307_BA_time
+Inner Race, https://engineering.case.edu/sites/default/files/, 109.mat,    0,      0.007,      48000,          None,   Drive End,      X109_DE_time, X109_FE_time, None
+Inner Race, https://engineering.case.edu/sites/default/files/, 110.mat,    1,      0.007,      48000,          None,   Drive End,      X110_DE_time, X110_FE_time, None
+Inner Race, https://engineering.case.edu/sites/default/files/, 111.mat,    2,      0.007,      48000,          None,   Drive End,      X111_DE_time, X111_FE_time, None
+Inner Race, https://engineering.case.edu/sites/default/files/, 112.mat,    3,      0.007,      48000,          None,   Drive End,      X112_DE_time, X112_FE_time, None
+Inner Race, https://engineering.case.edu/sites/default/files/, 174.mat,    0,      0.014,      48000,          None,   Drive End,      X173_DE_time, X173_FE_time, None
+Inner Race, https://engineering.case.edu/sites/default/files/, 175.mat,    1,      0.014,      48000,          None,   Drive End,      X175_DE_time, X175_FE_time, None
+Inner Race, https://engineering.case.edu/sites/default/files/, 176.mat,    2,      0.014,      48000,          None,   Drive End,      X176_DE_time, X176_FE_time, None
+Inner Race, https://engineering.case.edu/sites/default/files/, 177.mat,    3,      0.014,      48000,          None,   Drive End,      X177_DE_time, X177_FE_time, None
+Inner Race, https://engineering.case.edu/sites/default/files/, 213.mat,    0,      0.021,      48000,          None,   Drive End,      X213_DE_time, X213_FE_time, None
+Inner Race, https://engineering.case.edu/sites/default/files/, 214.mat,    1,      0.021,      48000,          None,   Drive End,      X214_DE_time, X214_FE_time, None
+Inner Race, https://engineering.case.edu/sites/default/files/, 215.mat,    2,      0.021,      48000,          None,   Drive End,      X215_DE_time, X215_FE_time, None
+Inner Race, https://engineering.case.edu/sites/default/files/, 217.mat,    3,      0.021,      48000,          None,   Drive End,      X217_DE_time, X217_FE_time, None
+Ball,       https://engineering.case.edu/sites/default/files/, 122.mat,    0,      0.007,      48000,          None,   Drive End,      X122_DE_time, X122_FE_time, None
+Ball,       https://engineering.case.edu/sites/default/files/, 123.mat,    1,      0.007,      48000,          None,   Drive End,      X123_DE_time, X123_FE_time, None
+Ball,       https://engineering.case.edu/sites/default/files/, 124.mat,    2,      0.007,      48000,          None,   Drive End,      X124_DE_time, X124_FE_time, None
+Ball,       https://engineering.case.edu/sites/default/files/, 125.mat,    3,      0.007,      48000,          None,   Drive End,      X125_DE_time, X125_FE_time, None
+Ball,       https://engineering.case.edu/sites/default/files/, 189.mat,    0,      0.014,      48000,          None,   Drive End,      X189_DE_time, X189_FE_time, None
+Ball,       https://engineering.case.edu/sites/default/files/, 190.mat,    1,      0.014,      48000,          None,   Drive End,      X190_DE_time, X190_FE_time, None
+Ball,       https://engineering.case.edu/sites/default/files/, 191.mat,    2,      0.014,      48000,          None,   Drive End,      X191_DE_time, X191_FE_time, None
+Ball,       https://engineering.case.edu/sites/default/files/, 192.mat,    3,      0.014,      48000,          None,   Drive End,      X192_DE_time, X192_FE_time, None
+Ball,       https://engineering.case.edu/sites/default/files/, 226.mat,    0,      0.021,      48000,          None,   Drive End,      X226_DE_time, X226_FE_time, None
+Ball,       https://engineering.case.edu/sites/default/files/, 227.mat,    1,      0.021,      48000,          None,   Drive End,      X227_DE_time, X227_FE_time, None
+Ball,       https://engineering.case.edu/sites/default/files/, 228.mat,    2,      0.021,      48000,          None,   Drive End,      X228_DE_time, X228_FE_time, None
+Ball,       https://engineering.case.edu/sites/default/files/, 229.mat,    3,      0.021,      48000,          None,   Drive End,      X229_DE_time, X229_FE_time, None
+Outer Race, https://engineering.case.edu/sites/default/files/, 135.mat,    0,      0.007,      48000,          6,      Drive End,      X135_DE_time, X135_FE_time, None
+Outer Race, https://engineering.case.edu/sites/default/files/, 136.mat,    1,      0.007,      48000,          6,      Drive End,      X136_DE_time, X136_FE_time, None
+Outer Race, https://engineering.case.edu/sites/default/files/, 137.mat,    2,      0.007,      48000,          6,      Drive End,      X137_DE_time, X137_FE_time, None
+Outer Race, https://engineering.case.edu/sites/default/files/, 138.mat,    3,      0.007,      48000,          6,      Drive End,      X138_DE_time, X138_FE_time, None
+Outer Race, https://engineering.case.edu/sites/default/files/, 201.mat,    0,      0.014,      48000,          6,      Drive End,      X201_DE_time, X201_FE_time, None
+Outer Race, https://engineering.case.edu/sites/default/files/, 202.mat,    1,      0.014,      48000,          6,      Drive End,      X202_DE_time, X202_FE_time, None
+Outer Race, https://engineering.case.edu/sites/default/files/, 203.mat,    2,      0.014,      48000,          6,      Drive End,      X203_DE_time, X203_FE_time, None
+Outer Race, https://engineering.case.edu/sites/default/files/, 204.mat,    3,      0.014,      48000,          6,      Drive End,      X204_DE_time, X204_FE_time, None
+Outer Race, https://engineering.case.edu/sites/default/files/, 238.mat,    0,      0.021,      48000,          6,      Drive End,      X238_DE_time, X238_FE_time, None
+Outer Race, https://engineering.case.edu/sites/default/files/, 239.mat,    1,      0.021,      48000,          6,      Drive End,      X239_DE_time, X239_FE_time, None
+Outer Race, https://engineering.case.edu/sites/default/files/, 240.mat,    2,      0.021,      48000,          6,      Drive End,      X240_DE_time, X240_FE_time, None
+Outer Race, https://engineering.case.edu/sites/default/files/, 241.mat,    3,      0.021,      48000,          6,      Drive End,      X241_DE_time, X241_FE_time, None
+Outer Race, https://engineering.case.edu/sites/default/files/, 148.mat,    0,      0.007,      48000,          3,      Drive End,      X148_DE_time, X148_FE_time, None
+Outer Race, https://engineering.case.edu/sites/default/files/, 149.mat,    1,      0.007,      48000,          3,      Drive End,      X149_DE_time, X149_FE_time, None
+Outer Race, https://engineering.case.edu/sites/default/files/, 150.mat,    2,      0.007,      48000,          3,      Drive End,      X150_DE_time, X150_FE_time, None
+Outer Race, https://engineering.case.edu/sites/default/files/, 151.mat,    3,      0.007,      48000,          3,      Drive End,      X151_DE_time, X151_FE_time, None
+Outer Race, https://engineering.case.edu/sites/default/files/, 250.mat,    0,      0.021,      48000,          3,      Drive End,      X250_DE_time, X250_FE_time, None
+Outer Race, https://engineering.case.edu/sites/default/files/, 251.mat,    1,      0.021,      48000,          3,      Drive End,      X251_DE_time, X251_FE_time, None
+Outer Race, https://engineering.case.edu/sites/default/files/, 252.mat,    2,      0.021,      48000,          3,      Drive End,      X252_DE_time, X252_FE_time, None
+Outer Race, https://engineering.case.edu/sites/default/files/, 253.mat,    3,      0.021,      48000,          3,      Drive End,      X253_DE_time, X253_FE_time, None
+Outer Race, https://engineering.case.edu/sites/default/files/, 161.mat,    0,      0.007,      48000,          12,     Drive End,      X161_DE_time, X161_FE_time, None
+Outer Race, https://engineering.case.edu/sites/default/files/, 162.mat,    1,      0.007,      48000,          12,     Drive End,      X162_DE_time, X162_FE_time, None
+Outer Race, https://engineering.case.edu/sites/default/files/, 163.mat,    2,      0.007,      48000,          12,     Drive End,      X163_DE_time, X163_FE_time, None
+Outer Race, https://engineering.case.edu/sites/default/files/, 164.mat,    3,      0.007,      48000,          12,     Drive End,      X164_DE_time, X164_FE_time, None
+Outer Race, https://engineering.case.edu/sites/default/files/, 262.mat,    0,      0.021,      48000,          12,     Drive End,      X262_DE_time, X262_FE_time, None
+Outer Race, https://engineering.case.edu/sites/default/files/, 263.mat,    1,      0.021,      48000,          12,     Drive End,      X263_DE_time, X263_FE_time, None
+Outer Race, https://engineering.case.edu/sites/default/files/, 264.mat,    2,      0.021,      48000,          12,     Drive End,      X264_DE_time, X264_FE_time, None
+Outer Race, https://engineering.case.edu/sites/default/files/, 265.mat,    3,      0.021,      48000,          12,     Drive End,      X265_DE_time, X265_FE_time, None

@@ -3,6 +3,8 @@ import numpy as np
 import scipy.stats as stats
 from sklearn.base import TransformerMixin
 
+from feature.utils import transform_channels_to_features
+
 def rms(x):
   '''
   root mean square
@@ -60,25 +62,27 @@ def kf(x):
   return stats.kurtosis(x)/(np.mean(x**2)**2)
 
 
+def extract_features(X):
+  return np.array([
+                    [
+                    rms(x), # root mean square
+                    sra(x), # square root amplitude
+                    stats.kurtosis(x), # kurtosis
+                    stats.skew(x), # skewness
+                    ppv(x), # peak to peak value
+                    cf(x), # crest factor
+                    ifa(x), # impact factor
+                    mf(x), # margin factor
+                    sf(x), # shape factor
+                    kf(x), # kurtosis factor
+                    ] for x in X
+                  ])
+
+
+
 class StatisticalTime(TransformerMixin):
-  '''
-  Extracts statistical features from the time domain.
-  '''
   def fit(self, X, y=None):
     return self
   def transform(self, X, y=None):
-    return np.array([
-                     [
-                      rms(x), # root mean square
-                      sra(x), # square root amplitude
-                      stats.kurtosis(x), # kurtosis
-                      stats.skew(x), # skewness
-                      ppv(x), # peak to peak value
-                      cf(x), # crest factor
-                      ifa(x), # impact factor
-                      mf(x), # margin factor
-                      sf(x), # shape factor
-                      kf(x), # kurtosis factor
-                      ] for x in X[:]
-                     ])
-
+    return transform_channels_to_features(X, extract_features=extract_features)
+  

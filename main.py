@@ -1,10 +1,21 @@
-from experiment.cwru_rauber_loca_et_al import run
-from utils.time import measure_time
-from estimators import rfwfe
+from dataset.cwru.rauber_loca_et_al import single_channel_X_y_DE_FE_12k
+from assesment.crossvalidation import performance
+from sklearn.metrics import accuracy_score, f1_score, confusion_matrix
+from estimator.RandomForest import RandomForest 
+
+
+def f1_macro(y_true, y_pred):
+    return f1_score(y_true, y_pred, average='macro')
+list_of_metrics = [accuracy_score, f1_macro, confusion_matrix]
+
+
+def run(model, verbose=False):
+    combination = 0
+    segment_length = 2048
+    list_of_X_y = single_channel_X_y_DE_FE_12k(combination, segment_length)
+    scores = performance(model, list_of_X_y, list_of_metrics=list_of_metrics, verbose=verbose)
+    return scores
 
 
 if __name__ == "__main__":
-    print("Running Random Forest with WFE...")
-    result, elapsed = measure_time(run, rfwfe.model, verbose=True)
-    print(f"Execution time: {elapsed:.2f} seconds")
-
+    result  = run(RandomForest(), verbose=True)
