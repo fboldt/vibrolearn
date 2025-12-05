@@ -1,7 +1,7 @@
 from dataset.cwru.rauber_loca_et_al import single_channel_X_y_DE_FE_12k
 from assesment.crossvalidation import performance
 from sklearn.metrics import accuracy_score, f1_score, confusion_matrix
-from estimator.HFRF import HFRF as Estimator
+from estimator.WPRF import WPRF as Estimator
 
 
 model = Estimator()
