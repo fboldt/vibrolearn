@@ -1,4 +1,4 @@
 [I 2025-12-05 02:38:45,447] Trial 106 finished with value: 0.8100351513455575 and parameters: {'wavelet': 'db30', 'mode': 'smooth', 'maxlevel': 9}. Best is trial 106 with value: 0.8100351513455575.
 [I 2025-12-05 08:32:12,201] Trial 67 finished with value: 0.7462730060571556 and parameters: {'wavelet': 'db36', 'mode': 'constant', 'maxlevel': 6}. Best is trial 67 with value: 0.7462730060571556.
 [I 2025-12-05 14:44:44,035] Trial 178 finished with value: 0.9059334711511768 and parameters: {'wavelet': 'bior3.5', 'mode': 'periodization', 'maxlevel': 6}. Best is trial 178 with value: 0.9059334711511768.
-???[I 2025-12-05 15:23:21,623] Trial 33 finished with value: 0.6024850278507837 and parameters: {'wavelet': 'coif13', 'mode': 'smooth', 'maxlevel': 5}. Best is trial 33 with value: 0.6024850278507837.
+[I 2025-12-05 16:30:29,331] Trial 159 finished with value: 0.6233353777447016 and parameters: {'wavelet': 'coif17', 'mode': 'periodization', 'maxlevel': 5}. Best is trial 159 with value: 0.6233353777447016. 
