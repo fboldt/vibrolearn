@@ -2,14 +2,7 @@ from dataset.utils import filter_registers_by_key_value_sequence, get_list_of_X_
 
 
 sehri_et_al_combination_rounds = [
-    [(0, 0.007), (1, 0.014), (2, 0.021)],
-    [(3, 0.007), (0, 0.014), (1, 0.021)],
-    [(2, 0.007), (3, 0.014), (0, 0.021)],
-    [(1, 0.007), (2, 0.014), (3, 0.021)],
-    [(0, 0.014), (1, 0.007), (2, 0.021)],
-    [(3, 0.014), (0, 0.007), (1, 0.021)],
-    [(2, 0.014), (3, 0.007), (0, 0.021)],
-    [(1, 0.014), (2, 0.007), (3, 0.021)],
+    [(0, 0.007), (1, 0.007), (2, 0.007), (3, 0.007), (0, 0.014), (1, 0.014), (2, 0.014), (3, 0.014), (0, 0.021), (1, 0.021), (2, 0.021), (3, 0.021)],
 ]
 
 
@@ -18,7 +11,8 @@ def get_fold(normal_load, fault_bearing_severity, faulty_bearing, sample_rate):
     registers = read_registers_from_config(config_file)
     faulty = filter_registers_by_key_value_sequence(
         registers, 
-        [('sample_rate', [sample_rate]), 
+        [('sample_rate', [sample_rate]),
+         ('load', [str(normal_load)]),
          ('faulty_bearing', faulty_bearing), 
          ('severity', [f"{fault_bearing_severity:.3f}"]),
          ('prlz', ['None', '6'])])
@@ -37,7 +31,11 @@ def get_list_of_folds(faulty_bearing, sample_rate, combination):
 
 
 def single_channel_X_y(combination, segment_length, sample_rate, faulty_bearing, channel_column):
-    list_of_folds = get_list_of_folds([faulty_bearing], sample_rate, combination)   
+    list_of_folds = get_list_of_folds([faulty_bearing], sample_rate, combination)
+    for i in range(len(list_of_folds)):
+        print(f"Fold {i}:")
+        for register in list_of_folds[i]:
+            print(f"  {register['condition']} - {register['filename']} - Severity: {register['severity']} - Load: {register['load']}") 
     return get_list_of_X_y(list_of_folds, raw_dir_path="raw_data/cwru", channels_columns=[channel_column], segment_length=segment_length, load_acquisition_func=load_matlab_acquisition)
 
 

@@ -187,7 +187,13 @@ def merge_X_y_from_lists(list1, list2):
     return merged_list
 
 
-def get_train_test_split(list_of_X_y, test_fold_index):
+def get_train_test_split(list_of_X_y, test_fold_index, holdout_indices=None):
+    # Hold-out mode
+    if holdout_indices:
+        X_test, y_test = concatenate_data([list_of_X_y[i] for i in holdout_indices[1]])
+        X_train, y_train = concatenate_data([list_of_X_y[i] for i in holdout_indices[0]])
+        return X_train, y_train, X_test, y_test
+    # K-Fold Cross-validation mode
     X_test, y_test = list_of_X_y[test_fold_index]
     X_train, y_train = concatenate_data([list_of_X_y[i] for i in range(len(list_of_X_y)) if i != test_fold_index])
     return X_train, y_train, X_test, y_test
