@@ -13,11 +13,11 @@ def get_average_scores(scores_per_fold):
     return average_scores
 
 
-def performance(model, list_of_X_y, list_of_metrics, verbose=False):
-    n_folds = len(list_of_X_y)
+def performance(model, list_of_X_y, list_of_metrics, holdout_indices=None, verbose=False):
+    n_folds = len(list_of_X_y) if holdout_indices is None else 1
     scores_per_fold = []
     for i in range(n_folds):
-        X_train, y_train, X_test, y_test = get_train_test_split(list_of_X_y, test_fold_index=i)
+        X_train, y_train, X_test, y_test = get_train_test_split(list_of_X_y, test_fold_index=i, holdout_indices=holdout_indices)
         scores = traintest.performance(model, X_train, y_train, X_test, y_test, list_of_metrics)
         scores_per_fold.append(scores)
         if verbose:
