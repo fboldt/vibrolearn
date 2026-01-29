@@ -1,8 +1,6 @@
-from dataset.cwru.rauber_loca_et_al import run_experiment
-from dataset.cwru.sehri_et_al import run_papers_experiment, run_proposed_experiment
-from sklearn.metrics import accuracy_score, f1_score, confusion_matrix
-from estimator.WPRF import WPRF as Estimator
 from pprint import pprint
+from sklearn.metrics import accuracy_score, f1_score, confusion_matrix
+from estimator.SFRF import SFRF as Estimator
 
 model = Estimator()
 
@@ -12,7 +10,12 @@ list_of_metrics = [accuracy_score, f1_macro, confusion_matrix]
 
 
 if __name__ == "__main__":
+    #'''
+    from dataset.cwru.sehri_et_al import run_papers_experiment
     scores = run_papers_experiment(model, list_of_metrics)
-    # scores = run_proposed_experiment(model, list_of_metrics)
-    print("\n\nFinal Scores:")
+    print("Scores for papers experiment:")
     pprint(scores)
+    ''' 
+    from dataset.cwru.sehri_et_al import run_proposed_experiment
+    run_proposed_experiment(model, list_of_metrics)
+    #'''

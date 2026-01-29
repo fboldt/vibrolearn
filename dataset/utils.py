@@ -192,6 +192,11 @@ def get_train_test_split(list_of_X_y, test_fold_index):
     X_train, y_train = concatenate_data([list_of_X_y[i] for i in range(len(list_of_X_y)) if i != test_fold_index])
     return X_train, y_train, X_test, y_test
 
+def get_train_val_test_split(list_of_X_y, val_fold_index, test_fold_index):
+    X_test, y_test = list_of_X_y[test_fold_index]
+    X_val, y_val = list_of_X_y[val_fold_index]
+    X_train, y_train = concatenate_data([list_of_X_y[i] for i in range(len(list_of_X_y)) if i != test_fold_index and i != val_fold_index])
+    return X_train, y_train, X_val, y_val, X_test, y_test
 
 def get_list_of_X_y(list_of_folds, raw_dir_path, channels_columns, segment_length, load_acquisition_func):
     list_of_X_y = []
