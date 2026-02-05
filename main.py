@@ -1,13 +1,12 @@
 from pprint import pprint
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score, f1_score, confusion_matrix
+from sklearn.metrics import accuracy_score, confusion_matrix
 from sklearn.pipeline import make_pipeline
 from feature.extraction import WaveletFeatures
+from utils.metrics import f1_macro
 
 model = make_pipeline(WaveletFeatures(), RandomForestClassifier())
 
-def f1_macro(y_true, y_pred):
-    return f1_score(y_true, y_pred, average='macro')
 list_of_metrics = [accuracy_score, f1_macro, confusion_matrix]
 
 def run_sehri_experiment():
@@ -30,5 +29,5 @@ def run_proposed_experiment():
 
 if __name__ == "__main__":
     run_sehri_experiment()
-    run_inspired_experiment()
-    run_proposed_experiment()
+    # run_inspired_experiment()
+    # run_proposed_experiment()
