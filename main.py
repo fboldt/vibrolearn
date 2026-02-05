@@ -10,14 +10,25 @@ def f1_macro(y_true, y_pred):
     return f1_score(y_true, y_pred, average='macro')
 list_of_metrics = [accuracy_score, f1_macro, confusion_matrix]
 
-if __name__ == "__main__":
-    #'''
+def run_sehri_experiment():
     from dataset.cwru.sehri_et_al import run_papers_experiment
     scores = run_papers_experiment(model, list_of_metrics)
     print("Scores for papers experiment:")
     pprint(scores)
-    ''' 
+
+def run_inspired_experiment():
     from dataset.cwru.sehri_et_al import run_papers_inspired_experiment
-    from assesment.nested import performance
-    run_papers_inspired_experiment(model, list_of_metrics, performance)
-    #'''
+    scores = run_papers_inspired_experiment(model, list_of_metrics)
+    print("Scores for papers inspired experiment:")
+    pprint(scores)
+
+def run_proposed_experiment():
+    from dataset.cwru.sehri_et_al import run_proposed_experiment
+    scores = run_proposed_experiment(model, list_of_metrics)
+    print("Scores for proposed experiment:")
+    pprint(scores)
+
+if __name__ == "__main__":
+    run_sehri_experiment()
+    run_inspired_experiment()
+    run_proposed_experiment()
