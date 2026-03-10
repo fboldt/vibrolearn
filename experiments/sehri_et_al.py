@@ -1,0 +1,36 @@
+from pprint import pprint
+
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, confusion_matrix
+from sklearn.pipeline import make_pipeline
+
+from feature.extraction import WaveletFeatures
+from utils.metrics import f1_macro
+
+model = make_pipeline(WaveletFeatures(), RandomForestClassifier())
+
+list_of_metrics = [accuracy_score, f1_macro, confusion_matrix]
+
+
+def run_sehri_experiment():
+    from dataset.cwru.sehri_et_al import run_papers_experiment
+
+    scores = run_papers_experiment(model, list_of_metrics)
+    print("Scores for papers experiment:")
+    pprint(scores)
+
+
+def run_inspired_experiment():
+    from dataset.cwru.sehri_et_al import run_papers_inspired_experiment
+
+    scores = run_papers_inspired_experiment(model, list_of_metrics)
+    print("Scores for papers inspired experiment:")
+    pprint(scores)
+
+
+def run_proposed_experiment():
+    from dataset.cwru.sehri_et_al import run_proposed_experiment as run_proposed_dataset_experiment
+
+    scores = run_proposed_dataset_experiment(model, list_of_metrics)
+    print("Scores for proposed experiment:")
+    pprint(scores)
