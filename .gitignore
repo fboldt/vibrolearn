@@ -162,3 +162,5 @@ cython_debug/
 #.idea/
 
 raw_data/
+
+raw_data/paderborn

@@ -1,30 +1,60 @@
 import os
 import requests
 import urllib.parse
+import urllib.request
 import csv
 import scipy.io
 import numpy as np
-
+import rarfile
 
 check_if_downloaded=False
 
 
+# def download_file_from_register(raw_dir_path, register):
+#     os.makedirs(raw_dir_path, exist_ok=True)
+#     file_url = urllib.parse.urljoin(register['base_url'], register['filename'])
+#     file_path = os.path.join(raw_dir_path, register['filename'])
+#     if not is_file_downloaded(file_url, raw_dir_path):
+#         print(f"Downloading {file_url} to {file_path}...")
+#         response = requests.get(file_url)
+#         with open(file_path, 'wb') as f:
+#             f.write(response.content)
+#     else:
+#         if not is_file_size_same(file_url, file_path):
+#             print(f"File {file_path} is incomplete. Re-downloading...")
+#             response = requests.get(file_url)
+#             with open(file_path, 'wb') as f:
+#                 f.write(response.content)
+                    
 def download_file_from_register(raw_dir_path, register):
     os.makedirs(raw_dir_path, exist_ok=True)
-    file_url = urllib.parse.urljoin(register['base_url'], register['filename'])
-    file_path = os.path.join(raw_dir_path, register['filename'])
-    if not is_file_downloaded(file_url, raw_dir_path):
-        print(f"Downloading {file_url} to {file_path}...")
-        response = requests.get(file_url)
-        with open(file_path, 'wb') as f:
-            f.write(response.content)
-    else:
-        if not is_file_size_same(file_url, file_path):
+    filename = register['filename'].strip()
+    file_url = urllib.parse.urljoin(register['base_url'].strip(), filename)
+    file_path = os.path.join(raw_dir_path, filename)
+    is_rar = filename.lower().endswith('.rar')
+
+    #ignora se já existe o rar
+    if is_rar:
+        bearing_name = os.path.splitext(filename)[0]
+        extracted_dir = os.path.join(raw_dir_path, bearing_name)
+        if os.path.isdir(extracted_dir):
+            print(f"Already extracted: {extracted_dir}. Skipping.")
+            return
+
+    if is_file_downloaded(file_url, raw_dir_path):
+        if is_file_size_same(file_url, file_path):
+            if not is_rar:
+                print(f"Already downloaded: {file_path}. Skipping.")
+                return
+        else:
             print(f"File {file_path} is incomplete. Re-downloading...")
-            response = requests.get(file_url)
-            with open(file_path, 'wb') as f:
-                f.write(response.content)
-                    
+            os.remove(file_path)
+
+    print(f"Downloading {file_url} to {file_path}...")
+    urllib.request.urlretrieve(file_url, file_path)
+
+    if is_rar:
+        _extract_and_delete_rar(file_path, raw_dir_path)
                     
 def is_file_downloaded(url, folder_path):
     # Parse the URL to get the file name
@@ -48,6 +78,13 @@ def is_file_size_same(url, file_path):
     url_file_size = int(response.headers.get('Content-Length', 0))    
     return local_file_size == url_file_size
 
+#to ignore extra files after extracted
+def _extract_and_delete_rar(rar_path, extract_to):
+    print(f"Extracting {rar_path} ...")
+    with rarfile.RarFile(rar_path) as rf:
+        rf.extractall(extract_to)
+    os.remove(rar_path)
+    print(f"Deleted {rar_path}")
 
 def read_registers_from_config(config_path):
     registers = []
