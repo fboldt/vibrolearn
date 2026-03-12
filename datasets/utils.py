@@ -5,7 +5,7 @@ import urllib.request
 import csv
 import scipy.io
 import numpy as np
-import rarfile
+import rarfile #need install unrar
 
 check_if_downloaded=False
 
@@ -223,4 +223,25 @@ def get_list_of_X_y(list_of_folds, raw_dir_path, channels_columns, segment_lengt
         X, y = get_X_y(fold, raw_dir_path=raw_dir_path, channels_columns=channels_columns, segment_length=segment_length, load_acquisition_func=load_acquisition_func)
         list_of_X_y.append((X, y))
     return list_of_X_y
+
+
+#choose a dataset to download
+def download_dataset(config_path, raw_dir_path, filenames=None):                                                                                                                                                  
+      registers = read_registers_from_config(config_path)
+      if filenames:
+          registers = [r for r in registers if r['filename'].strip() in filenames]
+      for register in registers:
+          download_file_from_register(raw_dir_path, register)
+      print(f"Dataset downloaded to {raw_dir_path}")
+
+
+
+# cwru all
+#download_dataset("datasets/cwru/config.csv", "raw_data/cwru")
+
+# cwru sniped
+#download_dataset("datasets/cwru/config.csv", "raw_data/cwru", filenames=["97.mat"])
+
+# paderborn 
+download_dataset("datasets/paderborn/config.csv", "raw_data/paderborn", filenames=["K003.rar"])
 

@@ -1,0 +1,4 @@
+requests
+scipy
+numpy
+rarfile
