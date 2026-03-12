@@ -1,0 +1,954 @@
+boldt@i7titanv:~/projects/vibrolearn$ python3 main.py --run-inspired-cnn-tuning-cv3 --cnn-tuning-verbose
+Traceback (most recent call last):
+  File "/home/boldt/projects/vibrolearn/main.py", line 3, in <module>
+    from tests.ptdataloader import check_pytorch_data_pipeline
+  File "/home/boldt/projects/vibrolearn/tests/ptdataloader.py", line 1, in <module>
+    from dataset.cwru.pytorch import CWRUSegmentDataset, create_cwru_dataloader
+  File "/home/boldt/projects/vibrolearn/dataset/cwru/pytorch.py", line 7, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+boldt@i7titanv:~/projects/vibrolearn$ source .venv/bin/activate
+(.venv) boldt@i7titanv:~/projects/vibrolearn$ python3 main.py --run-inspired-cnn-tuning-cv3 --cnn-tuning-verbose
+Starting inspired CNN tuning (CV3 train/val/test rotations).
+- parameter combinations: 128
+- total split evaluations: 6
+[split 1/6] train=0.014 val=0.021 test=0.007
+  new best @ combo 1/128: val=0.226331 params={'n_filters': 16, 'kernel_size': 3, 'hidden_dim': 32, 'dropout': 0.1, 'epochs': 5, 'batch_size': 64, 'learning_rate': 0.001, 'weight_decay': 0.0, 'device': None, '
+random_state': 42, 'verbose': False}
+  combo 2/128: val=0.176846 best=0.226331
+  new best @ combo 3/128: val=0.238694 params={'n_filters': 16, 'kernel_size': 3, 'hidden_dim': 32, 'dropout': 0.1, 'epochs': 5, 'batch_size': 64, 'learning_rate': 0.0005, 'weight_decay': 0.0, 'device': None,
+'random_state': 42, 'verbose': False}
+  combo 4/128: val=0.187560 best=0.238694
+  combo 5/128: val=0.218922 best=0.238694
+  new best @ combo 6/128: val=0.289966 params={'n_filters': 16, 'kernel_size': 3, 'hidden_dim': 32, 'dropout': 0.1, 'epochs': 10, 'batch_size': 64, 'learning_rate': 0.001, 'weight_decay': 0.0001, 'device': Non
+e, 'random_state': 42, 'verbose': False}
+  new best @ combo 7/128: val=0.377090 params={'n_filters': 16, 'kernel_size': 3, 'hidden_dim': 32, 'dropout': 0.1, 'epochs': 10, 'batch_size': 64, 'learning_rate': 0.0005, 'weight_decay': 0.0, 'device': None,
+ 'random_state': 42, 'verbose': False}
+  combo 8/128: val=0.229601 best=0.377090
+  combo 9/128: val=0.182613 best=0.377090
+  combo 10/128: val=0.186192 best=0.377090
+  combo 11/128: val=0.218327 best=0.377090
+  combo 12/128: val=0.202917 best=0.377090
+  combo 13/128: val=0.356577 best=0.377090
+  combo 14/128: val=0.209685 best=0.377090
+  combo 15/128: val=0.299269 best=0.377090
+  combo 16/128: val=0.304876 best=0.377090
+  combo 17/128: val=0.354692 best=0.377090
+  combo 18/128: val=0.195029 best=0.377090
+  new best @ combo 19/128: val=0.381589 params={'n_filters': 16, 'kernel_size': 3, 'hidden_dim': 64, 'dropout': 0.1, 'epochs': 5, 'batch_size': 64, 'learning_rate': 0.0005, 'weight_decay': 0.0, 'device': None,
+ 'random_state': 42, 'verbose': False}
+  combo 20/128: val=0.249062 best=0.381589
+  new best @ combo 21/128: val=0.528282 params={'n_filters': 16, 'kernel_size': 3, 'hidden_dim': 64, 'dropout': 0.1, 'epochs': 10, 'batch_size': 64, 'learning_rate': 0.001, 'weight_decay': 0.0, 'device': None,
+ 'random_state': 42, 'verbose': False}
+  combo 22/128: val=0.293224 best=0.528282
+  combo 23/128: val=0.279001 best=0.528282
+  combo 24/128: val=0.260967 best=0.528282
+  combo 25/128: val=0.324593 best=0.528282
+  combo 26/128: val=0.180629 best=0.528282
+  combo 27/128: val=0.366132 best=0.528282
+  combo 28/128: val=0.262384 best=0.528282
+  combo 29/128: val=0.359135 best=0.528282
+  combo 30/128: val=0.258780 best=0.528282
+  combo 31/128: val=0.249711 best=0.528282
+  combo 32/128: val=0.236071 best=0.528282
+  combo 33/128: val=0.349829 best=0.528282
+  combo 34/128: val=0.382872 best=0.528282
+  combo 35/128: val=0.472164 best=0.528282
+  combo 36/128: val=0.495038 best=0.528282
+  combo 37/128: val=0.245731 best=0.528282
+  combo 38/128: val=0.249263 best=0.528282
+  combo 39/128: val=0.335973 best=0.528282
+  combo 40/128: val=0.303573 best=0.528282
+  combo 41/128: val=0.348196 best=0.528282
+  combo 42/128: val=0.373110 best=0.528282
+  combo 43/128: val=0.431408 best=0.528282
+  combo 44/128: val=0.484658 best=0.528282
+  combo 45/128: val=0.246228 best=0.528282
+  combo 46/128: val=0.243366 best=0.528282
+  combo 47/128: val=0.335810 best=0.528282
+  combo 48/128: val=0.344475 best=0.528282
+  combo 49/128: val=0.241279 best=0.528282
+  combo 50/128: val=0.380373 best=0.528282
+  combo 51/128: val=0.449493 best=0.528282
+  new best @ combo 52/128: val=0.623518 params={'n_filters': 16, 'kernel_size': 7, 'hidden_dim': 64, 'dropout': 0.1, 'epochs': 5, 'batch_size': 64, 'learning_rate': 0.0005, 'weight_decay': 0.0001, 'device': No
+ne, 'random_state': 42, 'verbose': False}
+  combo 53/128: val=0.236311 best=0.623518
+  combo 54/128: val=0.250099 best=0.623518
+  combo 55/128: val=0.280036 best=0.623518
+  combo 56/128: val=0.275277 best=0.623518
+  combo 57/128: val=0.279853 best=0.623518
+  combo 58/128: val=0.420567 best=0.623518
+  combo 59/128: val=0.463214 best=0.623518
+  new best @ combo 60/128: val=0.624221 params={'n_filters': 16, 'kernel_size': 7, 'hidden_dim': 64, 'dropout': 0.3, 'epochs': 5, 'batch_size': 64, 'learning_rate': 0.0005, 'weight_decay': 0.0001, 'device': No
+ne, 'random_state': 42, 'verbose': False}
+  combo 61/128: val=0.244783 best=0.624221
+  combo 62/128: val=0.232648 best=0.624221
+  combo 63/128: val=0.297757 best=0.624221
+  combo 64/128: val=0.289792 best=0.624221
+  combo 65/128: val=0.195444 best=0.624221
+  combo 66/128: val=0.170581 best=0.624221
+  combo 67/128: val=0.194242 best=0.624221
+  combo 68/128: val=0.169851 best=0.624221
+  combo 69/128: val=0.336535 best=0.624221
+  combo 70/128: val=0.186434 best=0.624221
+  combo 71/128: val=0.271567 best=0.624221
+  combo 72/128: val=0.177927 best=0.624221
+  combo 73/128: val=0.171661 best=0.624221
+  combo 74/128: val=0.170948 best=0.624221
+  combo 75/128: val=0.218841 best=0.624221
+  combo 76/128: val=0.171688 best=0.624221
+  combo 77/128: val=0.194323 best=0.624221
+  combo 78/128: val=0.196731 best=0.624221
+  combo 79/128: val=0.183247 best=0.624221
+  combo 80/128: val=0.172514 best=0.624221
+  combo 81/128: val=0.185562 best=0.624221
+  combo 82/128: val=0.200425 best=0.624221
+  combo 83/128: val=0.352675 best=0.624221
+  combo 84/128: val=0.207037 best=0.624221
+  combo 85/128: val=0.205298 best=0.624221
+  combo 86/128: val=0.264619 best=0.624221
+  combo 87/128: val=0.214298 best=0.624221
+  combo 88/128: val=0.210202 best=0.624221
+  combo 89/128: val=0.292574 best=0.624221
+  combo 90/128: val=0.188245 best=0.624221
+  combo 91/128: val=0.313537 best=0.624221
+  combo 92/128: val=0.179793 best=0.624221
+  combo 93/128: val=0.440537 best=0.624221
+  combo 94/128: val=0.286318 best=0.624221
+  combo 95/128: val=0.241115 best=0.624221
+  combo 96/128: val=0.196731 best=0.624221
+  combo 97/128: val=0.349890 best=0.624221
+  combo 98/128: val=0.201577 best=0.624221
+  combo 99/128: val=0.395753 best=0.624221
+  combo 100/128: val=0.316041 best=0.624221
+  combo 101/128: val=0.246106 best=0.624221
+  combo 102/128: val=0.241584 best=0.624221
+  combo 103/128: val=0.360368 best=0.624221
+  combo 104/128: val=0.271701 best=0.624221
+  combo 105/128: val=0.293650 best=0.624221
+  combo 106/128: val=0.268290 best=0.624221
+  combo 107/128: val=0.375267 best=0.624221
+  combo 108/128: val=0.331111 best=0.624221
+  combo 109/128: val=0.285938 best=0.624221
+  combo 110/128: val=0.274419 best=0.624221
+  combo 111/128: val=0.371392 best=0.624221
+  combo 112/128: val=0.289763 best=0.624221
+  combo 113/128: val=0.215711 best=0.624221
+  combo 114/128: val=0.203392 best=0.624221
+  combo 115/128: val=0.278940 best=0.624221
+  combo 116/128: val=0.292286 best=0.624221
+  combo 117/128: val=0.237277 best=0.624221
+  combo 118/128: val=0.235046 best=0.624221
+  combo 119/128: val=0.238743 best=0.624221
+  combo 120/128: val=0.256898 best=0.624221
+  combo 121/128: val=0.235097 best=0.624221
+  combo 122/128: val=0.228481 best=0.624221
+  combo 123/128: val=0.319496 best=0.624221
+  combo 124/128: val=0.249807 best=0.624221
+  combo 125/128: val=0.275977 best=0.624221
+  combo 126/128: val=0.268445 best=0.624221
+  combo 127/128: val=0.254538 best=0.624221
+  combo 128/128: val=0.238287 best=0.624221
+[split 1/6] done in 174.49s best_val=0.624221 test_f1_macro=0.16771314005016655
+[split 2/6] train=0.021 val=0.014 test=0.007
+  new best @ combo 1/128: val=0.087854 params={'n_filters': 16, 'kernel_size': 3, 'hidden_dim': 32, 'dropout': 0.1, 'epochs': 5, 'batch_size': 64, 'learning_rate': 0.001, 'weight_decay': 0.0, 'device': None, '
+random_state': 42, 'verbose': False}
+  new best @ combo 2/128: val=0.215645 params={'n_filters': 16, 'kernel_size': 3, 'hidden_dim': 32, 'dropout': 0.1, 'epochs': 5, 'batch_size': 64, 'learning_rate': 0.001, 'weight_decay': 0.0001, 'device': None
+, 'random_state': 42, 'verbose': False}
+  combo 3/128: val=0.174741 best=0.215645
+  combo 4/128: val=0.174018 best=0.215645
+  combo 5/128: val=0.115719 best=0.215645
+  combo 6/128: val=0.150592 best=0.215645
+  combo 7/128: val=0.103198 best=0.215645
+  combo 8/128: val=0.174604 best=0.215645
+  combo 9/128: val=0.099441 best=0.215645
+  new best @ combo 10/128: val=0.216917 params={'n_filters': 16, 'kernel_size': 3, 'hidden_dim': 32, 'dropout': 0.3, 'epochs': 5, 'batch_size': 64, 'learning_rate': 0.001, 'weight_decay': 0.0001, 'device': Non
+e, 'random_state': 42, 'verbose': False}
+  combo 11/128: val=0.174741 best=0.216917
+  combo 12/128: val=0.174175 best=0.216917
+  combo 13/128: val=0.165988 best=0.216917
+  combo 14/128: val=0.133060 best=0.216917
+  combo 15/128: val=0.172244 best=0.216917
+  combo 16/128: val=0.114226 best=0.216917
+  combo 17/128: val=0.170181 best=0.216917
+  combo 18/128: val=0.154748 best=0.216917
+  combo 19/128: val=0.174628 best=0.216917
+  combo 20/128: val=0.164776 best=0.216917
+  combo 21/128: val=0.174164 best=0.216917
+  combo 22/128: val=0.084045 best=0.216917
+  combo 23/128: val=0.173232 best=0.216917
+  combo 24/128: val=0.164664 best=0.216917
+  combo 25/128: val=0.174628 best=0.216917
+  combo 26/128: val=0.154748 best=0.216917
+  combo 27/128: val=0.174551 best=0.216917
+  combo 28/128: val=0.157779 best=0.216917
+  combo 29/128: val=0.210945 best=0.216917
+  combo 30/128: val=0.143726 best=0.216917
+  combo 31/128: val=0.144342 best=0.216917
+  combo 32/128: val=0.162483 best=0.216917
+  combo 33/128: val=0.159911 best=0.216917
+  combo 34/128: val=0.165841 best=0.216917
+  combo 35/128: val=0.179373 best=0.216917
+  combo 36/128: val=0.138522 best=0.216917
+  new best @ combo 37/128: val=0.382361 params={'n_filters': 16, 'kernel_size': 7, 'hidden_dim': 32, 'dropout': 0.1, 'epochs': 10, 'batch_size': 64, 'learning_rate': 0.001, 'weight_decay': 0.0, 'device': None,
+ 'random_state': 42, 'verbose': False}
+  combo 38/128: val=0.163134 best=0.382361
+  combo 39/128: val=0.176319 best=0.382361
+  combo 40/128: val=0.158780 best=0.382361
+  combo 41/128: val=0.239889 best=0.382361
+  combo 42/128: val=0.162073 best=0.382361
+  combo 43/128: val=0.186063 best=0.382361
+  combo 44/128: val=0.148130 best=0.382361
+  combo 45/128: val=0.132289 best=0.382361
+  combo 46/128: val=0.165458 best=0.382361
+  combo 47/128: val=0.142906 best=0.382361
+  combo 48/128: val=0.181010 best=0.382361
+  combo 49/128: val=0.168364 best=0.382361
+  combo 50/128: val=0.142331 best=0.382361
+  combo 51/128: val=0.169709 best=0.382361
+  combo 52/128: val=0.086383 best=0.382361
+  combo 53/128: val=0.155436 best=0.382361
+  combo 54/128: val=0.161301 best=0.382361
+  combo 55/128: val=0.157624 best=0.382361
+  combo 56/128: val=0.140664 best=0.382361
+  combo 57/128: val=0.289806 best=0.382361
+  combo 58/128: val=0.145299 best=0.382361
+  combo 59/128: val=0.176351 best=0.382361
+  combo 60/128: val=0.088270 best=0.382361
+  new best @ combo 61/128: val=0.390542 params={'n_filters': 16, 'kernel_size': 7, 'hidden_dim': 64, 'dropout': 0.3, 'epochs': 10, 'batch_size': 64, 'learning_rate': 0.001, 'weight_decay': 0.0, 'device': None,
+ 'random_state': 42, 'verbose': False}
+  combo 62/128: val=0.175426 best=0.390542
+  combo 63/128: val=0.156363 best=0.390542
+  combo 64/128: val=0.140100 best=0.390542
+  combo 65/128: val=0.189892 best=0.390542
+  combo 66/128: val=0.171512 best=0.390542
+  combo 67/128: val=0.193516 best=0.390542
+  combo 68/128: val=0.296500 best=0.390542
+  combo 69/128: val=0.175796 best=0.390542
+  combo 70/128: val=0.192830 best=0.390542
+  combo 71/128: val=0.176772 best=0.390542
+  combo 72/128: val=0.341650 best=0.390542
+  new best @ combo 73/128: val=0.404369 params={'n_filters': 32, 'kernel_size': 3, 'hidden_dim': 32, 'dropout': 0.3, 'epochs': 5, 'batch_size': 64, 'learning_rate': 0.001, 'weight_decay': 0.0, 'device': None,
+'random_state': 42, 'verbose': False}
+  new best @ combo 74/128: val=0.417080 params={'n_filters': 32, 'kernel_size': 3, 'hidden_dim': 32, 'dropout': 0.3, 'epochs': 5, 'batch_size': 64, 'learning_rate': 0.001, 'weight_decay': 0.0001, 'device': Non
+e, 'random_state': 42, 'verbose': False}
+  combo 75/128: val=0.202379 best=0.417080
+  combo 76/128: val=0.289730 best=0.417080
+  combo 77/128: val=0.161199 best=0.417080
+  combo 78/128: val=0.329629 best=0.417080
+  combo 79/128: val=0.361864 best=0.417080
+  combo 80/128: val=0.384097 best=0.417080
+  combo 81/128: val=0.177454 best=0.417080
+  combo 82/128: val=0.178167 best=0.417080
+  combo 83/128: val=0.177432 best=0.417080
+  combo 84/128: val=0.187881 best=0.417080
+  combo 85/128: val=0.220113 best=0.417080
+  combo 86/128: val=0.208819 best=0.417080
+  combo 87/128: val=0.192232 best=0.417080
+  combo 88/128: val=0.191311 best=0.417080
+  combo 89/128: val=0.179857 best=0.417080
+  combo 90/128: val=0.199530 best=0.417080
+  combo 91/128: val=0.175257 best=0.417080
+  combo 92/128: val=0.196942 best=0.417080
+  combo 93/128: val=0.286635 best=0.417080
+  combo 94/128: val=0.112009 best=0.417080
+  combo 95/128: val=0.167827 best=0.417080
+  combo 96/128: val=0.214427 best=0.417080
+  combo 97/128: val=0.112816 best=0.417080
+  combo 98/128: val=0.151264 best=0.417080
+  combo 99/128: val=0.150183 best=0.417080
+  combo 100/128: val=0.231484 best=0.417080
+  combo 101/128: val=0.175315 best=0.417080
+  combo 102/128: val=0.211142 best=0.417080
+  combo 103/128: val=0.160320 best=0.417080
+  combo 104/128: val=0.180308 best=0.417080
+  combo 105/128: val=0.187211 best=0.417080
+  combo 106/128: val=0.164239 best=0.417080
+  combo 107/128: val=0.143202 best=0.417080
+  combo 108/128: val=0.243536 best=0.417080
+  combo 109/128: val=0.145721 best=0.417080
+  combo 110/128: val=0.167769 best=0.417080
+  combo 111/128: val=0.163770 best=0.417080
+  combo 112/128: val=0.175738 best=0.417080
+  combo 113/128: val=0.210754 best=0.417080
+  combo 114/128: val=0.147635 best=0.417080
+  combo 115/128: val=0.199812 best=0.417080
+  combo 116/128: val=0.136603 best=0.417080
+  combo 117/128: val=0.175558 best=0.417080
+  combo 118/128: val=0.156973 best=0.417080
+  combo 119/128: val=0.152075 best=0.417080
+  combo 120/128: val=0.141610 best=0.417080
+  combo 121/128: val=0.165198 best=0.417080
+  combo 122/128: val=0.153701 best=0.417080
+  combo 123/128: val=0.171479 best=0.417080
+  combo 124/128: val=0.120817 best=0.417080
+  combo 125/128: val=0.129789 best=0.417080
+  combo 126/128: val=0.151446 best=0.417080
+  combo 127/128: val=0.157893 best=0.417080
+  combo 128/128: val=0.155387 best=0.417080
+[split 2/6] done in 184.48s best_val=0.417080 test_f1_macro=0.2805164106924269
+[split 3/6] train=0.007 val=0.021 test=0.014
+  new best @ combo 1/128: val=0.361943 params={'n_filters': 16, 'kernel_size': 3, 'hidden_dim': 32, 'dropout': 0.1, 'epochs': 5, 'batch_size': 64, 'learning_rate': 0.001, 'weight_decay': 0.0, 'device': None, '
+random_state': 42, 'verbose': False}
+  combo 2/128: val=0.328836 best=0.361943
+  new best @ combo 3/128: val=0.362311 params={'n_filters': 16, 'kernel_size': 3, 'hidden_dim': 32, 'dropout': 0.1, 'epochs': 5, 'batch_size': 64, 'learning_rate': 0.0005, 'weight_decay': 0.0, 'device': None,
+'random_state': 42, 'verbose': False}
+  combo 4/128: val=0.318506 best=0.362311
+  combo 5/128: val=0.342027 best=0.362311
+  combo 6/128: val=0.341540 best=0.362311
+  combo 7/128: val=0.337850 best=0.362311
+  combo 8/128: val=0.326153 best=0.362311
+  new best @ combo 9/128: val=0.403247 params={'n_filters': 16, 'kernel_size': 3, 'hidden_dim': 32, 'dropout': 0.3, 'epochs': 5, 'batch_size': 64, 'learning_rate': 0.001, 'weight_decay': 0.0, 'device': None, '
+random_state': 42, 'verbose': False}
+  combo 10/128: val=0.179942 best=0.403247
+  new best @ combo 11/128: val=0.427185 params={'n_filters': 16, 'kernel_size': 3, 'hidden_dim': 32, 'dropout': 0.3, 'epochs': 5, 'batch_size': 64, 'learning_rate': 0.0005, 'weight_decay': 0.0, 'device': None,
+ 'random_state': 42, 'verbose': False}
+  combo 12/128: val=0.352273 best=0.427185
+  combo 13/128: val=0.358077 best=0.427185
+  combo 14/128: val=0.374956 best=0.427185
+  combo 15/128: val=0.331983 best=0.427185
+  combo 16/128: val=0.350085 best=0.427185
+  combo 17/128: val=0.394017 best=0.427185
+  combo 18/128: val=0.146898 best=0.427185
+  new best @ combo 19/128: val=0.427554 params={'n_filters': 16, 'kernel_size': 3, 'hidden_dim': 64, 'dropout': 0.1, 'epochs': 5, 'batch_size': 64, 'learning_rate': 0.0005, 'weight_decay': 0.0, 'device': None,
+ 'random_state': 42, 'verbose': False}
+  combo 20/128: val=0.247142 best=0.427554
+  combo 21/128: val=0.355272 best=0.427554
+  combo 22/128: val=0.361063 best=0.427554
+  combo 23/128: val=0.345439 best=0.427554
+  combo 24/128: val=0.355503 best=0.427554
+  combo 25/128: val=0.389166 best=0.427554
+  combo 26/128: val=0.161689 best=0.427554
+  combo 27/128: val=0.369803 best=0.427554
+  combo 28/128: val=0.217757 best=0.427554
+  combo 29/128: val=0.351029 best=0.427554
+  combo 30/128: val=0.357751 best=0.427554
+  combo 31/128: val=0.360512 best=0.427554
+  combo 32/128: val=0.352562 best=0.427554
+  combo 33/128: val=0.330949 best=0.427554
+  combo 34/128: val=0.335523 best=0.427554
+  combo 35/128: val=0.357283 best=0.427554
+  combo 36/128: val=0.417011 best=0.427554
+  combo 37/128: val=0.365669 best=0.427554
+  combo 38/128: val=0.348837 best=0.427554
+  new best @ combo 39/128: val=0.441275 params={'n_filters': 16, 'kernel_size': 7, 'hidden_dim': 32, 'dropout': 0.1, 'epochs': 10, 'batch_size': 64, 'learning_rate': 0.0005, 'weight_decay': 0.0, 'device': None
+, 'random_state': 42, 'verbose': False}
+  combo 40/128: val=0.407241 best=0.441275
+  combo 41/128: val=0.327386 best=0.441275
+  combo 42/128: val=0.326129 best=0.441275
+  combo 43/128: val=0.359639 best=0.441275
+  combo 44/128: val=0.416583 best=0.441275
+  combo 45/128: val=0.330579 best=0.441275
+  combo 46/128: val=0.330973 best=0.441275
+  combo 47/128: val=0.344122 best=0.441275
+  combo 48/128: val=0.345059 best=0.441275
+  combo 49/128: val=0.309159 best=0.441275
+  combo 50/128: val=0.314145 best=0.441275
+  combo 51/128: val=0.301287 best=0.441275
+  combo 52/128: val=0.311410 best=0.441275
+  combo 53/128: val=0.311813 best=0.441275
+  combo 54/128: val=0.318049 best=0.441275
+  combo 55/128: val=0.308026 best=0.441275
+  combo 56/128: val=0.314971 best=0.441275
+  combo 57/128: val=0.305222 best=0.441275
+  combo 58/128: val=0.303282 best=0.441275
+  combo 59/128: val=0.294638 best=0.441275
+  combo 60/128: val=0.304722 best=0.441275
+  combo 61/128: val=0.332980 best=0.441275
+  combo 62/128: val=0.328516 best=0.441275
+  combo 63/128: val=0.305515 best=0.441275
+  combo 64/128: val=0.311779 best=0.441275
+  combo 65/128: val=0.387385 best=0.441275
+  combo 66/128: val=0.166692 best=0.441275
+  combo 67/128: val=0.322565 best=0.441275
+  combo 68/128: val=0.166742 best=0.441275
+  combo 69/128: val=0.335525 best=0.441275
+  combo 70/128: val=0.175080 best=0.441275
+  combo 71/128: val=0.336112 best=0.441275
+  combo 72/128: val=0.163922 best=0.441275
+  combo 73/128: val=0.414469 best=0.441275
+  combo 74/128: val=0.166692 best=0.441275
+  combo 75/128: val=0.345649 best=0.441275
+  combo 76/128: val=0.166742 best=0.441275
+  combo 77/128: val=0.353080 best=0.441275
+  combo 78/128: val=0.169910 best=0.441275
+  combo 79/128: val=0.327852 best=0.441275
+  combo 80/128: val=0.167114 best=0.441275
+  new best @ combo 81/128: val=0.454776 params={'n_filters': 32, 'kernel_size': 3, 'hidden_dim': 64, 'dropout': 0.1, 'epochs': 5, 'batch_size': 64, 'learning_rate': 0.001, 'weight_decay': 0.0, 'device': None,
+'random_state': 42, 'verbose': False}
+  combo 82/128: val=0.349724 best=0.454776
+  combo 83/128: val=0.440865 best=0.454776
+  combo 84/128: val=0.453667 best=0.454776
+  combo 85/128: val=0.413274 best=0.454776
+  combo 86/128: val=0.367694 best=0.454776
+  combo 87/128: val=0.349337 best=0.454776
+  combo 88/128: val=0.374729 best=0.454776
+  new best @ combo 89/128: val=0.456254 params={'n_filters': 32, 'kernel_size': 3, 'hidden_dim': 64, 'dropout': 0.3, 'epochs': 5, 'batch_size': 64, 'learning_rate': 0.001, 'weight_decay': 0.0, 'device': None,
+'random_state': 42, 'verbose': False}
+  combo 90/128: val=0.301513 best=0.456254
+  new best @ combo 91/128: val=0.457807 params={'n_filters': 32, 'kernel_size': 3, 'hidden_dim': 64, 'dropout': 0.3, 'epochs': 5, 'batch_size': 64, 'learning_rate': 0.0005, 'weight_decay': 0.0, 'device': None,
+ 'random_state': 42, 'verbose': False}
+  combo 92/128: val=0.384360 best=0.457807
+  combo 93/128: val=0.379319 best=0.457807
+  combo 94/128: val=0.371820 best=0.457807
+  combo 95/128: val=0.348815 best=0.457807
+  combo 96/128: val=0.334441 best=0.457807
+  combo 97/128: val=0.281131 best=0.457807
+  combo 98/128: val=0.315137 best=0.457807
+  combo 99/128: val=0.279835 best=0.457807
+  combo 100/128: val=0.310006 best=0.457807
+  combo 101/128: val=0.316029 best=0.457807
+  combo 102/128: val=0.305262 best=0.457807
+  combo 103/128: val=0.298103 best=0.457807
+  combo 104/128: val=0.297025 best=0.457807
+  combo 105/128: val=0.295292 best=0.457807
+  combo 106/128: val=0.351625 best=0.457807
+  combo 107/128: val=0.277312 best=0.457807
+  combo 108/128: val=0.343469 best=0.457807
+  combo 109/128: val=0.282872 best=0.457807
+  combo 110/128: val=0.299721 best=0.457807
+  combo 111/128: val=0.288776 best=0.457807
+  combo 112/128: val=0.298101 best=0.457807
+  combo 113/128: val=0.323839 best=0.457807
+  combo 114/128: val=0.329111 best=0.457807
+  combo 115/128: val=0.317546 best=0.457807
+  combo 116/128: val=0.346715 best=0.457807
+  combo 117/128: val=0.345853 best=0.457807
+  combo 118/128: val=0.331439 best=0.457807
+  combo 119/128: val=0.322813 best=0.457807
+  combo 120/128: val=0.325844 best=0.457807
+  combo 121/128: val=0.322387 best=0.457807
+  combo 122/128: val=0.327123 best=0.457807
+  combo 123/128: val=0.310322 best=0.457807
+  combo 124/128: val=0.340692 best=0.457807
+  combo 125/128: val=0.339124 best=0.457807
+  combo 126/128: val=0.336139 best=0.457807
+  combo 127/128: val=0.323491 best=0.457807
+  combo 128/128: val=0.322157 best=0.457807
+[split 3/6] done in 183.79s best_val=0.457807 test_f1_macro=0.2235638834653215
+[split 4/6] train=0.021 val=0.007 test=0.014
+  new best @ combo 1/128: val=0.555689 params={'n_filters': 16, 'kernel_size': 3, 'hidden_dim': 32, 'dropout': 0.1, 'epochs': 5, 'batch_size': 64, 'learning_rate': 0.001, 'weight_decay': 0.0, 'device': None, '
+random_state': 42, 'verbose': False}
+  combo 2/128: val=0.309849 best=0.555689
+  combo 3/128: val=0.555358 best=0.555689
+  combo 4/128: val=0.555689 best=0.555689
+  combo 5/128: val=0.384195 best=0.555689
+  combo 6/128: val=0.450771 best=0.555689
+  combo 7/128: val=0.549723 best=0.555689
+  combo 8/128: val=0.443918 best=0.555689
+  combo 9/128: val=0.555689 best=0.555689
+  combo 10/128: val=0.281269 best=0.555689
+  combo 11/128: val=0.555139 best=0.555689
+  combo 12/128: val=0.555689 best=0.555689
+  combo 13/128: val=0.497034 best=0.555689
+  combo 14/128: val=0.504268 best=0.555689
+  combo 15/128: val=0.552351 best=0.555689
+  combo 16/128: val=0.502472 best=0.555689
+  combo 17/128: val=0.555689 best=0.555689
+  combo 18/128: val=0.166667 best=0.555689
+  combo 19/128: val=0.555689 best=0.555689
+  combo 20/128: val=0.166667 best=0.555689
+  combo 21/128: val=0.431589 best=0.555689
+  combo 22/128: val=0.507189 best=0.555689
+  combo 23/128: val=0.555689 best=0.555689
+  combo 24/128: val=0.206578 best=0.555689
+  combo 25/128: val=0.551500 best=0.555689
+  combo 26/128: val=0.166667 best=0.555689
+  combo 27/128: val=0.555689 best=0.555689
+  combo 28/128: val=0.166667 best=0.555689
+  combo 29/128: val=0.555689 best=0.555689
+  combo 30/128: val=0.374427 best=0.555689
+  combo 31/128: val=0.555689 best=0.555689
+  combo 32/128: val=0.167516 best=0.555689
+  combo 33/128: val=0.555689 best=0.555689
+  combo 34/128: val=0.555689 best=0.555689
+  combo 35/128: val=0.555689 best=0.555689
+  combo 36/128: val=0.554096 best=0.555689
+  combo 37/128: val=0.554966 best=0.555689
+  combo 38/128: val=0.555689 best=0.555689
+  combo 39/128: val=0.555689 best=0.555689
+  combo 40/128: val=0.555689 best=0.555689
+  combo 41/128: val=0.555689 best=0.555689
+  combo 42/128: val=0.555689 best=0.555689
+  combo 43/128: val=0.555689 best=0.555689
+  combo 44/128: val=0.550747 best=0.555689
+  combo 45/128: val=0.514874 best=0.555689
+  combo 46/128: val=0.555689 best=0.555689
+  combo 47/128: val=0.555689 best=0.555689
+  combo 48/128: val=0.555689 best=0.555689
+  combo 49/128: val=0.555689 best=0.555689
+  combo 50/128: val=0.555689 best=0.555689
+  combo 51/128: val=0.555689 best=0.555689
+  combo 52/128: val=0.523816 best=0.555689
+  combo 53/128: val=0.555689 best=0.555689
+  combo 54/128: val=0.555689 best=0.555689
+  combo 55/128: val=0.555689 best=0.555689
+  combo 56/128: val=0.555689 best=0.555689
+  combo 57/128: val=0.555689 best=0.555689
+  combo 58/128: val=0.555689 best=0.555689
+  combo 59/128: val=0.555689 best=0.555689
+  combo 60/128: val=0.542196 best=0.555689
+  combo 61/128: val=0.555689 best=0.555689
+  combo 62/128: val=0.555400 best=0.555689
+  combo 63/128: val=0.552933 best=0.555689
+  combo 64/128: val=0.555689 best=0.555689
+  combo 65/128: val=0.527370 best=0.555689
+  combo 66/128: val=0.381354 best=0.555689
+  combo 67/128: val=0.555689 best=0.555689
+  combo 68/128: val=0.553951 best=0.555689
+  combo 69/128: val=0.225145 best=0.555689
+  combo 70/128: val=0.544422 best=0.555689
+  combo 71/128: val=0.535903 best=0.555689
+  combo 72/128: val=0.425356 best=0.555689
+  combo 73/128: val=0.547931 best=0.555689
+  combo 74/128: val=0.289053 best=0.555689
+  combo 75/128: val=0.555689 best=0.555689
+  combo 76/128: val=0.511530 best=0.555689
+  combo 77/128: val=0.518506 best=0.555689
+  combo 78/128: val=0.517642 best=0.555689
+  combo 79/128: val=0.308991 best=0.555689
+  combo 80/128: val=0.461902 best=0.555689
+  combo 81/128: val=0.555689 best=0.555689
+  combo 82/128: val=0.469312 best=0.555689
+  combo 83/128: val=0.555689 best=0.555689
+  combo 84/128: val=0.555689 best=0.555689
+  combo 85/128: val=0.554821 best=0.555689
+  combo 86/128: val=0.406799 best=0.555689
+  combo 87/128: val=0.545753 best=0.555689
+  combo 88/128: val=0.456009 best=0.555689
+  combo 89/128: val=0.555689 best=0.555689
+  combo 90/128: val=0.488644 best=0.555689
+  combo 91/128: val=0.555689 best=0.555689
+  combo 92/128: val=0.555689 best=0.555689
+  combo 93/128: val=0.501489 best=0.555689
+  combo 94/128: val=0.445070 best=0.555689
+  combo 95/128: val=0.522417 best=0.555689
+  combo 96/128: val=0.401833 best=0.555689
+  combo 97/128: val=0.498194 best=0.555689
+  combo 98/128: val=0.537259 best=0.555689
+  combo 99/128: val=0.546933 best=0.555689
+  combo 100/128: val=0.468237 best=0.555689
+  combo 101/128: val=0.555689 best=0.555689
+  combo 102/128: val=0.555110 best=0.555689
+  combo 103/128: val=0.555689 best=0.555689
+  combo 104/128: val=0.554386 best=0.555689
+  combo 105/128: val=0.526446 best=0.555689
+  combo 106/128: val=0.534543 best=0.555689
+  combo 107/128: val=0.525365 best=0.555689
+  combo 108/128: val=0.462996 best=0.555689
+  combo 109/128: val=0.481794 best=0.555689
+  combo 110/128: val=0.549137 best=0.555689
+  combo 111/128: val=0.555545 best=0.555689
+  combo 112/128: val=0.552788 best=0.555689
+  combo 113/128: val=0.555589 best=0.555689
+  combo 114/128: val=0.555400 best=0.555689
+  combo 115/128: val=0.555689 best=0.555689
+  combo 116/128: val=0.540108 best=0.555689
+  combo 117/128: val=0.555689 best=0.555689
+  combo 118/128: val=0.554966 best=0.555689
+  combo 119/128: val=0.555400 best=0.555689
+  combo 120/128: val=0.553224 best=0.555689
+  combo 121/128: val=0.555689 best=0.555689
+  combo 122/128: val=0.554096 best=0.555689
+  combo 123/128: val=0.555689 best=0.555689
+  combo 124/128: val=0.541004 best=0.555689
+  combo 125/128: val=0.555689 best=0.555689
+  combo 126/128: val=0.554966 best=0.555689
+  combo 127/128: val=0.555689 best=0.555689
+  combo 128/128: val=0.555110 best=0.555689
+[split 4/6] done in 185.23s best_val=0.555689 test_f1_macro=0.08944626771922408
+[split 5/6] train=0.007 val=0.014 test=0.021
+  new best @ combo 1/128: val=0.188040 params={'n_filters': 16, 'kernel_size': 3, 'hidden_dim': 32, 'dropout': 0.1, 'epochs': 5, 'batch_size': 64, 'learning_rate': 0.001, 'weight_decay': 0.0, 'device': None, '
+random_state': 42, 'verbose': False}
+  new best @ combo 2/128: val=0.188198 params={'n_filters': 16, 'kernel_size': 3, 'hidden_dim': 32, 'dropout': 0.1, 'epochs': 5, 'batch_size': 64, 'learning_rate': 0.001, 'weight_decay': 0.0001, 'device': None
+, 'random_state': 42, 'verbose': False}
+  combo 3/128: val=0.188115 best=0.188198
+  combo 4/128: val=0.188198 best=0.188198
+  new best @ combo 5/128: val=0.188218 params={'n_filters': 16, 'kernel_size': 3, 'hidden_dim': 32, 'dropout': 0.1, 'epochs': 10, 'batch_size': 64, 'learning_rate': 0.001, 'weight_decay': 0.0, 'device': None,
+'random_state': 42, 'verbose': False}
+  combo 6/128: val=0.188040 best=0.188218
+  combo 7/128: val=0.188040 best=0.188218
+  combo 8/128: val=0.188198 best=0.188218
+  new best @ combo 9/128: val=0.194381 params={'n_filters': 16, 'kernel_size': 3, 'hidden_dim': 32, 'dropout': 0.3, 'epochs': 5, 'batch_size': 64, 'learning_rate': 0.001, 'weight_decay': 0.0, 'device': None, '
+random_state': 42, 'verbose': False}
+  combo 10/128: val=0.156564 best=0.194381
+  new best @ combo 11/128: val=0.212454 params={'n_filters': 16, 'kernel_size': 3, 'hidden_dim': 32, 'dropout': 0.3, 'epochs': 5, 'batch_size': 64, 'learning_rate': 0.0005, 'weight_decay': 0.0, 'device': None,
+ 'random_state': 42, 'verbose': False}
+  combo 12/128: val=0.188463 best=0.212454
+  combo 13/128: val=0.195454 best=0.212454
+  combo 14/128: val=0.187896 best=0.212454
+  combo 15/128: val=0.188040 best=0.212454
+  combo 16/128: val=0.188849 best=0.212454
+  combo 17/128: val=0.208213 best=0.212454
+  combo 18/128: val=0.163099 best=0.212454
+  new best @ combo 19/128: val=0.220081 params={'n_filters': 16, 'kernel_size': 3, 'hidden_dim': 64, 'dropout': 0.1, 'epochs': 5, 'batch_size': 64, 'learning_rate': 0.0005, 'weight_decay': 0.0, 'device': None,
+ 'random_state': 42, 'verbose': False}
+  new best @ combo 20/128: val=0.288692 params={'n_filters': 16, 'kernel_size': 3, 'hidden_dim': 64, 'dropout': 0.1, 'epochs': 5, 'batch_size': 64, 'learning_rate': 0.0005, 'weight_decay': 0.0001, 'device': No
+ne, 'random_state': 42, 'verbose': False}
+  combo 21/128: val=0.188548 best=0.288692
+  combo 22/128: val=0.188688 best=0.288692
+  combo 23/128: val=0.188340 best=0.288692
+  combo 24/128: val=0.232707 best=0.288692
+  combo 25/128: val=0.194179 best=0.288692
+  combo 26/128: val=0.230286 best=0.288692
+  combo 27/128: val=0.207678 best=0.288692
+  combo 28/128: val=0.278909 best=0.288692
+  combo 29/128: val=0.188507 best=0.288692
+  combo 30/128: val=0.188364 best=0.288692
+  combo 31/128: val=0.190722 best=0.288692
+  combo 32/128: val=0.238165 best=0.288692
+  combo 33/128: val=0.188119 best=0.288692
+  combo 34/128: val=0.187785 best=0.288692
+  combo 35/128: val=0.188115 best=0.288692
+  combo 36/128: val=0.186619 best=0.288692
+  combo 37/128: val=0.187952 best=0.288692
+  combo 38/128: val=0.188036 best=0.288692
+  combo 39/128: val=0.187618 best=0.288692
+  combo 40/128: val=0.187455 best=0.288692
+  combo 41/128: val=0.188198 best=0.288692
+  combo 42/128: val=0.187952 best=0.288692
+  combo 43/128: val=0.188115 best=0.288692
+  combo 44/128: val=0.186273 best=0.288692
+  combo 45/128: val=0.188119 best=0.288692
+  combo 46/128: val=0.188119 best=0.288692
+  combo 47/128: val=0.187952 best=0.288692
+  combo 48/128: val=0.187873 best=0.288692
+  combo 49/128: val=0.188278 best=0.288692
+  combo 50/128: val=0.188194 best=0.288692
+  combo 51/128: val=0.188278 best=0.288692
+  combo 52/128: val=0.185857 best=0.288692
+  combo 53/128: val=0.188278 best=0.288692
+  combo 54/128: val=0.188278 best=0.288692
+  combo 55/128: val=0.188278 best=0.288692
+  combo 56/128: val=0.188278 best=0.288692
+  combo 57/128: val=0.188278 best=0.288692
+  combo 58/128: val=0.188194 best=0.288692
+  combo 59/128: val=0.188278 best=0.288692
+  combo 60/128: val=0.185941 best=0.288692
+  combo 61/128: val=0.188278 best=0.288692
+  combo 62/128: val=0.188278 best=0.288692
+  combo 63/128: val=0.188278 best=0.288692
+  combo 64/128: val=0.188278 best=0.288692
+  combo 65/128: val=0.187538 best=0.288692
+  combo 66/128: val=0.151222 best=0.288692
+  combo 67/128: val=0.188278 best=0.288692
+  combo 68/128: val=0.151222 best=0.288692
+  combo 69/128: val=0.188119 best=0.288692
+  combo 70/128: val=0.151247 best=0.288692
+  combo 71/128: val=0.188119 best=0.288692
+  combo 72/128: val=0.151222 best=0.288692
+  combo 73/128: val=0.186364 best=0.288692
+  combo 74/128: val=0.151222 best=0.288692
+  combo 75/128: val=0.188278 best=0.288692
+  combo 76/128: val=0.151222 best=0.288692
+  combo 77/128: val=0.188306 best=0.288692
+  combo 78/128: val=0.151247 best=0.288692
+  combo 79/128: val=0.170450 best=0.288692
+  combo 80/128: val=0.151222 best=0.288692
+  combo 81/128: val=0.277108 best=0.288692
+  combo 82/128: val=0.274563 best=0.288692
+  combo 83/128: val=0.222751 best=0.288692
+  combo 84/128: val=0.232733 best=0.288692
+  combo 85/128: val=0.193521 best=0.288692
+  combo 86/128: val=0.193893 best=0.288692
+  combo 87/128: val=0.189346 best=0.288692
+  combo 88/128: val=0.198099 best=0.288692
+  combo 89/128: val=0.276880 best=0.288692
+  combo 90/128: val=0.256627 best=0.288692
+  combo 91/128: val=0.233326 best=0.288692
+  combo 92/128: val=0.274368 best=0.288692
+  combo 93/128: val=0.188427 best=0.288692
+  combo 94/128: val=0.195665 best=0.288692
+  combo 95/128: val=0.188419 best=0.288692
+  combo 96/128: val=0.218653 best=0.288692
+  combo 97/128: val=0.188278 best=0.288692
+  combo 98/128: val=0.186520 best=0.288692
+  combo 99/128: val=0.188278 best=0.288692
+  combo 100/128: val=0.179138 best=0.288692
+  combo 101/128: val=0.188278 best=0.288692
+  combo 102/128: val=0.188278 best=0.288692
+  combo 103/128: val=0.188278 best=0.288692
+  combo 104/128: val=0.188278 best=0.288692
+  combo 105/128: val=0.188278 best=0.288692
+  combo 106/128: val=0.187860 best=0.288692
+  combo 107/128: val=0.188278 best=0.288692
+  combo 108/128: val=0.179310 best=0.288692
+  combo 109/128: val=0.188278 best=0.288692
+  combo 110/128: val=0.188278 best=0.288692
+  combo 111/128: val=0.188278 best=0.288692
+  combo 112/128: val=0.188278 best=0.288692
+  combo 113/128: val=0.188040 best=0.288692
+  combo 114/128: val=0.187622 best=0.288692
+  combo 115/128: val=0.188119 best=0.288692
+  combo 116/128: val=0.186617 best=0.288692
+  combo 117/128: val=0.188040 best=0.288692
+  combo 118/128: val=0.188119 best=0.288692
+  combo 119/128: val=0.188119 best=0.288692
+  combo 120/128: val=0.188119 best=0.288692
+  combo 121/128: val=0.188119 best=0.288692
+  combo 122/128: val=0.187706 best=0.288692
+  combo 123/128: val=0.188278 best=0.288692
+  combo 124/128: val=0.187534 best=0.288692
+  combo 125/128: val=0.188469 best=0.288692
+  combo 126/128: val=0.188119 best=0.288692
+  combo 127/128: val=0.188119 best=0.288692
+  combo 128/128: val=0.188036 best=0.288692
+[split 5/6] done in 183.09s best_val=0.288692 test_f1_macro=0.2414690758145984
+[split 6/6] train=0.014 val=0.007 test=0.021
+  new best @ combo 1/128: val=0.169632 params={'n_filters': 16, 'kernel_size': 3, 'hidden_dim': 32, 'dropout': 0.1, 'epochs': 5, 'batch_size': 64, 'learning_rate': 0.001, 'weight_decay': 0.0, 'device': None, '
+random_state': 42, 'verbose': False}
+  new best @ combo 2/128: val=0.373004 params={'n_filters': 16, 'kernel_size': 3, 'hidden_dim': 32, 'dropout': 0.1, 'epochs': 5, 'batch_size': 64, 'learning_rate': 0.001, 'weight_decay': 0.0001, 'device': None
+, 'random_state': 42, 'verbose': False}
+  combo 3/128: val=0.158104 best=0.373004
+  combo 4/128: val=0.311303 best=0.373004
+  combo 5/128: val=0.182821 best=0.373004
+  combo 6/128: val=0.169332 best=0.373004
+  combo 7/128: val=0.207347 best=0.373004
+  new best @ combo 8/128: val=0.430421 params={'n_filters': 16, 'kernel_size': 3, 'hidden_dim': 32, 'dropout': 0.1, 'epochs': 10, 'batch_size': 64, 'learning_rate': 0.0005, 'weight_decay': 0.0001, 'device': No
+ne, 'random_state': 42, 'verbose': False}
+  new best @ combo 9/128: val=0.445990 params={'n_filters': 16, 'kernel_size': 3, 'hidden_dim': 32, 'dropout': 0.3, 'epochs': 5, 'batch_size': 64, 'learning_rate': 0.001, 'weight_decay': 0.0, 'device': None, '
+random_state': 42, 'verbose': False}
+  combo 10/128: val=0.415701 best=0.445990
+  combo 11/128: val=0.025912 best=0.445990
+  combo 12/128: val=0.353782 best=0.445990
+  combo 13/128: val=0.166667 best=0.445990
+  combo 14/128: val=0.186677 best=0.445990
+  combo 15/128: val=0.167092 best=0.445990
+  combo 16/128: val=0.371414 best=0.445990
+  combo 17/128: val=0.176404 best=0.445990
+  new best @ combo 18/128: val=0.486439 params={'n_filters': 16, 'kernel_size': 3, 'hidden_dim': 64, 'dropout': 0.1, 'epochs': 5, 'batch_size': 64, 'learning_rate': 0.001, 'weight_decay': 0.0001, 'device': Non
+e, 'random_state': 42, 'verbose': False}
+  combo 19/128: val=0.167092 best=0.486439
+  combo 20/128: val=0.190561 best=0.486439
+  combo 21/128: val=0.333661 best=0.486439
+  combo 22/128: val=0.167290 best=0.486439
+  combo 23/128: val=0.166667 best=0.486439
+  combo 24/128: val=0.290388 best=0.486439
+  combo 25/128: val=0.205833 best=0.486439
+  new best @ combo 26/128: val=0.504677 params={'n_filters': 16, 'kernel_size': 3, 'hidden_dim': 64, 'dropout': 0.3, 'epochs': 5, 'batch_size': 64, 'learning_rate': 0.001, 'weight_decay': 0.0001, 'device': Non
+e, 'random_state': 42, 'verbose': False}
+  combo 27/128: val=0.167092 best=0.504677
+  combo 28/128: val=0.169039 best=0.504677
+  combo 29/128: val=0.167066 best=0.504677
+  combo 30/128: val=0.132439 best=0.504677
+  combo 31/128: val=0.214526 best=0.504677
+  combo 32/128: val=0.235973 best=0.504677
+  combo 33/128: val=0.168695 best=0.504677
+  combo 34/128: val=0.174442 best=0.504677
+  combo 35/128: val=0.169989 best=0.504677
+  combo 36/128: val=0.167116 best=0.504677
+  combo 37/128: val=0.336713 best=0.504677
+  combo 38/128: val=0.226398 best=0.504677
+  combo 39/128: val=0.195066 best=0.504677
+  combo 40/128: val=0.194451 best=0.504677
+  combo 41/128: val=0.170093 best=0.504677
+  combo 42/128: val=0.171530 best=0.504677
+  combo 43/128: val=0.167812 best=0.504677
+  combo 44/128: val=0.167216 best=0.504677
+  combo 45/128: val=0.296796 best=0.504677
+  combo 46/128: val=0.256021 best=0.504677
+  combo 47/128: val=0.191327 best=0.504677
+  combo 48/128: val=0.185049 best=0.504677
+  combo 49/128: val=0.328756 best=0.504677
+  combo 50/128: val=0.187580 best=0.504677
+  combo 51/128: val=0.167639 best=0.504677
+  combo 52/128: val=0.167141 best=0.504677
+  combo 53/128: val=0.221890 best=0.504677
+  combo 54/128: val=0.294661 best=0.504677
+  combo 55/128: val=0.225984 best=0.504677
+  combo 56/128: val=0.208809 best=0.504677
+  combo 57/128: val=0.371504 best=0.504677
+  combo 58/128: val=0.200027 best=0.504677
+  combo 59/128: val=0.171632 best=0.504677
+  combo 60/128: val=0.167713 best=0.504677
+  combo 61/128: val=0.415239 best=0.504677
+  combo 62/128: val=0.249830 best=0.504677
+  combo 63/128: val=0.250110 best=0.504677
+  combo 64/128: val=0.199395 best=0.504677
+  combo 65/128: val=0.006919 best=0.504677
+  combo 66/128: val=0.014922 best=0.504677
+  combo 67/128: val=0.311336 best=0.504677
+  combo 68/128: val=0.190158 best=0.504677
+  combo 69/128: val=0.097324 best=0.504677
+  combo 70/128: val=0.001647 best=0.504677
+  combo 71/128: val=0.166667 best=0.504677
+  combo 72/128: val=0.329082 best=0.504677
+  combo 73/128: val=0.002902 best=0.504677
+  combo 74/128: val=0.113716 best=0.504677
+  combo 75/128: val=0.222902 best=0.504677
+  combo 76/128: val=0.243779 best=0.504677
+  combo 77/128: val=0.134992 best=0.504677
+  combo 78/128: val=0.020189 best=0.504677
+  combo 79/128: val=0.166516 best=0.504677
+  combo 80/128: val=0.214806 best=0.504677
+  combo 81/128: val=0.005283 best=0.504677
+  combo 82/128: val=0.166667 best=0.504677
+  combo 83/128: val=0.168787 best=0.504677
+  combo 84/128: val=0.472159 best=0.504677
+  combo 85/128: val=0.000000 best=0.504677
+  combo 86/128: val=0.014070 best=0.504677
+  combo 87/128: val=0.092731 best=0.504677
+  combo 88/128: val=0.054143 best=0.504677
+  combo 89/128: val=0.009334 best=0.504677
+  combo 90/128: val=0.163566 best=0.504677
+  combo 91/128: val=0.171892 best=0.504677
+  combo 92/128: val=0.298737 best=0.504677
+  combo 93/128: val=0.010029 best=0.504677
+  combo 94/128: val=0.005900 best=0.504677
+  combo 95/128: val=0.110992 best=0.504677
+  combo 96/128: val=0.072885 best=0.504677
+  combo 97/128: val=0.167396 best=0.504677
+  combo 98/128: val=0.300446 best=0.504677
+  combo 99/128: val=0.181459 best=0.504677
+  combo 100/128: val=0.268849 best=0.504677
+  combo 101/128: val=0.212320 best=0.504677
+  combo 102/128: val=0.042854 best=0.504677
+  combo 103/128: val=0.173636 best=0.504677
+  combo 104/128: val=0.225192 best=0.504677
+  combo 105/128: val=0.172352 best=0.504677
+  combo 106/128: val=0.268476 best=0.504677
+  combo 107/128: val=0.198185 best=0.504677
+  combo 108/128: val=0.340077 best=0.504677
+  combo 109/128: val=0.203728 best=0.504677
+  combo 110/128: val=0.080229 best=0.504677
+  combo 111/128: val=0.186171 best=0.504677
+  combo 112/128: val=0.203024 best=0.504677
+  combo 113/128: val=0.168824 best=0.504677
+  combo 114/128: val=0.333943 best=0.504677
+  combo 115/128: val=0.308340 best=0.504677
+  combo 116/128: val=0.343885 best=0.504677
+  combo 117/128: val=0.001334 best=0.504677
+  combo 118/128: val=0.033625 best=0.504677
+  combo 119/128: val=0.217281 best=0.504677
+  combo 120/128: val=0.278447 best=0.504677
+  combo 121/128: val=0.124340 best=0.504677
+  combo 122/128: val=0.377842 best=0.504677
+  combo 123/128: val=0.205915 best=0.504677
+  combo 124/128: val=0.407058 best=0.504677
+  combo 125/128: val=0.019081 best=0.504677
+  combo 126/128: val=0.005303 best=0.504677
+  combo 127/128: val=0.193721 best=0.504677
+  combo 128/128: val=0.259171 best=0.504677
+[split 6/6] done in 173.79s best_val=0.504677 test_f1_macro=0.18430987287477554
+Scores for inspired CNN tuning experiment:
+[{'best_params': {'batch_size': 64,
+                  'device': None,
+                  'dropout': 0.3,
+                  'epochs': 5,
+                  'hidden_dim': 64,
+                  'kernel_size': 7,
+                  'learning_rate': 0.0005,
+                  'n_filters': 16,
+                  'random_state': 42,
+                  'verbose': False,
+                  'weight_decay': 0.0001},
+  'best_validation_score': 0.6242205352279276,
+  'test_fold': '0.007',
+  'test_scores': {'accuracy_score': 0.3337342152736019,
+                  'confusion_matrix': array([[   2,    0, 1664],
+       [   8,    0, 1652],
+       [   0,    0, 1663]]),
+                  'f1_macro': 0.16771314005016655},
+  'train_fold': '0.014',
+  'validation_fold': '0.021'},
+ {'best_params': {'batch_size': 64,
+                  'device': None,
+                  'dropout': 0.3,
+                  'epochs': 5,
+                  'hidden_dim': 32,
+                  'kernel_size': 3,
+                  'learning_rate': 0.001,
+                  'n_filters': 32,
+                  'random_state': 42,
+                  'verbose': False,
+                  'weight_decay': 0.0001},
+  'best_validation_score': 0.41707984645318996,
+  'test_fold': '0.007',
+  'test_scores': {'accuracy_score': 0.37121667668871516,
+                  'confusion_matrix': array([[ 189, 1248,  229],
+       [   0,    0, 1660],
+       [   0,    0, 1663]]),
+                  'f1_macro': 0.2805164106924269},
+  'train_fold': '0.021',
+  'validation_fold': '0.014'},
+ {'best_params': {'batch_size': 64,
+                  'device': None,
+                  'dropout': 0.3,
+                  'epochs': 5,
+                  'hidden_dim': 64,
+                  'kernel_size': 3,
+                  'learning_rate': 0.0005,
+                  'n_filters': 32,
+                  'random_state': 42,
+                  'verbose': False,
+                  'weight_decay': 0.0},
+  'best_validation_score': 0.45780673778419817,
+  'test_fold': '0.014',
+  'test_scores': {'accuracy_score': 0.3682647433177768,
+                  'confusion_matrix': array([[1622,   41,    4],
+       [1270,  113,    0],
+       [1422,  241,    1]]),
+                  'f1_macro': 0.2235638834653215},
+  'train_fold': '0.007',
+  'validation_fold': '0.021'},
+ {'best_params': {'batch_size': 64,
+                  'device': None,
+                  'dropout': 0.1,
+                  'epochs': 5,
+                  'hidden_dim': 32,
+                  'kernel_size': 3,
+                  'learning_rate': 0.001,
+                  'n_filters': 16,
+                  'random_state': 42,
+                  'verbose': False,
+                  'weight_decay': 0.0},
+  'best_validation_score': 0.5556892632704907,
+  'test_fold': '0.014',
+  'test_scores': {'accuracy_score': 0.12515910055154858,
+                  'confusion_matrix': array([[ 464,    0, 1203],
+       [1333,    0,   50],
+       [1538,    0,  126]]),
+                  'f1_macro': 0.08944626771922408},
+  'train_fold': '0.021',
+  'validation_fold': '0.007'},
+ {'best_params': {'batch_size': 64,
+                  'device': None,
+                  'dropout': 0.1,
+                  'epochs': 5,
+                  'hidden_dim': 64,
+                  'kernel_size': 3,
+                  'learning_rate': 0.0005,
+                  'n_filters': 16,
+                  'random_state': 42,
+                  'verbose': False,
+                  'weight_decay': 0.0001},
+  'best_validation_score': 0.288691552670341,
+  'test_fold': '0.021',
+  'test_scores': {'accuracy_score': 0.2544,
+                  'confusion_matrix': array([[ 196, 1363,  104],
+       [   0,  730,  937],
+       [   0, 1324,  346]]),
+                  'f1_macro': 0.2414690758145984},
+  'train_fold': '0.007',
+  'validation_fold': '0.014'},
+ {'best_params': {'batch_size': 64,
+                  'device': None,
+                  'dropout': 0.3,
+                  'epochs': 5,
+                  'hidden_dim': 64,
+                  'kernel_size': 3,
+                  'learning_rate': 0.001,
+                  'n_filters': 16,
+                  'random_state': 42,
+                  'verbose': False,
+                  'weight_decay': 0.0001},
+  'best_validation_score': 0.5046769248269941,
+  'test_fold': '0.021',
+  'test_scores': {'accuracy_score': 0.336,
+                  'confusion_matrix': array([[   7, 1419,  237],
+       [   0, 1667,    0],
+       [ 235, 1429,    6]]),
+                  'f1_macro': 0.18430987287477554},
+  'train_fold': '0.014',
+  'validation_fold': '0.007'}]
+(.venv) boldt@i7titanv:~/projects/vibrolearn$
