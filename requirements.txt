@@ -1,3 +1,4 @@
+unrar
 alembic
 certifi
 charset-normalizer
