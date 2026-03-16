@@ -17,13 +17,13 @@ def download_file_from_register(raw_dir_path, register):
 
     if is_rar and is_rar_already_extracted(filename, raw_dir_path):
         return
+
     download_with_retries(file_url, raw_dir_path, file_path)
     
-    if not is_rar:
-         print(f"File ready and verified: {file_path}.")
-
     if is_rar:
         extract_and_delete_rar(file_path, raw_dir_path)
+    else:
+        print(f"File ready and verified: {file_path}.")
 
 def is_file_downloaded(url, folder_path):
     # Parse the URL to get the file name
