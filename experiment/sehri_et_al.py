@@ -34,6 +34,7 @@ def run_sehri_experiment(model):
     scores = run_papers_experiment(model, list_of_metrics)
     print("Scores for papers experiment:")
     pprint(scores)
+    print()
 
 
 def run_inspired_experiment(model):
@@ -42,7 +43,7 @@ def run_inspired_experiment(model):
     scores = run_papers_inspired_experiment(model, list_of_metrics)
     print("Scores for papers inspired experiment:")
     pprint(scores)
-
+    print()
 
 def run_proposed_experiment(model):
     from dataset.cwru.sehri_et_al import run_proposed_experiment as run_proposed_dataset_experiment
@@ -50,6 +51,7 @@ def run_proposed_experiment(model):
     scores = run_proposed_dataset_experiment(model, list_of_metrics)
     print("Scores for proposed experiment:")
     pprint(scores)
+    print()
 
 
 def _iter_param_combinations(param_grid):
