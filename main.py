@@ -6,6 +6,7 @@ from experiment.sehri_et_al import (
     run_inspired_experiment,
     run_proposed_experiment,
     run_sehri_experiment,
+    run_sehri_experiment_wavelet_random_forest,
 )
 from estimator.CNN1D import CNN1D
 
@@ -45,6 +46,11 @@ def parse_args() -> argparse.Namespace:
         default=1,
         help="Print one progress line every N evaluated parameter combinations.",
     )
+    parser.add_argument(
+        "--run-sehri-wavelet-rf",
+        action="store_true",
+        help="Run Sehri experiment with Wavelet features + RandomForest pipeline.",
+    )
     return parser.parse_args()
 
 
@@ -61,11 +67,18 @@ if __name__ == "__main__":
             log_every=max(1, args.cnn_tuning_log_every),
         )
 
-    # Keep the previous default behavior unless a specific check-only run was requested.
-    should_run_experiments = (
-        (args.run_experiments or not args.check_pytorch_data)
+    should_run_default_wavelet_rf = (
+        not args.check_pytorch_data
         and not should_run_cnn_tuning
+        and not args.run_experiments
     )
+    should_run_wavelet_rf = args.run_sehri_wavelet_rf or should_run_default_wavelet_rf
+
+    if should_run_wavelet_rf:
+        run_sehri_experiment_wavelet_random_forest()
+
+    # Legacy multi-experiment flow now runs only when explicitly requested.
+    should_run_experiments = args.run_experiments and not should_run_cnn_tuning
     if should_run_experiments:
         run_sehri_experiment(model)
         run_inspired_experiment(model)

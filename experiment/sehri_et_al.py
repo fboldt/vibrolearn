@@ -3,6 +3,8 @@ import time
 from pprint import pprint
 
 from sklearn.metrics import accuracy_score, confusion_matrix
+from sklearn.pipeline import Pipeline
+from sklearn.ensemble import RandomForestClassifier
 
 from dataset.cwru.sehri_et_al import (
     get_list_of_papers_inspired_cross_validation_folds,
@@ -10,6 +12,7 @@ from dataset.cwru.sehri_et_al import (
     segment_length,
 )
 from dataset.utils import get_list_of_X_y, load_matlab_acquisition
+from feature.wavelet_package import WaveletPackage
 from utils.metrics import f1_macro
 
 list_of_metrics = [accuracy_score, f1_macro, confusion_matrix]
@@ -35,6 +38,38 @@ def run_sehri_experiment(model):
     print("Scores for papers experiment:")
     pprint(scores)
     print()
+
+
+def run_sehri_experiment_wavelet_random_forest(
+    n_estimators=300,
+    random_state=42,
+    n_jobs=-1,
+    wavelet='db4',
+    mode='symmetric',
+    maxlevel=4,
+):
+    """Run the Sehri holdout experiment with a Wavelet+RandomForest pipeline."""
+    model = Pipeline(
+        steps=[
+            (
+                "wavelet",
+                WaveletPackage(
+                    wavelet=wavelet,
+                    mode=mode,
+                    maxlevel=maxlevel,
+                ),
+            ),
+            (
+                "random_forest",
+                RandomForestClassifier(
+                    n_estimators=n_estimators,
+                    random_state=random_state,
+                    n_jobs=n_jobs,
+                ),
+            ),
+        ]
+    )
+    run_sehri_experiment(model)
 
 
 def run_inspired_experiment(model):
