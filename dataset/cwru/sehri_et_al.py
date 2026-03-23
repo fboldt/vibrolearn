@@ -27,7 +27,7 @@ def get_list_of_papers_splits():
         train_test_split.append(fold)
     return train_test_split
 
-def run_papers_experiment(model, list_of_metrics):
+def get_list_of_papers_X_y():
     list_of_folds = get_list_of_papers_splits()
     list_of_X_y = get_list_of_X_y(
         list_of_folds,
@@ -36,6 +36,10 @@ def run_papers_experiment(model, list_of_metrics):
         segment_length=segment_length,
         load_acquisition_func=load_matlab_acquisition
     )
+    return list_of_X_y
+
+def run_papers_experiment(model, list_of_metrics):
+    list_of_X_y = get_list_of_papers_X_y()
     scores = holdout(model, list_of_X_y, test_fold_index=1, list_of_metrics=list_of_metrics) 
     return scores
 

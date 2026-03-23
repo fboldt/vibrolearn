@@ -9,6 +9,7 @@ from experiment.sehri_et_al import (
     run_sehri_experiment_wavelet_random_forest,
 )
 from estimator.CNN1D import CNN1D
+from tests.sehri_et_al_cwru import print_meta_data
 
 model = CNN1D()
 
@@ -51,6 +52,12 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Run Sehri experiment with Wavelet features + RandomForest pipeline.",
     )
+    parser.add_argument(
+        "--print-meta-data",
+        action="store_true",
+        help="Print the shapes of X and y for each fold in the papers experiment.",
+    )
+
     return parser.parse_args()
 
 
@@ -71,6 +78,7 @@ if __name__ == "__main__":
         not args.check_pytorch_data
         and not should_run_cnn_tuning
         and not args.run_experiments
+        and not args.print_meta_data
     )
     should_run_wavelet_rf = args.run_sehri_wavelet_rf or should_run_default_wavelet_rf
 
@@ -83,3 +91,6 @@ if __name__ == "__main__":
         run_sehri_experiment(model)
         run_inspired_experiment(model)
         run_proposed_experiment(model)
+
+    if args.print_meta_data:
+        print_meta_data()
