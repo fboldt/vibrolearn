@@ -1,37 +1,3 @@
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.pipeline import Pipeline
-from pprint import pprint
-from feature.extraction import WaveletPackage
-
-def get_wavelet_random_forest():
-    n_estimators=300
-    random_state=42
-    n_jobs=-1
-    wavelet='db4'
-    mode='symmetric'
-    maxlevel=4
-    model = Pipeline(
-        steps=[
-            (
-                "wavelet",
-                WaveletPackage(
-                    wavelet=wavelet,
-                    mode=mode,
-                    maxlevel=maxlevel,
-                ),
-            ),
-            (
-                "random_forest",
-                RandomForestClassifier(
-                    n_estimators=n_estimators,
-                    random_state=random_state,
-                    n_jobs=n_jobs,
-                ),
-            ),
-        ]
-    )
-    return model
-
 def f1_macro(y_true, y_pred):
     from sklearn.metrics import f1_score
     return f1_score(y_true, y_pred, average='macro')
