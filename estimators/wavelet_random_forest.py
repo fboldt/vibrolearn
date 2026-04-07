@@ -24,3 +24,22 @@ def get_wavelet_random_forest(random_state = None):
         ]
     )
     return model
+
+from estimators.base_estimator import BaseEstimator
+class WaveletRandomForest(BaseEstimator):
+    def __init__(self, random_state = None):
+        self.model = get_wavelet_random_forest(random_state=random_state)
+  
+    def train(self, list_of_registers):
+        X, y = self.load_function(list_of_registers)
+        self.model.fit(X, y)
+        print("Model trained")
+    
+    def evaluate(self, list_of_registers, list_of_metrics):
+        X, y = self.load_function(list_of_registers)
+        y_pred = self.model.predict(X)
+        scores = {}
+        for metric in list_of_metrics:
+            scores[metric.__name__] = metric(y, y_pred)
+        return scores
+

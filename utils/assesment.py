@@ -6,6 +6,14 @@ def train_test_split(list_of_X_y, test_fold_index):
     X_train, y_train = concatenate_data([list_of_X_y[i] for i in range(len(list_of_X_y)) if i != test_fold_index])
     return (X_train, y_train), (X_test, y_test)
 
+def train_test_split_filters(list_of_filters, test_fold_index):
+    test_filter = list_of_filters[test_fold_index]
+    train_filters = []
+    for i in range(len(list_of_filters)):
+        if i != test_fold_index:
+            train_filters.extend(list_of_filters[i])
+    return train_filters, test_filter
+
 def holdout(model, list_of_X_y, test_fold_index, list_of_metrics):
     (X_train, y_train), (X_test, y_test) = train_test_split(list_of_X_y, test_fold_index)
     model.fit(X_train, y_train)
@@ -13,6 +21,12 @@ def holdout(model, list_of_X_y, test_fold_index, list_of_metrics):
     scores = {}
     for metric in list_of_metrics:
         scores[metric.__name__] = metric(y_test, y_test_pred)
+    return scores
+
+def holdout_filters(model, list_of_filters, test_fold_index, list_of_metrics):
+    train_filters, test_filter = train_test_split_filters(list_of_filters, test_fold_index)
+    model.train(train_filters)
+    scores = model.evaluate(test_filter, list_of_metrics)
     return scores
 
 def cross_validation(model, list_of_X_y, list_of_metrics):

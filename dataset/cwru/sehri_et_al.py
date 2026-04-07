@@ -1,4 +1,5 @@
-from utils.assesment import cross_validation, holdout
+from dataset.cwru.dataloader import get_sehri_et_all_X_y
+from utils.assesment import cross_validation, holdout, holdout_filters
 from dataset.utils import filter_registers_by_key_value_sequence, get_list_of_X_y, load_matlab_acquisition, read_registers_from_config
 
 segment_length = 1024
@@ -43,38 +44,10 @@ def run_papers_experiment(model, list_of_metrics):
     scores = holdout(model, list_of_X_y, test_fold_index=1, list_of_metrics=list_of_metrics) 
     return scores
 
-papers_inspired_cross_validation_folds = ['0.007', '0.014', '0.021']
-
-def get_papers_inspired_cross_validation_fold(severity):
-    sample_rate = "48000"
-    config_file = "dataset/cwru/config.csv"
-    prlzs = ['None', '6']
-    registers = read_registers_from_config(config_file)
-    filtered = filter_registers_by_key_value_sequence(
-        registers,
-        [('sample_rate', [sample_rate]),
-         ('severity', [severity]),
-         ('prlz', prlzs)]
-    )
-    return filtered
-
-def get_list_of_papers_inspired_cross_validation_folds():
-    folds = []
-    for severity in papers_inspired_cross_validation_folds:
-        fold = get_papers_inspired_cross_validation_fold(severity)
-        folds.append(fold)
-    return folds
-
-def run_papers_inspired_experiment(model, list_of_metrics):
-    list_of_folds = get_list_of_papers_inspired_cross_validation_folds()
-    list_of_X_y = get_list_of_X_y(
-        list_of_folds,
-        raw_dir_path="raw_data/cwru",
-        channels_columns=['DE'],
-        segment_length=segment_length,
-        load_acquisition_func=load_matlab_acquisition
-    )
-    scores = cross_validation(model, list_of_X_y, list_of_metrics=list_of_metrics)
+def run_papers_experiment_filters(model, list_of_metrics):
+    list_of_folds = get_list_of_papers_splits()
+    model.set_load_function(get_sehri_et_all_X_y)
+    scores = holdout_filters(model, list_of_folds, test_fold_index=1, list_of_metrics=list_of_metrics) 
     return scores
 
 proposed_cross_validation_combinations = [
@@ -111,12 +84,16 @@ def get_fold(combination):
         fold.extend(filtered)
     return fold
 
-def get_list_of_proposed_cross_validation_folds(comb_index=0):
+def get_list_of_folds(comb_index=0):
     folds = []
     for combination in proposed_cross_validation_combinations[comb_index]:
         fold = get_fold(combination)
         folds.append(fold)
     return folds
+
+def run_papers_inspired_experiment(model, list_of_metrics):
+    scores = perform_cross_validation(model, list_of_metrics, segment_length, 0)
+    return scores
 
 def run_proposed_experiment(model, list_of_metrics):
     list_of_scores = []
@@ -126,7 +103,7 @@ def run_proposed_experiment(model, list_of_metrics):
     return list_of_scores
 
 def perform_cross_validation(model, list_of_metrics, segment_length, comb_index):
-    list_of_folds = get_list_of_proposed_cross_validation_folds(comb_index=comb_index)
+    list_of_folds = get_list_of_folds(comb_index=comb_index)
     list_of_X_y = get_list_of_X_y(
             list_of_folds,
             raw_dir_path="raw_data/cwru",
