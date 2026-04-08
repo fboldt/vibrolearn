@@ -1,5 +1,5 @@
 from tests.sehri_et_al_cwru import print_papers_sehri_meta_data
-from experiment.sehri_et_al import run_sehri_et_al_papers, run_sehri_et_al_papers_filters, run_sehri_et_al_papers_inspired_experiment, run_sehri_et_al_proposed_experiment
+from experiment.sehri_et_al import run_sehri_et_al_papers, run_sehri_et_al_papers_filters, run_sehri_et_al_papers_inspired_experiment, run_sehri_et_al_papers_inspired_filters, run_sehri_et_al_proposed_experiment, run_sehri_et_al_proposed_filters
 from estimators.wavelet_random_forest import get_wavelet_random_forest, WaveletRandomForest
 from experiment.sehri_et_al_aug import run_papers_experiment_augmented
 
@@ -23,7 +23,9 @@ if __name__ == "__main__":
     if args.debug:
         print("Running in debug mode")
         model = WaveletRandomForest(random_state=42)
-        run_sehri_et_al_papers_filters(model)
+        # run_sehri_et_al_papers_filters(model)
+        # run_sehri_et_al_papers_inspired_filters(model)
+        run_sehri_et_al_proposed_filters(model)
     if args.metadata:
         print_papers_sehri_meta_data()
     if args.random_forest:

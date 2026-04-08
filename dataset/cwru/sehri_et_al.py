@@ -1,4 +1,5 @@
 from dataset.cwru.dataloader import get_sehri_et_all_X_y
+from experiment.sehri_et_al import print_dict_of_scores
 from utils.assesment import cross_validation, holdout, holdout_filters
 from dataset.utils import filter_registers_by_key_value_sequence, get_list_of_X_y, load_matlab_acquisition, read_registers_from_config
 
@@ -95,11 +96,30 @@ def run_papers_inspired_experiment(model, list_of_metrics):
     scores = perform_cross_validation(model, list_of_metrics, segment_length, 0)
     return scores
 
+def run_papers_inspired_experiment_filters(model, list_of_metrics):
+    list_of_folds = get_list_of_folds(comb_index=0)
+    model.set_load_function(get_sehri_et_all_X_y)
+    scores = []
+    for fold_idx in range(len(list_of_folds)):
+        fold_scores = holdout_filters(model, list_of_folds, test_fold_index=fold_idx, list_of_metrics=list_of_metrics)
+        scores.append(fold_scores)
+    return scores
+
 def run_proposed_experiment(model, list_of_metrics):
     list_of_scores = []
     for comb_index in range(len(proposed_cross_validation_combinations)):
         scores = perform_cross_validation(model, list_of_metrics, segment_length, comb_index)
         list_of_scores.extend(scores)
+    return list_of_scores
+
+def run_proposed_experiment_filters(model, list_of_metrics):
+    list_of_scores = []
+    for comb_index in range(len(proposed_cross_validation_combinations)):
+        list_of_folds = get_list_of_folds(comb_index=comb_index)
+        model.set_load_function(get_sehri_et_all_X_y)
+        for fold_idx in range(len(list_of_folds)):
+            fold_scores = holdout_filters(model, list_of_folds, test_fold_index=fold_idx, list_of_metrics=list_of_metrics)
+            list_of_scores.append(fold_scores)
     return list_of_scores
 
 def perform_cross_validation(model, list_of_metrics, segment_length, comb_index):

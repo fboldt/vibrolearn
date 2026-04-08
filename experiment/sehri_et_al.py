@@ -33,9 +33,23 @@ def run_sehri_et_al_proposed_experiment(model):
     scores = run_proposed_experiment(model,list_of_metrics=list_of_metrics)
     print_fold_scores(scores)
 
+def run_sehri_et_al_proposed_filters(model):
+    from sklearn.metrics import accuracy_score, confusion_matrix
+    from dataset.cwru.sehri_et_al import run_proposed_experiment_filters
+    list_of_metrics = [accuracy_score, f1_macro, confusion_matrix]
+    scores = run_proposed_experiment_filters(model,list_of_metrics=list_of_metrics)
+    print_fold_scores(scores)
+
 def run_sehri_et_al_papers_filters(model):
     from sklearn.metrics import accuracy_score, confusion_matrix
     from dataset.cwru.sehri_et_al import run_papers_experiment_filters
     list_of_metrics = [accuracy_score, f1_macro, confusion_matrix]
     scores = run_papers_experiment_filters(model,list_of_metrics=list_of_metrics)
     print_dict_of_scores(scores)
+
+def run_sehri_et_al_papers_inspired_filters(model):
+    from sklearn.metrics import accuracy_score, confusion_matrix
+    from dataset.cwru.sehri_et_al import run_papers_inspired_experiment_filters
+    list_of_metrics = [accuracy_score, f1_macro, confusion_matrix]
+    scores = run_papers_inspired_experiment_filters(model,list_of_metrics=list_of_metrics)
+    print_fold_scores(scores)

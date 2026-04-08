@@ -37,6 +37,14 @@ def cross_validation(model, list_of_X_y, list_of_metrics):
         scores_per_fold.append(scores)
     return scores_per_fold
 
+def cross_validation_filters(model, list_of_filters, list_of_metrics):
+    n_folds = len(list_of_filters)
+    scores_per_fold = []
+    for i in range(n_folds):
+        scores = holdout_filters(model, list_of_filters, test_fold_index=i, list_of_metrics=list_of_metrics)
+        scores_per_fold.append(scores)
+    return scores_per_fold
+
 def get_best_params(model, params, list_of_X_y):
     best_score = 0
     best_params = None
