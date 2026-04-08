@@ -14,34 +14,17 @@ def train_test_split_filters(list_of_filters, test_fold_index):
             train_filters.extend(list_of_filters[i])
     return train_filters, test_filter
 
-def holdout(model, list_of_X_y, test_fold_index, list_of_metrics):
-    (X_train, y_train), (X_test, y_test) = train_test_split(list_of_X_y, test_fold_index)
-    model.fit(X_train, y_train)
-    y_test_pred = model.predict(X_test)
-    scores = {}
-    for metric in list_of_metrics:
-        scores[metric.__name__] = metric(y_test, y_test_pred)
-    return scores
-
-def holdout_filters(model, list_of_filters, test_fold_index, list_of_metrics):
+def holdout(model, list_of_filters, test_fold_index, list_of_metrics):
     train_filters, test_filter = train_test_split_filters(list_of_filters, test_fold_index)
     model.train(train_filters)
     scores = model.evaluate(test_filter, list_of_metrics)
     return scores
 
-def cross_validation(model, list_of_X_y, list_of_metrics):
-    n_folds = len(list_of_X_y)
+def cross_validation(model, list_of_folds, list_of_metrics):
+    n_folds = len(list_of_folds)
     scores_per_fold = []
     for i in range(n_folds):
-        scores = holdout(model, list_of_X_y, test_fold_index=i, list_of_metrics=list_of_metrics)
-        scores_per_fold.append(scores)
-    return scores_per_fold
-
-def cross_validation_filters(model, list_of_filters, list_of_metrics):
-    n_folds = len(list_of_filters)
-    scores_per_fold = []
-    for i in range(n_folds):
-        scores = holdout_filters(model, list_of_filters, test_fold_index=i, list_of_metrics=list_of_metrics)
+        scores = holdout(model, list_of_folds, test_fold_index=i, list_of_metrics=list_of_metrics)
         scores_per_fold.append(scores)
     return scores_per_fold
 
