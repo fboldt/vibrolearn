@@ -1,96 +1,149 @@
-from dataset.cwru.dataloader import get_sehri_et_all_X_y
+from dataset.cwru.dataloader import get_sehri_et_al_X_y
 from utils.assesment import holdout
-from dataset.utils import filter_registers_by_key_value_sequence, read_registers_from_config
+from dataset.cwru.utils import get_list_of_folds
 
 
 papers_split = [
     [
-        [('Inner Race', '0.007', ['0', '1', '2', '3']),
-         ('Outer Race', '0.007', ['0', '1', '2', '3']),
-         ('Ball',       '0.007', ['0', '1', '2', '3']),
-         ('Inner Race', '0.014', ['0', '1', '2', '3']),
-         ('Outer Race', '0.014', ['0', '1', '2', '3']),
-         ('Ball',       '0.014', ['0', '1', '2', '3'])],
-        [('Inner Race', '0.021', ['0']),
-         ('Outer Race', '0.021', ['0']),
-         ('Ball',       '0.021', ['0'])]
+        [
+            {
+                "condition": ['Inner Race', 'Outer Race', 'Ball'], 
+                "severity":  ['0.007', '0.014'], 
+            }
+        ],
+        [
+            {
+                "condition": ['Inner Race', 'Outer Race', 'Ball'], 
+                "severity":  ['0.021'], 
+                "load":      ['0']
+            }
+        ],
     ]
 ]
 
 
-proposed_cross_validation_combinations = [
-    [
-        [('Inner Race', '0.007', ['0', '1', '2', '3']),
-         ('Outer Race', '0.007', ['0', '1', '2', '3']),
-         ('Ball',       '0.007', ['0', '1', '2', '3'])],
-        [('Inner Race', '0.014', ['0', '1', '2', '3']),
-         ('Outer Race', '0.014', ['0', '1', '2', '3']),
-         ('Ball',       '0.014', ['0', '1', '2', '3'])],
-        [('Inner Race', '0.021', ['0', '1', '2', '3']),
-         ('Outer Race', '0.021', ['0', '1', '2', '3']),
-         ('Ball',       '0.021', ['0', '1', '2', '3'])]
+proposed_combinations = [
+    [ # combination 0
+        [ # fold 0
+            {
+                "condition": ['Inner Race', 'Outer Race', 'Ball'], 
+                "severity":  ['0.007'], 
+            }
+        ],
+        [ # fold 1
+            {
+                "condition": ['Inner Race', 'Outer Race', 'Ball'], 
+                "severity":  ['0.014'], 
+            }
+        ],
+        [ # fold 2
+            {
+                "condition": ['Inner Race', 'Outer Race', 'Ball'], 
+                "severity":  ['0.021'], 
+            }
+        ]
     ],
-    [
-        [('Inner Race', '0.007', ['0', '1', '2', '3']),
-         ('Outer Race', '0.014', ['0', '1', '2', '3']),
-         ('Ball',       '0.021', ['0', '1', '2', '3'])],
-        [('Inner Race', '0.014', ['0', '1', '2', '3']),
-         ('Outer Race', '0.021', ['0', '1', '2', '3']),
-         ('Ball',       '0.007', ['0', '1', '2', '3'])],
-        [('Inner Race', '0.021', ['0', '1', '2', '3']),
-         ('Outer Race', '0.007', ['0', '1', '2', '3']),
-         ('Ball',       '0.014', ['0', '1', '2', '3'])]
+    [ # combination 1
+        [ # fold 4
+            {
+                "condition": ['Inner Race'], 
+                "severity": ['0.007'], 
+            },
+            {
+                "condition": ['Outer Race'], 
+                "severity": ['0.014'], 
+            },
+            {
+                "condition": ['Ball'], 
+                "severity": ['0.021'], 
+            }
+        ],
+        [ # fold 5
+            {
+                "condition": ['Inner Race'], 
+                "severity": ['0.014'], 
+            },
+            {
+                "condition": ['Outer Race'], 
+                "severity": ['0.021'], 
+            },
+            {
+                "condition": ['Ball'], 
+                "severity": ['0.007'], 
+            }
+        ],
     ],
-    [
-        [('Inner Race', '0.007', ['0', '1', '2', '3']),
-         ('Outer Race', '0.021', ['0', '1', '2', '3']),
-         ('Ball',       '0.014', ['0', '1', '2', '3'])],
-        [('Inner Race', '0.014', ['0', '1', '2', '3']),
-         ('Outer Race', '0.007', ['0', '1', '2', '3']),
-         ('Ball',       '0.021', ['0', '1', '2', '3'])],
-        [('Inner Race', '0.021', ['0', '1', '2', '3']),
-         ('Outer Race', '0.014', ['0', '1', '2', '3']),
-         ('Ball',       '0.007', ['0', '1', '2', '3'])]
+    [ # combination 2
+        [ # fold 6
+            {
+                "condition": ['Inner Race'], 
+                "severity": ['0.021'], 
+            },
+            {
+                "condition": ['Outer Race'], 
+                "severity": ['0.007'], 
+            },
+            {
+                "condition": ['Ball'], 
+                "severity": ['0.014'], 
+            }
+        ],
+        [ # fold 7
+            {
+                "condition": ['Inner Race'], 
+                "severity": ['0.07'], 
+            },
+            {
+                "condition": ['Outer Race'], 
+                "severity": ['0.021'], 
+            },
+            {
+                "condition": ['Ball'], 
+                "severity": ['0.014'], 
+            }
+        ],
+        [ # fold 8
+            {
+                "condition": ['Inner Race'], 
+                "severity": ['0.014'], 
+            },
+            {
+                "condition": ['Outer Race'], 
+                "severity": ['0.007'], 
+            },
+            {
+                "condition": ['Ball'], 
+                "severity": ['0.021'], 
+            }
+        ],
+        [ # fold 9
+            {
+                "condition": ['Inner Race'], 
+                "severity": ['0.021'], 
+            },
+            {
+                "condition": ['Outer Race'], 
+                "severity": ['0.014'], 
+            },
+            {
+                "condition": ['Ball'], 
+                "severity": ['0.007'], 
+            }
+        ],
     ]
 ]
-
-
-def get_folds(combination):
-    sample_rate = "48000"
-    config_file = "dataset/cwru/config.csv"
-    registers = read_registers_from_config(config_file)
-    prlzs = ['None', '6']
-    folds = []
-    for faulty_bearing, fault_bearing_severity, loads in combination:
-        filtered = filter_registers_by_key_value_sequence(
-            registers, 
-            [('sample_rate', [sample_rate]), 
-            ('condition', [faulty_bearing]), 
-            ('severity', [fault_bearing_severity]),
-            ('load', loads),
-            ('prlz', prlzs)])
-        folds.extend(filtered)
-    return folds
-
-
-def get_list_of_folds(combinations, comb_index):
-    folds = []
-    for combination in combinations[comb_index]:
-        fold = get_folds(combination)
-        folds.append(fold)
-    return folds
 
 
 def run_papers_experiment(model, list_of_metrics):
     list_of_folds = get_list_of_folds(papers_split, comb_index=0)
-    model.set_load_function(get_sehri_et_all_X_y)
+    model.set_load_function(get_sehri_et_al_X_y)
     scores = holdout(model, list_of_folds, test_fold_index=1, list_of_metrics=list_of_metrics) 
     return scores
 
 
 def run_papers_inspired_experiment(model, list_of_metrics):
-    list_of_folds = get_list_of_folds(proposed_cross_validation_combinations, comb_index=0)
-    model.set_load_function(get_sehri_et_all_X_y)
+    list_of_folds = get_list_of_folds(proposed_combinations, comb_index=0)
+    model.set_load_function(get_sehri_et_al_X_y)
     scores = []
     for fold_idx in range(len(list_of_folds)):
         fold_scores = holdout(model, list_of_folds, test_fold_index=fold_idx, list_of_metrics=list_of_metrics)
@@ -100,9 +153,9 @@ def run_papers_inspired_experiment(model, list_of_metrics):
 
 def run_proposed_experiment(model, list_of_metrics):
     list_of_scores = []
-    for comb_index in range(len(proposed_cross_validation_combinations)):
-        list_of_folds = get_list_of_folds(proposed_cross_validation_combinations, comb_index=comb_index)
-        model.set_load_function(get_sehri_et_all_X_y)
+    model.set_load_function(get_sehri_et_al_X_y)
+    for comb_index in range(len(proposed_combinations)):
+        list_of_folds = get_list_of_folds(proposed_combinations, comb_index=comb_index)
         for fold_idx in range(len(list_of_folds)):
             fold_scores = holdout(model, list_of_folds, test_fold_index=fold_idx, list_of_metrics=list_of_metrics)
             list_of_scores.append(fold_scores)

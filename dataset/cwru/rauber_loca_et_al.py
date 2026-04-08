@@ -1,64 +1,101 @@
-from dataset.utils import filter_registers_by_key_value_sequence, get_list_of_X_y, load_matlab_acquisition, merge_X_y_from_lists, read_registers_from_config
-from assesment.crossvalidation import performance
+from dataset.cwru.dataloader import get_rauber_loca_et_al_X_y
+from dataset.cwru.utils import get_list_of_folds
+from utils.assesment import holdout
 
-rauber_loca_et_al_combination_rounds = [
-    [(0, 0.007), (1, 0.014), (2, 0.021), (3, 0.028)],
-    [(3, 0.007), (0, 0.014), (1, 0.021), (2, 0.028)],
-    [(2, 0.007), (3, 0.014), (0, 0.021), (1, 0.028)],
-    [(1, 0.007), (2, 0.014), (3, 0.021), (0, 0.028)],
-    [(0, 0.014), (1, 0.007), (2, 0.021), (3, 0.028)],
-    [(3, 0.014), (0, 0.007), (1, 0.021), (2, 0.028)],
-    [(2, 0.014), (3, 0.007), (0, 0.021), (1, 0.028)],
-    [(1, 0.014), (2, 0.007), (3, 0.021), (0, 0.028)],
+
+rauber_loca_et_al_combinations = [
+    [ #combination 0
+        [(['Normal'], ['0'], ['0']),
+         (['Inner Race', 'Outer Race', 'Ball'], ['0.007'], ['0', '1', '2', '3'])],
+        [(['Normal'], ['0'], ['1']),
+         (['Inner Race', 'Outer Race', 'Ball'], ['0.014'], ['0', '1', '2', '3'])],
+        [(['Normal'], ['0'], ['2']),
+         (['Inner Race', 'Outer Race', 'Ball'], ['0.021'], ['0', '1', '2', '3'])],
+        [(['Normal'], ['0'], ['3']),
+         (['Inner Race', 'Outer Race', 'Ball'], ['0.028'], ['0', '1', '2', '3'])]
+    ],
+    [ #combination 1
+        [(['Normal'], ['0'], ['3']),
+         (['Inner Race', 'Outer Race', 'Ball'], ['0.007'], ['0', '1', '2', '3'])],
+        [(['Normal'], ['0'], ['0']),
+         (['Inner Race', 'Outer Race', 'Ball'], ['0.014'], ['0', '1', '2', '3'])],
+        [(['Normal'], ['0'], ['1']),
+         (['Inner Race', 'Outer Race', 'Ball'], ['0.021'], ['0', '1', '2', '3'])],
+        [(['Normal'], ['0'], ['2']),
+         (['Inner Race', 'Outer Race', 'Ball'], ['0.028'], ['0', '1', '2', '3'])]
+    ],
+    [ #combination 2
+        [(['Normal'], ['0'], ['2']),
+         (['Inner Race', 'Outer Race', 'Ball'], ['0.007'], ['0', '1', '2', '3'])],
+        [(['Normal'], ['0'], ['3']),
+         (['Inner Race', 'Outer Race', 'Ball'], ['0.014'], ['0', '1', '2', '3'])],
+        [(['Normal'], ['0'], ['0']),
+         (['Inner Race', 'Outer Race', 'Ball'], ['0.021'], ['0', '1', '2', '3'])],
+        [(['Normal'], ['0'], ['1']),
+         (['Inner Race', 'Outer Race', 'Ball'], ['0.028'], ['0', '1', '2', '3'])]
+    ],
+    [ #combination 3
+        [(['Normal'], ['0'], ['0']),
+         (['Inner Race', 'Outer Race', 'Ball'], ['0.007'], ['0', '1', '2', '3'])],
+        [(['Normal'], ['0'], ['1']),
+         (['Inner Race', 'Outer Race', 'Ball'], ['0.014'], ['0', '1', '2', '3'])],
+        [(['Normal'], ['0'], ['2']),
+         (['Inner Race', 'Outer Race', 'Ball'], ['0.021'], ['0', '1', '2', '3'])],
+        [(['Normal'], ['0'], ['3']),
+         (['Inner Race', 'Outer Race', 'Ball'], ['0.028'], ['0', '1', '2', '3'])]
+    ],
+    [ #combination 4
+        [(['Normal'], ['0'], ['0']),
+         (['Inner Race', 'Outer Race', 'Ball'], ['0.014'], ['0', '1', '2', '3'])],
+        [(['Normal'], ['0'], ['1']),
+         (['Inner Race', 'Outer Race', 'Ball'], ['0.007'], ['0', '1', '2', '3'])],
+        [(['Normal'], ['0'], ['2']),
+         (['Inner Race', 'Outer Race', 'Ball'], ['0.021'], ['0', '1', '2', '3'])],
+        [(['Normal'], ['0'], ['3']),
+         (['Inner Race', 'Outer Race', 'Ball'], ['0.028'], ['0', '1', '2', '3'])]
+    ],
+    [ #combination 5
+        [(['Normal'], ['0'], ['3']),
+         (['Inner Race', 'Outer Race', 'Ball'], ['0.014'], ['0', '1', '2', '3'])],
+        [(['Normal'], ['0'], ['0']),
+         (['Inner Race', 'Outer Race', 'Ball'], ['0.007'], ['0', '1', '2', '3'])],
+        [(['Normal'], ['0'], ['1']),
+         (['Inner Race', 'Outer Race', 'Ball'], ['0.021'], ['0', '1', '2', '3'])],
+        [(['Normal'], ['0'], ['2']),
+         (['Inner Race', 'Outer Race', 'Ball'], ['0.028'], ['0', '1', '2', '3'])]
+    ],
+    [ #combination 6
+        [(['Normal'], ['0'], ['2']),
+         (['Inner Race', 'Outer Race', 'Ball'], ['0.014'], ['0', '1', '2', '3'])],
+        [(['Normal'], ['0'], ['3']),
+         (['Inner Race', 'Outer Race', 'Ball'], ['0.007'], ['0', '1', '2', '3'])],
+        [(['Normal'], ['0'], ['0']),
+         (['Inner Race', 'Outer Race', 'Ball'], ['0.021'], ['0', '1', '2', '3'])],
+        [(['Normal'], ['0'], ['1']),
+         (['Inner Race', 'Outer Race', 'Ball'], ['0.028'], ['0', '1', '2', '3'])]
+    ],
+    [ #combination 7
+        [(['Normal'], ['0'], ['1']),
+         (['Inner Race', 'Outer Race', 'Ball'], ['0.014'], ['0', '1', '2', '3'])],
+        [(['Normal'], ['0'], ['2']),
+         (['Inner Race', 'Outer Race', 'Ball'], ['0.007'], ['0', '1', '2', '3'])],
+        [(['Normal'], ['0'], ['3']),
+         (['Inner Race', 'Outer Race', 'Ball'], ['0.021'], ['0', '1', '2', '3'])],
+        [(['Normal'], ['0'], ['0']),
+         (['Inner Race', 'Outer Race', 'Ball'], ['0.028'], ['0', '1', '2', '3'])]
+    ],
 ]
 
-def get_fold(normal_load, fault_bearing_severity, faulty_bearing, sample_rate):
-    config_file = "dataset/cwru/config.csv"
-    registers = read_registers_from_config(config_file)
-    normal = filter_registers_by_key_value_sequence(
-        registers, 
-        [('sample_rate', [sample_rate]), 
-         ('faulty_bearing', ['None']), 
-         ('load', [str(normal_load)]), 
-         ('condition', ['Normal'])])
-    faulty = filter_registers_by_key_value_sequence(
-        registers, 
-        [('sample_rate', [sample_rate]), 
-         ('faulty_bearing', faulty_bearing), 
-         ('severity', [f"{fault_bearing_severity:.3f}"])])
-    fold = []
-    fold.extend(normal)
-    fold.extend(faulty)
-    return fold
 
-def get_list_of_folds(faulty_bearing, sample_rate, combination):
-    folds = []
-    for normal_load, fault_bearing_severity in rauber_loca_et_al_combination_rounds[combination%len(rauber_loca_et_al_combination_rounds)]:
-        fold = get_fold(normal_load=normal_load, fault_bearing_severity=fault_bearing_severity, faulty_bearing=faulty_bearing, sample_rate=sample_rate)
-        if len(fold) > 0:
-            folds.append(fold)
-    return folds
-
-def single_channel_X_y(combination, segment_length, sample_rate, faulty_bearing, channel_column):
-    list_of_folds = get_list_of_folds([faulty_bearing], sample_rate, combination)
-    return get_list_of_X_y(list_of_folds, raw_dir_path="raw_data/cwru", channels_columns=[channel_column], segment_length=segment_length, load_acquisition_func=load_matlab_acquisition)
-
-def single_channel_X_y_DE_FE_12k(combination, segment_length):
-    sample_rate = '12000'
-    X_y_DE = single_channel_X_y(combination, segment_length, sample_rate, 'Drive End', 'DE')
-    X_y_FE = single_channel_X_y(combination, segment_length, sample_rate, 'Fan End', 'FE')
-    list_of_X_y = merge_X_y_from_lists(X_y_DE, X_y_FE)
-    return list_of_X_y
-
-def run_experiment(model, list_of_metrics, debug=False):
-    combinations = range(len(rauber_loca_et_al_combination_rounds))
-    verbose=False
-    if debug:
-        combinations = [0]
-        verbose = True
-    segment_length = 2048
-    scores = None
-    for combination in combinations:
-        list_of_X_y = single_channel_X_y_DE_FE_12k(combination, segment_length)
-        scores = performance(model, list_of_X_y, list_of_metrics=list_of_metrics, verbose=verbose)
-    return scores
+def run_experiment(model, list_of_metrics):
+    print("Running rauber_loca_et_al experiment")
+    list_of_scores = []
+    model.set_load_function(get_rauber_loca_et_al_X_y)
+    for combination in range(len(rauber_loca_et_al_combinations)):
+        print(f"Combination {combination}")
+        list_of_folds = get_list_of_folds(rauber_loca_et_al_combinations, comb_index=combination)
+        for fold_idx in range(len(list_of_folds)):
+            print(f"Fold {fold_idx}")
+            fold_scores = holdout(model, list_of_folds, test_fold_index=fold_idx, list_of_metrics=list_of_metrics)
+            list_of_scores.append(fold_scores)
+    return list_of_scores

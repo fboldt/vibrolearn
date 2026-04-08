@@ -25,13 +25,13 @@ def run_sehri_et_al_papers_inspired_experiment(model):
     from sklearn.metrics import accuracy_score, confusion_matrix
     from dataset.cwru.sehri_et_al import run_papers_inspired_experiment
     list_of_metrics = [accuracy_score, f1_macro, confusion_matrix]
-    scores = run_papers_inspired_experiment(model,list_of_metrics=list_of_metrics)
-    print_fold_scores(scores)
+    list_of_scores = run_papers_inspired_experiment(model,list_of_metrics=list_of_metrics)
+    print_fold_scores(list_of_scores)
 
 
 def run_sehri_et_al_proposed_experiment(model):
     from sklearn.metrics import accuracy_score, confusion_matrix
     from dataset.cwru.sehri_et_al import run_proposed_experiment
     list_of_metrics = [accuracy_score, f1_macro, confusion_matrix]
-    scores = run_proposed_experiment(model,list_of_metrics=list_of_metrics)
-    print_fold_scores(scores)
+    list_of_scores = run_proposed_experiment(model,list_of_metrics=list_of_metrics)
+    print_fold_scores(list_of_scores)
