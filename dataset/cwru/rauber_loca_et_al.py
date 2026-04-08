@@ -4,85 +4,149 @@ from utils.assesment import holdout
 
 
 rauber_loca_et_al_combinations = [
-    [ #combination 0
-        [(['Normal'], ['0'], ['0']),
-         (['Inner Race', 'Outer Race', 'Ball'], ['0.007'], ['0', '1', '2', '3'])],
-        [(['Normal'], ['0'], ['1']),
-         (['Inner Race', 'Outer Race', 'Ball'], ['0.014'], ['0', '1', '2', '3'])],
-        [(['Normal'], ['0'], ['2']),
-         (['Inner Race', 'Outer Race', 'Ball'], ['0.021'], ['0', '1', '2', '3'])],
-        [(['Normal'], ['0'], ['3']),
-         (['Inner Race', 'Outer Race', 'Ball'], ['0.028'], ['0', '1', '2', '3'])]
+    [ #combination 0  
+        [ #fold 0
+            { "condition": ['Normal'], "load": ['0'], "sample_rate": ["12000"], },
+            { "severity": ['0.007'], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"], },
+        ],
+        [ #fold 1
+            { "condition": ['Normal'], "load": ['1'], "sample_rate": ["12000"], },
+            { "severity": ['0.014'], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"], },
+        ],
+        [ #fold 2
+            { "condition": ['Normal'], "load": ['2'], "sample_rate": ["12000"], },
+            { "severity": ['0.021'], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"], },
+        ],
+        [ #fold 3
+            { "condition": ['Normal'], "load": ['3'], "sample_rate": ["12000"], },
+            { "severity": ['0.028'], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"], },
+        ],
     ],
     [ #combination 1
-        [(['Normal'], ['0'], ['3']),
-         (['Inner Race', 'Outer Race', 'Ball'], ['0.007'], ['0', '1', '2', '3'])],
-        [(['Normal'], ['0'], ['0']),
-         (['Inner Race', 'Outer Race', 'Ball'], ['0.014'], ['0', '1', '2', '3'])],
-        [(['Normal'], ['0'], ['1']),
-         (['Inner Race', 'Outer Race', 'Ball'], ['0.021'], ['0', '1', '2', '3'])],
-        [(['Normal'], ['0'], ['2']),
-         (['Inner Race', 'Outer Race', 'Ball'], ['0.028'], ['0', '1', '2', '3'])]
+        [ #fold 0
+            { "condition": ['Normal'], "load": ['3'], "sample_rate": ["12000"], },
+            { "severity": ['0.007'], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"], },
+        ],
+        [ #fold 1
+            { "condition": ['Normal'], "load": ['0'], "sample_rate": ["12000"], },
+            { "severity": ['0.014'], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"], },
+        ],
+        [ #fold 2
+            { "condition": ['Normal'], "load": ['1'], "sample_rate": ["12000"], },
+            { "severity": ['0.021'], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"], },
+        ],
+        [ #fold 3
+            { "condition": ['Normal'], "load": ['2'], "sample_rate": ["12000"], },
+            { "severity": ['0.028'], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"], },
+        ],
     ],
     [ #combination 2
-        [(['Normal'], ['0'], ['2']),
-         (['Inner Race', 'Outer Race', 'Ball'], ['0.007'], ['0', '1', '2', '3'])],
-        [(['Normal'], ['0'], ['3']),
-         (['Inner Race', 'Outer Race', 'Ball'], ['0.014'], ['0', '1', '2', '3'])],
-        [(['Normal'], ['0'], ['0']),
-         (['Inner Race', 'Outer Race', 'Ball'], ['0.021'], ['0', '1', '2', '3'])],
-        [(['Normal'], ['0'], ['1']),
-         (['Inner Race', 'Outer Race', 'Ball'], ['0.028'], ['0', '1', '2', '3'])]
+        [ #fold 0
+            { "condition": ['Normal'], "load": ['2'], "sample_rate": ["12000"], },
+            { "severity": ['0.007'], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"], },
+        ],
+        [ #fold 1
+            { "condition": ['Normal'], "load": ['3'], "sample_rate": ["12000"], },
+            { "severity": ['0.014'], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"], },
+        ],
+        [ #fold 2
+            { "condition": ['Normal'], "load": ['0'], "sample_rate": ["12000"], },
+            { "severity": ['0.021'], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"], },
+        ],
+        [ #fold 3
+            { "condition": ['Normal'], "load": ['1'], "sample_rate": ["12000"], },
+            { "severity": ['0.028'], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"], },
+        ],
     ],
     [ #combination 3
-        [(['Normal'], ['0'], ['0']),
-         (['Inner Race', 'Outer Race', 'Ball'], ['0.007'], ['0', '1', '2', '3'])],
-        [(['Normal'], ['0'], ['1']),
-         (['Inner Race', 'Outer Race', 'Ball'], ['0.014'], ['0', '1', '2', '3'])],
-        [(['Normal'], ['0'], ['2']),
-         (['Inner Race', 'Outer Race', 'Ball'], ['0.021'], ['0', '1', '2', '3'])],
-        [(['Normal'], ['0'], ['3']),
-         (['Inner Race', 'Outer Race', 'Ball'], ['0.028'], ['0', '1', '2', '3'])]
+        [ #fold 0
+            { "condition": ['Normal'], "load": ['1'], "sample_rate": ["12000"], },
+            { "severity": ['0.007'], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"], },
+        ],
+        [ #fold 1
+            { "condition": ['Normal'], "load": ['2'], "sample_rate": ["12000"], },
+            { "severity": ['0.014'], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"], },
+        ],
+        [ #fold 2
+            { "condition": ['Normal'], "load": ['3'], "sample_rate": ["12000"], },
+            { "severity": ['0.021'], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"], },
+        ],
+        [ #fold 3
+            { "condition": ['Normal'], "load": ['0'], "sample_rate": ["12000"], },
+            { "severity": ['0.028'], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"], },
+        ],
     ],
     [ #combination 4
-        [(['Normal'], ['0'], ['0']),
-         (['Inner Race', 'Outer Race', 'Ball'], ['0.014'], ['0', '1', '2', '3'])],
-        [(['Normal'], ['0'], ['1']),
-         (['Inner Race', 'Outer Race', 'Ball'], ['0.007'], ['0', '1', '2', '3'])],
-        [(['Normal'], ['0'], ['2']),
-         (['Inner Race', 'Outer Race', 'Ball'], ['0.021'], ['0', '1', '2', '3'])],
-        [(['Normal'], ['0'], ['3']),
-         (['Inner Race', 'Outer Race', 'Ball'], ['0.028'], ['0', '1', '2', '3'])]
+        [ #fold 0
+            { "condition": ['Normal'], "load": ['0'], "sample_rate": ["12000"], },
+            { "severity": ['0.014'], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"], },
+        ],
+        [ #fold 1
+            { "condition": ['Normal'], "load": ['1'], "sample_rate": ["12000"], },
+            { "severity": ['0.007'], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"], },
+        ],
+        [ #fold 2
+            { "condition": ['Normal'], "load": ['2'], "sample_rate": ["12000"], },
+            { "severity": ['0.021'], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"], },
+        ],
+        [ #fold 3
+            { "condition": ['Normal'], "load": ['3'], "sample_rate": ["12000"], },
+            { "severity": ['0.028'], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"], },
+        ],
     ],
     [ #combination 5
-        [(['Normal'], ['0'], ['3']),
-         (['Inner Race', 'Outer Race', 'Ball'], ['0.014'], ['0', '1', '2', '3'])],
-        [(['Normal'], ['0'], ['0']),
-         (['Inner Race', 'Outer Race', 'Ball'], ['0.007'], ['0', '1', '2', '3'])],
-        [(['Normal'], ['0'], ['1']),
-         (['Inner Race', 'Outer Race', 'Ball'], ['0.021'], ['0', '1', '2', '3'])],
-        [(['Normal'], ['0'], ['2']),
-         (['Inner Race', 'Outer Race', 'Ball'], ['0.028'], ['0', '1', '2', '3'])]
+        [ #fold 0
+            { "condition": ['Normal'], "load": ['3'], "sample_rate": ["12000"], },
+            { "severity": ['0.014'], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"], },
+        ],
+        [ #fold 1
+            { "condition": ['Normal'], "load": ['0'], "sample_rate": ["12000"], },
+            { "severity": ['0.007'], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"], },
+        ],
+        [ #fold 2
+            { "condition": ['Normal'], "load": ['1'], "sample_rate": ["12000"], },
+            { "severity": ['0.021'], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"], },
+        ],
+        [ #fold 3
+            { "condition": ['Normal'], "load": ['2'], "sample_rate": ["12000"], },
+            { "severity": ['0.028'], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"], },
+        ],
     ],
     [ #combination 6
-        [(['Normal'], ['0'], ['2']),
-         (['Inner Race', 'Outer Race', 'Ball'], ['0.014'], ['0', '1', '2', '3'])],
-        [(['Normal'], ['0'], ['3']),
-         (['Inner Race', 'Outer Race', 'Ball'], ['0.007'], ['0', '1', '2', '3'])],
-        [(['Normal'], ['0'], ['0']),
-         (['Inner Race', 'Outer Race', 'Ball'], ['0.021'], ['0', '1', '2', '3'])],
-        [(['Normal'], ['0'], ['1']),
-         (['Inner Race', 'Outer Race', 'Ball'], ['0.028'], ['0', '1', '2', '3'])]
+        [ #fold 0
+            { "condition": ['Normal'], "load": ['2'], "sample_rate": ["12000"], },
+            { "severity": ['0.014'], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"], },
+        ],
+        [ #fold 1
+            { "condition": ['Normal'], "load": ['3'], "sample_rate": ["12000"], },
+            { "severity": ['0.007'], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"], },
+        ],
+        [ #fold 2
+            { "condition": ['Normal'], "load": ['0'], "sample_rate": ["12000"], },
+            { "severity": ['0.021'], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"], },
+        ],
+        [ #fold 3
+            { "condition": ['Normal'], "load": ['1'], "sample_rate": ["12000"], },
+            { "severity": ['0.028'], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"], },
+        ],
     ],
     [ #combination 7
-        [(['Normal'], ['0'], ['1']),
-         (['Inner Race', 'Outer Race', 'Ball'], ['0.014'], ['0', '1', '2', '3'])],
-        [(['Normal'], ['0'], ['2']),
-         (['Inner Race', 'Outer Race', 'Ball'], ['0.007'], ['0', '1', '2', '3'])],
-        [(['Normal'], ['0'], ['3']),
-         (['Inner Race', 'Outer Race', 'Ball'], ['0.021'], ['0', '1', '2', '3'])],
-        [(['Normal'], ['0'], ['0']),
-         (['Inner Race', 'Outer Race', 'Ball'], ['0.028'], ['0', '1', '2', '3'])]
+        [ #fold 0
+            { "condition": ['Normal'], "load": ['1'], "sample_rate": ["12000"], },
+            { "severity": ['0.014'], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"], },
+        ],
+        [ #fold 1
+            { "condition": ['Normal'], "load": ['2'], "sample_rate": ["12000"], },
+            { "severity": ['0.007'], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"], },
+        ],
+        [ #fold 2
+            { "condition": ['Normal'], "load": ['3'], "sample_rate": ["12000"], },
+            { "severity": ['0.021'], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"], },
+        ],
+        [ #fold 3
+            { "condition": ['Normal'], "load": ['0'], "sample_rate": ["12000"], },
+            { "severity": ['0.028'], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"], },
+        ],
     ],
 ]
 

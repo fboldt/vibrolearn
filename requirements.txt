@@ -37,6 +37,7 @@ python-dotenv
 pytz
 PyWavelets
 PyYAML
+rarfile
 requests
 scikit-learn
 scipy

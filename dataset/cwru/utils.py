@@ -8,8 +8,6 @@ def get_folds(combination):
     registers = read_registers_from_config(config_file)
     folds = []
     for item in combination:
-        item["sample_rate"] = ["48000"]
-        item["prlz"] = ['None', '6']
         filtered = filter_registers_by_key_value_sequence(
             registers, 
             [[k, v] for k, v in item.items()])
