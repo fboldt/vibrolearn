@@ -1,5 +1,5 @@
 from experiment.sehri_et_al import run_sehri_et_al_papers, run_sehri_et_al_papers_inspired_experiment, run_sehri_et_al_proposed_experiment
-from estimators.wavelet_random_forest import WaveletRandomForest
+from estimators.wavelet_random_forest import WaveletRandomForest, get_wavelet_random_forest
 from experiment.sehri_et_al_aug import run_papers_experiment_augmented
 
 import argparse
