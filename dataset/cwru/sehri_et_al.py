@@ -84,11 +84,11 @@ def run_papers_experiment(model, list_of_metrics):
 def run_papers_inspired_experiment(model, list_of_metrics):
     list_of_folds = get_list_of_folds(proposed_combinations, comb_index=0)
     model.set_load_function(get_sehri_et_al_X_y)
-    scores = []
+    list_of_scores = []
     for fold_idx in range(len(list_of_folds)):
         fold_scores = holdout(model, list_of_folds, test_fold_index=fold_idx, list_of_metrics=list_of_metrics)
-        scores.append(fold_scores)
-    return scores
+        list_of_scores.append(fold_scores)
+    return list_of_scores
 
 
 def run_proposed_experiment(model, list_of_metrics):

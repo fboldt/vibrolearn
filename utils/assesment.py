@@ -1,14 +1,4 @@
-from dataset.utils import concatenate_data
-from utils.metrics import f1_macro
-
-
-def train_test_split(list_of_X_y, test_fold_index):
-    X_test, y_test = list_of_X_y[test_fold_index]
-    X_train, y_train = concatenate_data([list_of_X_y[i] for i in range(len(list_of_X_y)) if i != test_fold_index])
-    return (X_train, y_train), (X_test, y_test)
-
-
-def train_test_split_filters(list_of_filters, test_fold_index):
+def train_test_split(list_of_filters, test_fold_index):
     test_filter = list_of_filters[test_fold_index]
     train_filters = []
     for i in range(len(list_of_filters)):
@@ -18,16 +8,19 @@ def train_test_split_filters(list_of_filters, test_fold_index):
 
 
 def holdout(model, list_of_filters, test_fold_index, list_of_metrics):
-    train_filters, test_filter = train_test_split_filters(list_of_filters, test_fold_index)
+    train_filters, test_filter = train_test_split(list_of_filters, test_fold_index)
     model.train(train_filters)
     scores = model.evaluate(test_filter, list_of_metrics)
     return scores
 
 
-def cross_validation(model, list_of_folds, list_of_metrics):
-    n_folds = len(list_of_folds)
-    scores_per_fold = []
-    for i in range(n_folds):
-        scores = holdout(model, list_of_folds, test_fold_index=i, list_of_metrics=list_of_metrics)
-        scores_per_fold.append(scores)
-    return scores_per_fold
+def print_dict_of_scores(scores):
+    print(20 * "-")
+    for metric_name, score in scores.items():
+        print(f"-- {metric_name} --\n{score}\n")
+
+
+def print_scores_list(scores):
+    for i, fold in enumerate(scores):
+        print(f"### Fold {i + 1}:")
+        print_dict_of_scores(fold)
