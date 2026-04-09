@@ -1,0 +1,146 @@
+{
+    "cross_validation_0": {
+        "fold_0_0": [ 
+            { "condition": ["Normal"], "load": ["0"], "sample_rate": ["12000"] },
+            { "severity": ["0.007"], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"] }
+        ],
+        "fold_0_1": [
+            { "condition": ["Normal"], "load": ["1"], "sample_rate": ["12000"] },
+            { "severity": ["0.014"], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"] }
+        ],
+        "fold_0_2": [
+            { "condition": ["Normal"], "load": ["2"], "sample_rate": ["12000"] },
+            { "severity": ["0.021"], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"] }
+        ],
+        "fold_0_3": [
+            { "condition": ["Normal"], "load": ["3"], "sample_rate": ["12000"] },
+            { "severity": ["0.028"], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"] }
+        ]
+    },
+    "cross_validation_1": {
+        "fold_1_0": [
+            { "condition": ["Normal"], "load": ["3"], "sample_rate": ["12000"] },
+            { "severity": ["0.007"], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"] }
+        ],
+        "fold_1_1": [
+            { "condition": ["Normal"], "load": ["0"], "sample_rate": ["12000"] },
+            { "severity": ["0.014"], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"] }
+        ],
+        "fold_1_2": [
+            { "condition": ["Normal"], "load": ["1"], "sample_rate": ["12000"] },
+            { "severity": ["0.021"], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"] }
+        ],
+        "fold_1_3": [
+            { "condition": ["Normal"], "load": ["2"], "sample_rate": ["12000"] },
+            { "severity": ["0.028"], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"] }
+        ]
+    },
+    "cross_validation_2": {
+        "fold_2_0": [
+            { "condition": ["Normal"], "load": ["2"], "sample_rate": ["12000"] },
+            { "severity": ["0.007"], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"] }
+        ],
+        "fold_2_1": [
+            { "condition": ["Normal"], "load": ["3"], "sample_rate": ["12000"] },
+            { "severity": ["0.014"], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"] }
+        ],
+        "fold_2_2": [
+            { "condition": ["Normal"], "load": ["0"], "sample_rate": ["12000"] },
+            { "severity": ["0.021"], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"] }
+        ],
+        "fold_2_3": [
+            { "condition": ["Normal"], "load": ["1"], "sample_rate": ["12000"] },
+            { "severity": ["0.028"], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"] }
+        ]
+    },
+    "cross_validation_3": {
+        "fold_3_0": [
+            { "condition": ["Normal"], "load": ["1"], "sample_rate": ["12000"] },
+            { "severity": ["0.007"], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"] }
+        ],
+        "fold_3_1": [
+            { "condition": ["Normal"], "load": ["2"], "sample_rate": ["12000"] },
+            { "severity": ["0.014"], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"] }
+        ],
+        "fold_3_2": [
+            { "condition": ["Normal"], "load": ["3"], "sample_rate": ["12000"] },
+            { "severity": ["0.021"], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"] }
+        ],
+        "fold_3_3": [
+            { "condition": ["Normal"], "load": ["0"], "sample_rate": ["12000"] },
+            { "severity": ["0.028"], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"] }
+        ]
+    },
+    "cross_validation_4": {
+        "fold_4_0": [
+            { "condition": ["Normal"], "load": ["0"], "sample_rate": ["12000"] },
+            { "severity": ["0.014"], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"] }
+        ],
+        "fold_4_1": [
+            { "condition": ["Normal"], "load": ["1"], "sample_rate": ["12000"] },
+            { "severity": ["0.007"], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"] }
+        ],
+        "fold_4_2": [
+            { "condition": ["Normal"], "load": ["2"], "sample_rate": ["12000"] },
+            { "severity": ["0.021"], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"] }
+        ],
+        "fold_4_3": [
+            { "condition": ["Normal"], "load": ["3"], "sample_rate": ["12000"] },
+            { "severity": ["0.028"], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"] }
+        ]
+    },
+    "cross_validation_5": {
+        "fold_5_0": [
+            { "condition": ["Normal"], "load": ["3"], "sample_rate": ["12000"] },
+            { "severity": ["0.014"], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"] }
+        ],
+        "fold_5_1": [
+            { "condition": ["Normal"], "load": ["0"], "sample_rate": ["12000"] },
+            { "severity": ["0.007"], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"] }
+        ],
+        "fold_5_2": [
+            { "condition": ["Normal"], "load": ["1"], "sample_rate": ["12000"] },
+            { "severity": ["0.021"], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"] }
+        ],
+        "fold_5_3": [
+            { "condition": ["Normal"], "load": ["2"], "sample_rate": ["12000"] },
+            { "severity": ["0.028"], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"] }
+        ]
+    },
+    "cross_validation_6": {
+        "fold_6_0": [
+            { "condition": ["Normal"], "load": ["2"], "sample_rate": ["12000"] },
+            { "severity": ["0.014"], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"] }
+        ],
+        "fold_6_1": [
+            { "condition": ["Normal"], "load": ["3"], "sample_rate": ["12000"] },
+            { "severity": ["0.007"], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"] }
+        ],
+        "fold_6_2": [
+            { "condition": ["Normal"], "load": ["0"], "sample_rate": ["12000"] },
+            { "severity": ["0.021"], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"] }
+        ],
+        "fold_6_3": [
+            { "condition": ["Normal"], "load": ["1"], "sample_rate": ["12000"] },
+            { "severity": ["0.028"], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"] }
+        ]
+    },
+    "cross_validation_7": {
+        "fold_7_0": [
+            { "condition": ["Normal"], "load": ["1"], "sample_rate": ["12000"] },
+            { "severity": ["0.014"], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"] }
+        ],
+        "fold_7_1": [
+            { "condition": ["Normal"], "load": ["2"], "sample_rate": ["12000"] },
+            { "severity": ["0.007"], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"] }
+        ],
+        "fold_7_2": [
+            { "condition": ["Normal"], "load": ["3"], "sample_rate": ["12000"] },
+            { "severity": ["0.021"], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"] }
+        ],
+        "fold_7_3": [
+            { "condition": ["Normal"], "load": ["0"], "sample_rate": ["12000"] },
+            { "severity": ["0.028"], "faulty_bearing": ["Drive End"], "sample_rate": ["12000"] }
+        ]
+    }
+}

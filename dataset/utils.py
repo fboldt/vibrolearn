@@ -231,3 +231,22 @@ def get_list_of_X_y(list_of_folds, raw_dir_path, channels_columns, segment_lengt
         list_of_X_y.append((X, y))
     return list_of_X_y
 
+
+def get_fold(fold_filters, config_file):
+    registers = read_registers_from_config(config_file)
+    fold = []
+    for fold_filter in fold_filters:
+        filtered = filter_registers_by_key_value_sequence(
+            registers, 
+            [[k, v] for k, v in fold_filter.items()])
+        fold.extend(filtered)
+    return fold
+
+
+def get_folds(combinations, combination_key, config_file):
+    folds = {}
+    for fold_key in combinations[combination_key]:
+        fold = get_fold(combinations[combination_key][fold_key], config_file=config_file)
+        folds[fold_key] = fold
+    return folds
+
