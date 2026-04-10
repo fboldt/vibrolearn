@@ -218,20 +218,6 @@ def get_channels_from_register(channels_columns, register):
     return channels
 
 
-def concatenate_data(list_of_X_y):
-    X_all = np.concatenate([X for X, _ in list_of_X_y], axis=0)
-    y_all = np.concatenate([y for _, y in list_of_X_y], axis=0)
-    return X_all, y_all
-
-
-def get_list_of_X_y(list_of_folds, raw_dir_path, channels_columns, segment_length, load_acquisition_func):
-    list_of_X_y = []
-    for fold in list_of_folds:
-        X, y = get_X_y(fold, raw_dir_path=raw_dir_path, channels_columns=channels_columns, segment_length=segment_length, load_acquisition_func=load_acquisition_func)
-        list_of_X_y.append((X, y))
-    return list_of_X_y
-
-
 def get_fold(fold_filters, config_file):
     registers = read_registers_from_config(config_file)
     fold = []

@@ -30,7 +30,11 @@ def load_function(registers, experimental_setup):
     channels_columns=experimental_setup["channels_columns"]
     segment_length=experimental_setup["segment_length"]
     load_acquisition_func=eval(experimental_setup["load_acquisition_func"])
-    X, y = get_X_y(registers, raw_dir_path=raw_dir_path, channels_columns=channels_columns, segment_length=segment_length, load_acquisition_func=load_acquisition_func)
+    X, y = get_X_y(registers, 
+                   raw_dir_path=raw_dir_path, 
+                   channels_columns=channels_columns, 
+                   segment_length=segment_length, 
+                   load_acquisition_func=load_acquisition_func)
     return X, y
 
 
@@ -38,7 +42,7 @@ def run_experiment(model, experimental_setup, list_of_metrics):
     model.set_load_function(lambda registers: load_function(registers, experimental_setup))
     scores = {}
     if experimental_setup["type"] == "train_test_split":
-        scores = perform_holdout_experiment(model, experimental_setup, list_of_metrics, scores)
+        scores["testing"] = perform_holdout_experiment(model, experimental_setup, list_of_metrics, scores)
     elif experimental_setup["type"] == "cross_validation":
         scores = perform_experimental_cross_validation(model, experimental_setup, list_of_metrics, scores)
     return scores
