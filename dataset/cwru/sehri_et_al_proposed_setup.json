@@ -1,0 +1,61 @@
+{
+    "config_file": "dataset/cwru/config.csv",
+    "raw_dir_path": "raw_data/cwru",
+    "channels_columns": ["DE"],
+    "segment_length": 1024,
+    "load_acquisition_func": "load_matlab_acquisition",
+    "type": "cross_validation",
+    "setup": {
+        "cross_validation_0": {
+            "fold_0_0": [ 
+                { "condition": ["Inner Race", "Outer Race", "Ball"], 
+                "severity":  ["0.007"], "sample_rate": ["48000"], 
+                "prlz": ["None", "6"]}
+            ],
+            "fold_0_1": [
+                { "condition": ["Inner Race", "Outer Race", "Ball"], 
+                "severity":  ["0.014"], "sample_rate": ["48000"], 
+                "prlz": ["None", "6"]}
+            ],
+            "fold_0_2": [ 
+                { "condition": ["Inner Race", "Outer Race", "Ball"], 
+                "severity":  ["0.021"], "sample_rate": ["48000"], 
+                "prlz": ["None", "6"]}
+            ]
+        },
+        "cross_validation_1": {
+            "fold_1_0": [ 
+                { "condition": ["Inner Race"], "severity": ["0.007"], "sample_rate": ["48000"] },
+                { "condition": ["Outer Race"], "severity": ["0.014"], "sample_rate": ["48000"], "prlz": ["6"]},
+                { "condition": ["Ball"],       "severity": ["0.021"], "sample_rate": ["48000"] }
+            ],
+            "fold_1_1": [ 
+                { "condition": ["Inner Race"], "severity": ["0.014"], "sample_rate": ["48000"] },
+                { "condition": ["Outer Race"], "severity": ["0.021"], "sample_rate": ["48000"], "prlz": ["6"]},
+                { "condition": ["Ball"],       "severity": ["0.007"], "sample_rate": ["48000"] }
+            ],
+            "fold_1_2": [ 
+                { "condition": ["Inner Race"], "severity": ["0.021"], "sample_rate": ["48000"] },
+                { "condition": ["Outer Race"], "severity": ["0.007"], "sample_rate": ["48000"], "prlz": ["6"]},
+                { "condition": ["Ball"],       "severity": ["0.014"], "sample_rate": ["48000"] }
+            ]
+        },
+        "cross_validation_2": {
+            "fold_2_0": [ 
+                { "condition": ["Inner Race"], "severity": ["0.007"], "sample_rate": ["48000"] },
+                { "condition": ["Outer Race"], "severity": ["0.021"], "sample_rate": ["48000"], "prlz": ["6"]},
+                { "condition": ["Ball"],       "severity": ["0.014"], "sample_rate": ["48000"] }
+            ],
+            "fold_2_1": [ 
+                { "condition": ["Inner Race"], "severity": ["0.014"], "sample_rate": ["48000"] },
+                { "condition": ["Outer Race"], "severity": ["0.007"], "sample_rate": ["48000"], "prlz": ["6"]},
+                { "condition": ["Ball"],       "severity": ["0.021"], "sample_rate": ["48000"] }
+            ],
+            "fold_2_2": [ 
+                { "condition": ["Inner Race"], "severity": ["0.021"], "sample_rate": ["48000"] },
+                { "condition": ["Outer Race"], "severity": ["0.014"], "sample_rate": ["48000"], "prlz": ["6"]},
+                { "condition": ["Ball"],       "severity": ["0.007"], "sample_rate": ["48000"] }
+            ]
+        }
+    }
+}

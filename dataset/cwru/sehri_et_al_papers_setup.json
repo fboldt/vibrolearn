@@ -1,0 +1,22 @@
+{
+    "config_file": "dataset/cwru/config.csv",
+    "raw_dir_path": "raw_data/cwru",
+    "channels_columns": ["DE"],
+    "segment_length": 1024,
+    "load_acquisition_func": "load_matlab_acquisition",
+    "type": "train_test_split",
+    "setup": { 
+        "holdout_0": {
+            "training": [ 
+                {   "condition":   ["Inner Race", "Outer Race", "Ball"], 
+                    "severity":    ["0.007", "0.014"], 
+                    "sample_rate": ["48000"], "prlz": ["None", "6"]}
+            ],
+            "testing": [
+                {   "condition":   ["Inner Race", "Outer Race", "Ball"], 
+                    "severity":    ["0.021"], "load": ["0"], 
+                    "sample_rate": ["48000"], "prlz": ["None", "6"]}
+            ]
+        }
+    }
+}
