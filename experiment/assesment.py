@@ -1,4 +1,13 @@
 from dataset.utils import get_X_y, get_folds, load_matlab_acquisition
+from sklearn.metrics import accuracy_score, confusion_matrix, f1_score
+
+
+def f1_macro(y_true, y_pred):
+    return f1_score(y_true, y_pred, average='macro')
+
+
+def get_list_of_metrics():
+    return [accuracy_score, f1_macro, confusion_matrix]
 
 
 def train_test_split(filters, test_fold_key):
@@ -38,8 +47,9 @@ def load_function(registers, experimental_setup):
     return X, y
 
 
-def run_experiment(model, experimental_setup, list_of_metrics):
+def run_experiment(model, experimental_setup):
     model.set_load_function(lambda registers: load_function(registers, experimental_setup))
+    list_of_metrics = get_list_of_metrics()
     scores = {}
     if experimental_setup["type"] == "train_test_split":
         scores["testing"] = perform_holdout_experiment(model, experimental_setup, list_of_metrics, scores)

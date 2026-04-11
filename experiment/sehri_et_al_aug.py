@@ -1,9 +1,9 @@
 import numpy as np
 from sklearn.metrics import confusion_matrix, accuracy_score
 from sqlalchemy.util import defaultdict
-from experiment.sehri_et_al import f1_macro, print_dict_of_scores, print_fold_scores
+from experiment.assesment import f1_macro, print_dict_of_scores, print_scores_list
 
-from utils.assesment import holdout
+from experiment.assesment import holdout
 from dataset.utils import (
     read_registers_from_config,
     filter_registers_by_key_value_sequence,
