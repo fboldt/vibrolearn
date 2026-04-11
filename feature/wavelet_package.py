@@ -1,4 +1,3 @@
-
 import numpy as np
 import pywt
 from sklearn.base import TransformerMixin
