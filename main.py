@@ -1,29 +1,24 @@
+import argparse
 import json
 
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
 
 from estimators.pipeline import Pipeline
-from feature.wavelet_package import WaveletPackage
-from feature.flatten import Flatten
 from experiment.assesment import print_scores_list, run_experiment
-
-import argparse
+from feature.wavelet_package import WaveletPackage
+from feature.extraction import *
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run vibrolearn with the following options:")
-    parser.add_argument("-d", "--debug", action="store_true", help="Run in debug mode")
-    parser.add_argument("-f", "--feature_extraction", type=str, help="The feature extraction method to use for the experiments (choices: WaveletPackage, Flatten)")
+    parser.add_argument("-f", "--feature_extraction", type=str, help="The feature extraction method to use for the experiments (choices: FlattenFeatures, StatisticalFeatures, HeterogeneousFeatures, WaveletFeatures)")
     parser.add_argument("-c", "--classifier", type=str, help="The classifier to use for the experiments (choices: RandomForestClassifier, KNeighborsClassifier)")
     parser.add_argument("-e", "--experimental_setup", type=str, help="The experimental setup file to run (mandatory)")
     
     args = parser.parse_args()
     if not any(vars(args).values()):
         parser.print_help()
-    
-    if args.debug:
-        print("Running in debug mode")
     
     steps = []
 
@@ -51,4 +46,6 @@ if __name__ == "__main__":
         experimental_setup = json.load(open(args.experimental_setup, "r"))
         list_of_scores = run_experiment(pipe, experimental_setup)
         print_scores_list(list_of_scores)
+    elif not args.experimental_setup:
+        print("No experimental setup specified, please provide one using the -e or --experimental_setup argument")
 
