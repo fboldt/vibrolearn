@@ -5,9 +5,9 @@ from os import path
 
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
+from estimators.cnn_lstm import CNNLSTMClassifier
 
 from estimators.pipeline import Pipeline
-from estimators.cnn_lstm import CNNLSTMClassifier
 from dataset.loader import augmented
 from experiment.assesment import run_experiment, save_scores
 from feature.extraction import *
@@ -59,6 +59,9 @@ if __name__ == "__main__":
                 batch_size=64,
                 learning_rate=0.001,
                 device="cuda",
+                early_stopping_patience=20,
+                min_delta=1e-4,
+                checkpoint_path="best_cnn_lstm.pt",
                 verbose=True
             )
         else:
