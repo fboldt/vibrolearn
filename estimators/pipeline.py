@@ -9,7 +9,9 @@ def timed_load(loader, registers, experimental_setup):
 
 
 @timed(return_time=True, use_seconds=True)
-def timed_fit(pipe, X, y):
+def timed_fit(pipe, X, y, domains=None):
+    if domains is not None:
+        return pipe.fit(X, y, feature_selection__domains=domains)
     return pipe.fit(X, y)
 
 
@@ -27,14 +29,32 @@ class Pipeline():
   
     def train(self, list_of_registers, experimental_setup):
         self.experimental_setup = experimental_setup
-        (X, y), load_time = timed_load(self.train_loader, list_of_registers, self.experimental_setup)
+        loaded_data, load_time = timed_load(
+            self.train_loader,
+            list_of_registers,
+            self.experimental_setup
+        )
+        if len(loaded_data) == 3:
+            X, y, domains = loaded_data
+        else:
+            X, y = loaded_data
+            domains = None
         self.scores["load_data_time"] = load_time
-        _, training_time = timed_fit(self.pipe, X, y)
+        _, training_time = timed_fit(self.pipe, X, y, domains=domains)
         self.scores["training_time"] = training_time
         return self
     
     def evaluate(self, list_of_registers, list_of_metrics):
-        (X, y), _ = timed_load(self.evaluate_loader, list_of_registers, self.experimental_setup)
+        # (X, y, _), _ = timed_load(self.evaluate_loader, list_of_registers, self.experimental_setup)
+        loaded_data, _ = timed_load(
+            self.evaluate_loader,
+            list_of_registers,
+            self.experimental_setup
+        )
+        if len(loaded_data) == 3:
+            X, y, _ = loaded_data
+        else:
+            X, y = loaded_data
         y_pred, prediction_time = timed_predict(self.pipe, X)
         self.scores["prediction_time"] = prediction_time
         scores = {}
@@ -42,4 +62,3 @@ class Pipeline():
             scores[metric.__name__] = metric(y, y_pred)
         self.scores = self.scores | scores
         return self.scores
-

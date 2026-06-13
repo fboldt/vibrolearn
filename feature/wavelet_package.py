@@ -1,6 +1,6 @@
 import numpy as np
 import pywt
-from sklearn.base import TransformerMixin
+from sklearn.base import BaseEstimator, TransformerMixin
 
 
 def Energy(coeffs, k):
@@ -22,8 +22,8 @@ def wavelist(kind='discrete'):
     return pywt.wavelist(kind=kind)
 
 
-class WaveletPackage(TransformerMixin):
-    def __init__(self, wavelet='db4', mode='symmetric', maxlevel=4):
+class WaveletPackage(BaseEstimator, TransformerMixin):
+    def __init__(self, wavelet='db4', mode='symmetric', maxlevel=8):
         super().__init__()
         self.wavelet = wavelet
         self.mode = mode
@@ -39,6 +39,7 @@ class WaveletPackage(TransformerMixin):
         return features
 
     def fit(self, X, y=None):
+        self.is_fitted_ = True
         return self
     
     def transform(self, X, y=None):

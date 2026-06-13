@@ -1,3 +1,0 @@
-experiment,accuracy_mean,accuracy_std,f1_mean,f1_std
-No augmentation,0.3678,0.0036,0.2730,0.0028
-With augmentation,0.3768,0.0050,0.2857,0.0027

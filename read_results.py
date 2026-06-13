@@ -1,98 +1,158 @@
 import json
-import pandas as pd
 from pathlib import Path
 
-from sqlalchemy import table
+import numpy as np
 
 
-RESULTS_DIR = Path("results")
+def compile_experiment_results(
+    input_dir,
+    output_filename="compiled_results.json"
+):
+    """
+    Compile multiple experiment JSON files into a single summary JSON.
 
+    Parameters
+    ----------
+    input_dir : str
+        Directory containing experiment JSON files.
 
-def parse_scores(json_file, experiment_name):
-    rows = []
+    output_filename : str
+        Name of the output JSON file.
 
-    with open(json_file, "r", encoding="utf-8") as f:
-        data = json.load(f)
+    Output
+    ------
+    Creates a JSON file containing:
+    - Mean and std of accuracy_score per domain
+    - Mean and std of f1_macro per domain
+    - Mean load_data_time per domain
+    - Mean training_time per domain
+    - Mean prediction_time per domain
+    - Global mean/std across domains
+    """
 
-    for key, values in data["scores"].items():
-        _, round_id, fold_id = key.split("_")
+    input_dir = Path(input_dir)
 
-        rows.append({
-            "experiment": experiment_name,
-            "round": int(round_id) + 1,  # rounds 1–8
-            "accuracy": values["accuracy_score"],
-            "f1_macro": values["f1_macro"]
-        })
+    json_files = sorted(input_dir.glob("*.json"))
 
-    return rows
+    if len(json_files) == 0:
+        raise ValueError(f"No JSON files found in: {input_dir}")
 
+    # Store metrics grouped by domain
+    domain_metrics = {}
 
-def load_all(pattern, experiment_name):
-    rows = []
+    for json_file in json_files:
 
-    for file_path in RESULTS_DIR.glob(pattern):
-        rows.extend(parse_scores(file_path, experiment_name))
+        with open(json_file, "r") as f:
+            data = json.load(f)
 
-    return pd.DataFrame(rows)
+        scores = data.get("scores", {})
 
+        for domain_name, metrics in scores.items():
 
-def compute_table(df):
-    # média e std por round
-    round_stats = (
-        df.groupby(["experiment", "round"])
-        .agg({
-            "accuracy": ["mean", "std"],
-            "f1_macro": ["mean", "std"]
-        })
-    )
+            if domain_name not in domain_metrics:
+                domain_metrics[domain_name] = {
+                    "accuracy_score": [],
+                    "f1_macro": [],
+                    "load_data_time": [],
+                    "training_time": [],
+                    "prediction_time": []
+                }
 
-    round_stats.columns = [
-        "accuracy_mean", "accuracy_std",
-        "f1_mean", "f1_std"
-    ]
+            domain_metrics[domain_name]["accuracy_score"].append(
+                metrics["accuracy_score"]
+            )
 
-    round_stats = round_stats.reset_index()
+            domain_metrics[domain_name]["f1_macro"].append(
+                metrics["f1_macro"]
+            )
 
-    # média e std geral
-    overall_stats = (
-        df.groupby("experiment")
-        .agg({
-            "accuracy": ["mean", "std"],
-            "f1_macro": ["mean", "std"]
-        })
-    )
+            domain_metrics[domain_name]["load_data_time"].append(
+                metrics["load_data_time"]
+            )
 
-    overall_stats.columns = [
-        "accuracy_mean", "accuracy_std",
-        "f1_mean", "f1_std"
-    ]
+            domain_metrics[domain_name]["training_time"].append(
+                metrics["training_time"]
+            )
 
-    overall_stats = overall_stats.reset_index()
-    overall_stats["round"] = "Mean"
+            domain_metrics[domain_name]["prediction_time"].append(
+                metrics["prediction_time"]
+            )
 
-    # juntar
-    final = pd.concat([round_stats, overall_stats], ignore_index=True)
+    compiled_results = {
+        "num_experiments": len(json_files),
+        "domains": {}
+    }
 
-    return final
+    # Used later to compute global statistics
+    domain_accuracy_means = []
+    domain_f1_means = []
 
+    # Compile statistics per domain
+    for domain_name in sorted(domain_metrics.keys()):
 
-def main():
-    df_no_aug = load_all("rauber_de_fe_setup__*.json", "No augmentation")
-    df_aug = load_all("rauber_de_fe_setup_aug_*.json", "With augmentation")
+        acc_values = domain_metrics[domain_name]["accuracy_score"]
+        f1_values = domain_metrics[domain_name]["f1_macro"]
 
-    df = pd.concat([df_no_aug, df_aug], ignore_index=True)
+        load_values = domain_metrics[domain_name]["load_data_time"]
+        train_values = domain_metrics[domain_name]["training_time"]
+        pred_values = domain_metrics[domain_name]["prediction_time"]
 
-    table = compute_table(df)
+        acc_mean = float(np.mean(acc_values))
+        acc_std = float(np.std(acc_values))
 
-    # ordenar corretamente (1–8 + Mean)
-    table["round_order"] = table["round"].apply(lambda x: 999 if x == "Mean" else int(x))
-    table = table.sort_values(["experiment", "round_order"]).drop(columns="round_order")
+        f1_mean = float(np.mean(f1_values))
+        f1_std = float(np.std(f1_values))
 
-    # salvar
-    table.to_csv("table_round_mean_std.csv", index=False, float_format="%.4f")
+        load_mean = float(np.mean(load_values))
+        train_mean = float(np.mean(train_values))
+        pred_mean = float(np.mean(pred_values))
 
-    print(table)
+        domain_accuracy_means.append(acc_mean)
+        domain_f1_means.append(f1_mean)
 
+        compiled_results["domains"][domain_name] = {
+            "accuracy_score": {
+                "mean": acc_mean,
+                "std": acc_std
+            },
+            "f1_macro": {
+                "mean": f1_mean,
+                "std": f1_std
+            },
+            "load_data_time": {
+                "mean": load_mean
+            },
+            "training_time": {
+                "mean": train_mean
+            },
+            "prediction_time": {
+                "mean": pred_mean
+            }
+        }
+
+    # Global statistics across domains
+    compiled_results["overall"] = {
+        "accuracy_score": {
+            "mean_across_domains": float(np.mean(domain_accuracy_means)),
+            "std_across_domains": float(np.std(domain_accuracy_means))
+        },
+        "f1_macro": {
+            "mean_across_domains": float(np.mean(domain_f1_means)),
+            "std_across_domains": float(np.std(domain_f1_means))
+        }
+    }
+
+    output_path = input_dir / output_filename
+
+    with open(output_path, "w") as f:
+        json.dump(compiled_results, f, indent=4)
+
+    print(f"Compiled results saved to: {output_path}")
+
+    return compiled_results
 
 if __name__ == "__main__":
-    main()
+    output_filename = "compiled_results.json"
+    for i in [14, 16, 18, 20]:
+        input_directory = f"results_paper/rf_wpd_sdfs_k16/alpha_{i}"
+        compile_experiment_results(input_directory, output_filename)

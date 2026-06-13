@@ -13,54 +13,27 @@ class CNNLSTMNet(nn.Module):
         super().__init__()
 
         self.conv1 = nn.Sequential(
-            nn.Conv1d(
-                in_channels=1,
-                out_channels=32,
-                kernel_size=7,
-                stride=1,
-                padding=3
-            ),
+            nn.Conv1d(1, 32, kernel_size=7, stride=1, padding=3),
             nn.BatchNorm1d(32),
             nn.ReLU()
         )
 
         self.conv2 = nn.Sequential(
-            nn.Conv1d(
-                in_channels=32,
-                out_channels=64,
-                kernel_size=5,
-                stride=1,
-                padding=2
-            ),
+            nn.Conv1d(32, 64, kernel_size=5, stride=1, padding=2),
             nn.BatchNorm1d(64),
             nn.ReLU()
         )
 
-        self.maxpool = nn.MaxPool1d(
-            kernel_size=2,
-            stride=2
-        )
+        self.maxpool = nn.MaxPool1d(kernel_size=2, stride=2)
 
         self.conv3 = nn.Sequential(
-            nn.Conv1d(
-                in_channels=64,
-                out_channels=128,
-                kernel_size=3,
-                stride=1,
-                padding=1
-            ),
+            nn.Conv1d(64, 128, kernel_size=3, stride=1, padding=1),
             nn.BatchNorm1d(128),
             nn.ReLU()
         )
 
         self.conv4 = nn.Sequential(
-            nn.Conv1d(
-                in_channels=128,
-                out_channels=256,
-                kernel_size=3,
-                stride=1,
-                padding=1
-            ),
+            nn.Conv1d(128, 256, kernel_size=3, stride=1, padding=1),
             nn.BatchNorm1d(256),
             nn.ReLU()
         )
@@ -90,7 +63,6 @@ class CNNLSTMNet(nn.Module):
         self.output = nn.Linear(256, num_classes)
 
     def forward(self, x):
-        # Input shape: (batch_size, seq_len, channels)
         x = x.permute(0, 2, 1)
 
         x = self.conv1(x)
@@ -99,15 +71,10 @@ class CNNLSTMNet(nn.Module):
         x = self.conv3(x)
         x = self.conv4(x)
 
-        # Shape: (batch_size, channels, seq_len)
-        # LSTM expects: (batch_size, seq_len, features)
         x = x.permute(0, 2, 1)
 
         _, (hidden, _) = self.lstm(x)
 
-        # Bidirectional LSTM:
-        # hidden[-2] = last forward hidden state
-        # hidden[-1] = last backward hidden state
         x = torch.cat((hidden[-2], hidden[-1]), dim=1)
 
         x = self.fc1(x)
@@ -128,7 +95,8 @@ class CNNLSTMClassifier(ClassifierMixin, BaseEstimator):
         verbose=True,
         early_stopping_patience=10,
         min_delta=0.0,
-        checkpoint_path="best_cnn_lstm.pt"
+        checkpoint_path="best_cnn_lstm.pt",
+        use_rms_normalization=True
     ):
         self.epochs = epochs
         self.batch_size = batch_size
@@ -138,13 +106,17 @@ class CNNLSTMClassifier(ClassifierMixin, BaseEstimator):
         self.early_stopping_patience = early_stopping_patience
         self.min_delta = min_delta
         self.checkpoint_path = checkpoint_path
+        self.use_rms_normalization = use_rms_normalization
 
-    def fit(self, X, y):
-        X = np.asarray(X, dtype=np.float32)
+    def fit(self, X, y, X_val=None, y_val=None):
+        X = self._prepare_input(X)
         y = np.asarray(y)
 
-        if X.ndim == 2:
-            X = X[..., np.newaxis]
+        has_validation = X_val is not None and y_val is not None
+
+        if has_validation:
+            X_val = self._prepare_input(X_val)
+            y_val = np.asarray(y_val)
 
         if self.device == "cuda" and not torch.cuda.is_available():
             self.device_ = "cpu"
@@ -168,20 +140,44 @@ class CNNLSTMClassifier(ClassifierMixin, BaseEstimator):
             dtype=np.int64
         )
 
+        if has_validation:
+            unknown_labels = set(y_val) - set(self.classes_)
+
+            if unknown_labels:
+                raise ValueError(
+                    f"Validation set contains labels not present in training set: "
+                    f"{unknown_labels}"
+                )
+
+            y_val_encoded = np.array(
+                [self.class_to_index_[label] for label in y_val],
+                dtype=np.int64
+            )
+
         self.model_ = CNNLSTMNet(
             num_classes=len(self.classes_)
         ).to(self.device_)
 
-        dataset = TensorDataset(
-            torch.tensor(X, dtype=torch.float32),
-            torch.tensor(y_encoded, dtype=torch.long)
-        )
-
-        loader = DataLoader(
-            dataset,
+        train_loader = DataLoader(
+            TensorDataset(
+                torch.tensor(X, dtype=torch.float32),
+                torch.tensor(y_encoded, dtype=torch.long)
+            ),
             batch_size=self.batch_size,
             shuffle=True
         )
+
+        val_loader = None
+
+        if has_validation:
+            val_loader = DataLoader(
+                TensorDataset(
+                    torch.tensor(X_val, dtype=torch.float32),
+                    torch.tensor(y_val_encoded, dtype=torch.long)
+                ),
+                batch_size=self.batch_size,
+                shuffle=False
+            )
 
         criterion = nn.CrossEntropyLoss()
 
@@ -190,53 +186,49 @@ class CNNLSTMClassifier(ClassifierMixin, BaseEstimator):
             lr=self.learning_rate
         )
 
-        best_loss = float("inf")
+        best_score = -float("inf")
         best_epoch = 0
         best_model_state = None
+        best_metric_name = "val_accuracy" if has_validation else "train_accuracy"
         epochs_without_improvement = 0
 
         self.history_ = {
             "train_loss": [],
-            "train_accuracy": []
+            "train_accuracy": [],
+            "val_loss": [],
+            "val_accuracy": []
         }
 
         for epoch in range(self.epochs):
-            self.model_.train()
+            train_loss, train_accuracy = self._train_one_epoch(
+                train_loader,
+                criterion,
+                optimizer
+            )
 
-            total_loss = 0.0
-            correct = 0
-            total = 0
-
-            for xb, yb in loader:
-                xb = xb.to(self.device_)
-                yb = yb.to(self.device_)
-
-                optimizer.zero_grad()
-
-                outputs = self.model_(xb)
-                loss = criterion(outputs, yb)
-
-                loss.backward()
-                optimizer.step()
-
-                batch_size = xb.size(0)
-
-                total_loss += loss.item() * batch_size
-
-                preds = torch.argmax(outputs, dim=1)
-                correct += (preds == yb).sum().item()
-                total += yb.size(0)
-
-            avg_loss = total_loss / total
-            train_accuracy = correct / total
-
-            self.history_["train_loss"].append(avg_loss)
+            self.history_["train_loss"].append(train_loss)
             self.history_["train_accuracy"].append(train_accuracy)
 
-            improved = avg_loss < (best_loss - self.min_delta)
+            if has_validation:
+                val_loss, val_accuracy = self._evaluate_loader(
+                    val_loader,
+                    criterion
+                )
+
+                self.history_["val_loss"].append(val_loss)
+                self.history_["val_accuracy"].append(val_accuracy)
+
+                checkpoint_score = val_accuracy
+            else:
+                val_loss = None
+                val_accuracy = None
+
+                checkpoint_score = train_accuracy
+
+            improved = checkpoint_score > (best_score + self.min_delta)
 
             if improved:
-                best_loss = avg_loss
+                best_score = checkpoint_score
                 best_epoch = epoch + 1
                 epochs_without_improvement = 0
 
@@ -250,25 +242,38 @@ class CNNLSTMClassifier(ClassifierMixin, BaseEstimator):
                             "epoch": best_epoch,
                             "model_state_dict": best_model_state,
                             "optimizer_state_dict": optimizer.state_dict(),
-                            "best_loss": best_loss,
+                            "best_score": best_score,
+                            "checkpoint_metric": best_metric_name,
                             "classes": self.classes_,
                             "class_to_index": self.class_to_index_,
-                            "index_to_class": self.index_to_class_
+                            "index_to_class": self.index_to_class_,
+                            "used_validation": has_validation,
+                            "use_rms_normalization": self.use_rms_normalization
                         },
                         self.checkpoint_path
                     )
-
             else:
                 epochs_without_improvement += 1
 
             if self.verbose:
-                print(
-                    f"Epoch [{epoch + 1}/{self.epochs}] - "
-                    f"Loss: {avg_loss:.4f} - "
-                    f"Train Acc: {train_accuracy:.4f} - "
-                    f"Best Loss: {best_loss:.4f} - "
-                    f"Best Epoch: {best_epoch}"
-                )
+                if has_validation:
+                    print(
+                        f"Epoch [{epoch + 1}/{self.epochs}] - "
+                        f"Loss: {train_loss:.4f} - "
+                        f"Train Acc: {train_accuracy:.4f} - "
+                        f"Val Loss: {val_loss:.4f} - "
+                        f"Val Acc: {val_accuracy:.4f} - "
+                        f"Best Val Acc: {best_score:.4f} - "
+                        f"Best Epoch: {best_epoch}"
+                    )
+                else:
+                    print(
+                        f"Epoch [{epoch + 1}/{self.epochs}] - "
+                        f"Loss: {train_loss:.4f} - "
+                        f"Train Acc: {train_accuracy:.4f} - "
+                        f"Best Train Acc: {best_score:.4f} - "
+                        f"Best Epoch: {best_epoch}"
+                    )
 
             if (
                 self.early_stopping_patience is not None
@@ -278,23 +283,22 @@ class CNNLSTMClassifier(ClassifierMixin, BaseEstimator):
                     print(
                         f"Early stopping at epoch {epoch + 1}. "
                         f"Best epoch: {best_epoch} - "
-                        f"Best loss: {best_loss:.4f}"
+                        f"Best {best_metric_name}: {best_score:.4f}"
                     )
                 break
 
         if best_model_state is not None:
             self.model_.load_state_dict(best_model_state)
 
-        self.best_loss_ = best_loss
+        self.best_score_ = best_score
         self.best_epoch_ = best_epoch
+        self.best_metric_name_ = best_metric_name
+        self.used_validation_ = has_validation
 
         return self
 
     def predict(self, X):
-        X = np.asarray(X, dtype=np.float32)
-
-        if X.ndim == 2:
-            X = X[..., np.newaxis]
+        X = self._prepare_input(X)
 
         self.model_.eval()
 
@@ -322,3 +326,87 @@ class CNNLSTMClassifier(ClassifierMixin, BaseEstimator):
     def score(self, X, y):
         y_pred = self.predict(X)
         return np.mean(y_pred == np.asarray(y))
+
+    def _prepare_input(self, X):
+        X = np.asarray(X, dtype=np.float32)
+
+        if X.ndim == 2:
+            X = X[..., np.newaxis]
+
+        if X.ndim != 3:
+            raise ValueError(
+                f"Expected X with shape (n_samples, seq_len) or "
+                f"(n_samples, seq_len, channels), got shape {X.shape}"
+            )
+
+        if self.use_rms_normalization:
+            X = self._rms_normalize(X)
+
+        return X
+
+    def _rms_normalize(self, X):
+        rms = np.sqrt(
+            np.mean(X ** 2, axis=1, keepdims=True)
+        )
+
+        return X / (rms + 1e-8)
+
+    def _train_one_epoch(self, train_loader, criterion, optimizer):
+        self.model_.train()
+
+        total_loss = 0.0
+        correct = 0
+        total = 0
+
+        for xb, yb in train_loader:
+            xb = xb.to(self.device_)
+            yb = yb.to(self.device_)
+
+            optimizer.zero_grad()
+
+            outputs = self.model_(xb)
+            loss = criterion(outputs, yb)
+
+            loss.backward()
+            optimizer.step()
+
+            batch_size = xb.size(0)
+
+            total_loss += loss.item() * batch_size
+
+            preds = torch.argmax(outputs, dim=1)
+            correct += (preds == yb).sum().item()
+            total += yb.size(0)
+
+        avg_loss = total_loss / total
+        accuracy = correct / total
+
+        return avg_loss, accuracy
+
+    def _evaluate_loader(self, loader, criterion):
+        self.model_.eval()
+
+        total_loss = 0.0
+        correct = 0
+        total = 0
+
+        with torch.no_grad():
+            for xb, yb in loader:
+                xb = xb.to(self.device_)
+                yb = yb.to(self.device_)
+
+                outputs = self.model_(xb)
+                loss = criterion(outputs, yb)
+
+                batch_size = xb.size(0)
+
+                total_loss += loss.item() * batch_size
+
+                preds = torch.argmax(outputs, dim=1)
+                correct += (preds == yb).sum().item()
+                total += yb.size(0)
+
+        avg_loss = total_loss / total
+        accuracy = correct / total
+
+        return avg_loss, accuracy

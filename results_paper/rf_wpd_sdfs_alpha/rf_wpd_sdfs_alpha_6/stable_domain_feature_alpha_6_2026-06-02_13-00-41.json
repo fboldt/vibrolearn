@@ -1,0 +1,106 @@
+{
+  "experiment_name": "sehri_khalilian_et_al_setup",
+  "feature_extraction": "WaveletFeatures",
+  "classifier": "RandomForestClassifier",
+  "augmentation": false,
+  "start_time": "2026-06-02_12-51-27",
+  "scores": {
+    "domains_1": {
+      "load_data_time": 0.07151755,
+      "training_time": 38.663903555,
+      "prediction_time": 5.208542353,
+      "accuracy_score": 0.7285115303983228,
+      "f1_macro": 0.7187281310104346,
+      "confusion_matrix": "[[124 110   0   4]\n [  1 233   0   4]\n [  0   0 238   0]\n [ 39 101   0 100]]"
+    },
+    "domains_2": {
+      "load_data_time": 0.082297226,
+      "training_time": 38.736909475,
+      "prediction_time": 5.210693955,
+      "accuracy_score": 0.6462836056931998,
+      "f1_macro": 0.609531966814077,
+      "confusion_matrix": "[[ 59 385   0  31]\n [  2 467   0   4]\n [  0   0 472   0]\n [118 131   0 228]]"
+    },
+    "domains_3": {
+      "load_data_time": 0.069946514,
+      "training_time": 38.805124112,
+      "prediction_time": 5.221738644,
+      "accuracy_score": 0.6610614818707304,
+      "f1_macro": 0.6384388774985436,
+      "confusion_matrix": "[[108 351   0  16]\n [  2 451   0  26]\n [  0   0 473   0]\n [ 84 166   0 226]]"
+    },
+    "domains_4": {
+      "load_data_time": 0.127240697,
+      "training_time": 38.751861303,
+      "prediction_time": 2.626206709,
+      "accuracy_score": 0.7262217551234892,
+      "f1_macro": 0.7166131207258208,
+      "confusion_matrix": "[[238 230   0   7]\n [  0 477   0   0]\n [  0   0 474   0]\n [ 51 233   0 193]]"
+    },
+    "domains_5": {
+      "load_data_time": 0.078679049,
+      "training_time": 38.869323214,
+      "prediction_time": 2.623381332,
+      "accuracy_score": 0.7331932773109243,
+      "f1_macro": 0.6542283015505257,
+      "confusion_matrix": "[[225   0   0  14]\n [  0   0   0 238]\n [  0   0 238   0]\n [  1   1   0 235]]"
+    },
+    "domains_6": {
+      "load_data_time": 0.094223168,
+      "training_time": 38.790536947,
+      "prediction_time": 2.628453358,
+      "accuracy_score": 0.7363445378151261,
+      "f1_macro": 0.656784188034188,
+      "confusion_matrix": "[[228   1   0  10]\n [  0   0   0 238]\n [  0   0 238   0]\n [  1   1   0 235]]"
+    },
+    "domains_7": {
+      "load_data_time": 0.083943342,
+      "training_time": 38.85633895,
+      "prediction_time": 2.630990103,
+      "accuracy_score": 0.7363445378151261,
+      "f1_macro": 0.6565696675161501,
+      "confusion_matrix": "[[229   1   0   9]\n [  0   0   0 238]\n [  0   0 238   0]\n [  2   1   0 234]]"
+    },
+    "domains_8": {
+      "load_data_time": 0.085193582,
+      "training_time": 39.612308314,
+      "prediction_time": 2.102654796,
+      "accuracy_score": 0.7394957983193278,
+      "f1_macro": 0.6591001963240324,
+      "confusion_matrix": "[[231   1   0   7]\n [  0   0   0 238]\n [  0   0 238   0]\n [  1   1   0 235]]"
+    },
+    "domains_9": {
+      "load_data_time": 0.07114086,
+      "training_time": 39.602033393,
+      "prediction_time": 4.964717443,
+      "accuracy_score": 0.6202046035805626,
+      "f1_macro": 0.4410416284613974,
+      "confusion_matrix": "[[242   1   0   0]\n [ 57   5   0   0]\n [  0   0 238   0]\n [237   2   0   0]]"
+    },
+    "domains_10": {
+      "load_data_time": 0.08968341,
+      "training_time": 39.409902055,
+      "prediction_time": 5.214206969,
+      "accuracy_score": 0.5756560580681184,
+      "f1_macro": 0.48561957939852163,
+      "confusion_matrix": "[[468   0   4   2]\n [282  89   0   1]\n [  0   0 472   0]\n [471   0   0   2]]"
+    },
+    "domains_11": {
+      "load_data_time": 0.100660859,
+      "training_time": 39.46239896,
+      "prediction_time": 5.237733664,
+      "accuracy_score": 0.5334386519220643,
+      "f1_macro": 0.4502472843736213,
+      "confusion_matrix": "[[461   5   1   8]\n [408  68   0   0]\n [  0   0 473   0]\n [463   1   0  11]]"
+    },
+    "domains_12": {
+      "load_data_time": 0.100660859,
+      "training_time": 39.46239896,
+      "prediction_time": 5.237733664,
+      "accuracy_score": 0.5260663507109005,
+      "f1_macro": 0.44518980024502713,
+      "confusion_matrix": "[[448   3  10  14]\n [397  57   1  18]\n [  0   0 474   0]\n [455   0   2  20]]"
+    }
+  },
+  "end_time": "2026-06-02_13-00-41"
+}
