@@ -8,12 +8,10 @@ class StableDomainFeatureSelector(BaseEstimator, TransformerMixin):
     def __init__(
         self,
         k=8,
-        score_func="mutual_info",
         alpha=0.5,
         random_state=None
     ):
         self.k = k
-        self.score_func = score_func
         self.alpha = alpha
         self.random_state = random_state
 
