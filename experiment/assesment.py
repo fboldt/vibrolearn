@@ -1,5 +1,5 @@
 import json
-
+import os
 from dataset.utils import get_folds
 from sklearn.metrics import accuracy_score, confusion_matrix, f1_score
 
@@ -72,6 +72,7 @@ def print_dict_of_scores(scores):
 
 
 def save_scores(scores, output_file):
+    os.makedirs(os.path.dirname(output_file), exist_ok=True)
     with open(output_file, "w") as f:
         json.dump(scores, f, indent=2, default=str)
     print(f"Saved scores to: {output_file}")

@@ -237,10 +237,59 @@ def get_X_y_domains(
     return X, y, domains
 
 
-def extract_segments_and_targets(raw_dir_path, channels_columns, segment_length, load_acquisition_func, register):
-    acquisition = get_acquisition_data(raw_dir_path, channels_columns, load_acquisition_func, register)
-    segments, targets = prepare_segments_and_targets(segment_length, register, acquisition)
-    return segments,targets
+# def extract_segments_and_targets(raw_dir_path, channels_columns, segment_length, load_acquisition_func, register):
+#     acquisition = get_acquisition_data(raw_dir_path, channels_columns, load_acquisition_func, register)
+#     segments, targets = prepare_segments_and_targets(segment_length, register, acquisition)
+#     return segments,targets
+
+def extract_segments_and_targets(
+    raw_dir_path,
+    channels_columns,
+    segment_length,
+    load_acquisition_func,
+    register
+):
+    acquisition = get_acquisition_data(
+        raw_dir_path,
+        channels_columns,
+        load_acquisition_func,
+        register
+    )
+
+    # Define o número máximo de pontos por aquisição
+    fault_class = register["condition"]
+
+    if fault_class == "Normal":
+        max_samples = 184000
+
+    elif fault_class in ["Inner Race", "Outer Race", "Ball"]:
+        max_samples = 120000#61440
+
+    else:
+        raise ValueError(
+            f"Classe desconhecida: {fault_class}"
+        )
+
+    # Verifica se a aquisição possui pontos suficientes
+    if acquisition.shape[0] < max_samples:
+        max_samples = acquisition.shape[0]
+        # raise ValueError(
+        #     f"A aquisição da classe {fault_class} possui apenas "
+        #     f"{acquisition.shape[0]} pontos, mas são necessários "
+        #     f"{max_samples}."
+        # )
+
+    # Mantém exatamente a quantidade definida
+    acquisition = acquisition[:max_samples]
+
+    # Segmentação
+    segments, targets = prepare_segments_and_targets(
+        segment_length,
+        register,
+        acquisition
+    )
+
+    return segments, targets
 
 
 def prepare_segments_and_targets(segment_length, register, acquisition):

@@ -1,5 +1,5 @@
 from sklearn.pipeline import Pipeline as SklearnPipeline
-from dataset.loader import vanilla
+from dataset.loader import vanilla, augmented
 from timed_decorator.simple_timed import timed
 
 
@@ -24,7 +24,7 @@ class Pipeline():
     def __init__(self, steps):
         self.pipe = SklearnPipeline(steps)
         self.scores = {}
-        self.train_loader = vanilla
+        self.train_loader = augmented
         self.evaluate_loader = vanilla
   
     def train(self, list_of_registers, experimental_setup):

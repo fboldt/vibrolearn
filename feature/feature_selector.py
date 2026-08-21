@@ -17,7 +17,7 @@ class StableDomainFeatureSelector(BaseEstimator, TransformerMixin):
         self.alpha = alpha
         self.random_state = random_state
 
-    def fit(self, X, y, domains=None):       
+    def fit(self, X, y, domains=None):
         X = np.asarray(X)
         y = np.asarray(y)
         domains = np.asarray(domains)

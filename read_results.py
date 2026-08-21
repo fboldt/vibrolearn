@@ -153,6 +153,8 @@ def compile_experiment_results(
 
 if __name__ == "__main__":
     output_filename = "compiled_results.json"
-    for i in [14, 16, 18, 20]:
-        input_directory = f"results_paper/rf_wpd_sdfs_k16/alpha_{i}"
+    # input_directory = f"results_paper/rf_statistical"
+    # compile_experiment_results(input_directory, output_filename)
+    for i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]:
+        input_directory = f"results_paper/rf_statistical_sdfs_k8/alpha_{i}"
         compile_experiment_results(input_directory, output_filename)

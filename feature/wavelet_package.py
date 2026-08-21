@@ -12,7 +12,7 @@ def getEnergy(wp):
   return np.asarray([Energy(coefs,i) for i in range(2**wp.maxlevel)])
 
 
-def extract_features(X, wavelet='db4', mode='symmetric', maxlevel=4):
+def extract_features(X, wavelet='db4', mode='symmetric', maxlevel=8):
     wp = [pywt.WaveletPacket(data=x, wavelet=wavelet, mode=mode, maxlevel=maxlevel) for x in X]
     features = np.array([getEnergy(wp_i) for wp_i in wp])
     return features

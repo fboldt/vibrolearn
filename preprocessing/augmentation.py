@@ -25,16 +25,16 @@ def augment_acquisition(list_of_registers, experimental_setup):
     conditions = get_values_by_key(list_of_registers, "condition")
     X, y, = [], []
     for condition in conditions:
-        X_agregated_sev, y_agregated_sev = aggregate_severity_acquisitions(list_of_registers, condition, experimental_setup)
-        if X_agregated_sev is None or y_agregated_sev is None:
-            continue
+        # X_agregated_sev, y_agregated_sev = aggregate_severity_acquisitions(list_of_registers, condition, experimental_setup)
+        # if X_agregated_sev is None or y_agregated_sev is None:
+        #     continue
         X_agregated_load, y_agregated_load = aggregate_load_acquistions(list_of_registers, condition, experimental_setup)
         if X_agregated_load is None or y_agregated_load is None:
             continue
-        X_agregated = np.concatenate([X_agregated_sev, X_agregated_load], axis=0)
-        y_agregated = np.concatenate([y_agregated_sev, y_agregated_load], axis=0)
-        X.append(X_agregated)
-        y.append(y_agregated)
+        # X_agregated = np.concatenate([X_agregated_sev, X_agregated_load], axis=0)
+        # y_agregated = np.concatenate([y_agregated_sev, y_agregated_load], axis=0)
+        X.append(X_agregated_load)
+        y.append(y_agregated_load)
     X = np.concatenate(X, axis=0)
     y = np.concatenate(y, axis=0)
     return X, y
