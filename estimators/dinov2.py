@@ -6,17 +6,20 @@ import torch
 import torch.nn as nn
 
 from PIL import Image
+
 from sklearn.base import BaseEstimator, ClassifierMixin
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms as T
+from transformers import Dinov2WithRegistersModel
 
-from transformers import (
-    Dinov2WithRegistersConfig,
-    Dinov2WithRegistersModel,
-)
+from dataset.loader import spectrogram_vanilla
+from estimators.pipeline import Pipeline
 
 
-# Normalização utilizada pelos checkpoints DINOv2
+# ============================================================
+# CONSTANTES
+# ============================================================
+
 IMAGENET_MEAN = [0.485, 0.456, 0.406]
 IMAGENET_STD = [0.229, 0.224, 0.225]
 
@@ -25,19 +28,19 @@ IMAGENET_STD = [0.229, 0.224, 0.225]
 # DATASET
 # ============================================================
 
-class SpectrogramDataset(Dataset):
+class _SpectrogramDataset(Dataset):
+    """
+    Dataset interno responsável pelo carregamento e
+    pré-processamento dos espectrogramas utilizados pelo DINOv2.
+    """
 
-    def __init__(
-        self,
-        X,
-        y=None,
-        image_size=224
-    ):
+    def __init__(self, X, y=None, image_size=224):
         self.X = np.asarray(X, dtype=object)
-
-        self.y = None
-        if y is not None:
-            self.y = np.asarray(y, dtype=np.int64)
+        self.y = (
+            None
+            if y is None
+            else np.asarray(y, dtype=np.int64)
+        )
 
         self.transform = T.Compose([
             T.Resize(
@@ -48,86 +51,87 @@ class SpectrogramDataset(Dataset):
             T.Normalize(
                 mean=IMAGENET_MEAN,
                 std=IMAGENET_STD
-            )
+            ),
         ])
 
     def __len__(self):
         return len(self.X)
 
     def __getitem__(self, index):
-
         image_path = str(self.X[index])
 
         with Image.open(image_path) as image:
-            image = image.convert("RGB")
-            image = self.transform(image)
+            image = self.transform(
+                image.convert("RGB")
+            )
 
         if self.y is None:
             return image
 
-        return image, int(self.y[index])
+        return image, self.y[index]
 
 
 # ============================================================
-# REDE DINOv2
+# REDE
 # ============================================================
 
-class DINOv2Net(nn.Module):
+class _DINOv2Net(nn.Module):
+    """
+    Backbone DINOv2 seguido por uma camada de classificação.
+    """
 
     def __init__(
         self,
         num_classes,
-        model_name="facebook/dinov2-with-registers-small",
-        dropout=0.6,
+        model_name,
+        dropout,
         local_files_only=False
     ):
         super().__init__()
 
-        config = Dinov2WithRegistersConfig.from_pretrained(
-            model_name,
-            local_files_only=local_files_only
-        )
-
-        self.dinov2 = Dinov2WithRegistersModel.from_pretrained(
-            model_name,
-            config=config,
-            attn_implementation="eager",
-            local_files_only=local_files_only
+        self.backbone = (
+            Dinov2WithRegistersModel.from_pretrained(
+                model_name,
+                attn_implementation="eager",
+                local_files_only=local_files_only
+            )
         )
 
         self.classifier = nn.Sequential(
-            nn.Dropout(p=dropout),
+            nn.Dropout(dropout),
             nn.Linear(
-                self.dinov2.config.hidden_size,
+                self.backbone.config.hidden_size,
                 num_classes
             )
         )
 
     def forward(self, x):
-
-        outputs = self.dinov2(
+        outputs = self.backbone(
             pixel_values=x,
             output_attentions=False
         )
 
-        # Mesmo procedimento empregado na implementação
-        # disponibilizada por Cardoso:
-        # média dos embeddings dos tokens
-        x = outputs.last_hidden_state.mean(dim=1)
+        # Média dos embeddings dos tokens,
+        # conforme implementação adotada no trabalho.
+        embeddings = (
+            outputs.last_hidden_state.mean(dim=1)
+        )
 
-        x = self.classifier(x)
-
-        return x
+        return self.classifier(embeddings)
 
 
 # ============================================================
-# CLASSIFICADOR COMPATÍVEL COM SCIKIT-LEARN
+# CLASSIFICADOR
 # ============================================================
 
 class DINOv2Classifier(
     ClassifierMixin,
     BaseEstimator
 ):
+    """
+    Classificador DINOv2 compatível com a interface
+    de estimadores do Scikit-learn.
+    """
 
     def __init__(
         self,
@@ -149,8 +153,8 @@ class DINOv2Classifier(
         local_files_only=False,
         verbose=True
     ):
-
         self.model_name = model_name
+
         self.cv_epochs = cv_epochs
         self.final_epochs = final_epochs
 
@@ -159,7 +163,9 @@ class DINOv2Classifier(
         self.weight_decay = weight_decay
         self.dropout = dropout
 
-        self.early_stopping_patience = early_stopping_patience
+        self.early_stopping_patience = (
+            early_stopping_patience
+        )
         self.min_delta = min_delta
         self.scheduler_factor = scheduler_factor
 
@@ -168,12 +174,10 @@ class DINOv2Classifier(
         self.num_workers = num_workers
 
         self.random_state = random_state
-
         self.checkpoint_path = checkpoint_path
         self.local_files_only = local_files_only
 
         self.verbose = verbose
-
 
     # ========================================================
     # FIT
@@ -186,8 +190,8 @@ class DINOv2Classifier(
         X_val=None,
         y_val=None
     ):
-
         self._set_seed()
+        self.device_ = self._resolve_device()
 
         X = np.asarray(X, dtype=object)
         y = np.asarray(y)
@@ -197,36 +201,8 @@ class DINOv2Classifier(
             and y_val is not None
         )
 
-        if has_validation:
-            X_val = np.asarray(
-                X_val,
-                dtype=object
-            )
-
-            y_val = np.asarray(y_val)
-
         # ----------------------------------------------------
-        # DEVICE
-        # ----------------------------------------------------
-        print("Device:", self.device)
-        if (
-            self.device == "cuda"
-            and not torch.cuda.is_available()
-        ):            
-            self.device_ = "cpu"
-
-            if self.verbose:
-                print(
-                    "CUDA is not available. "
-                    "Using CPU instead."
-                )
-
-        else:
-            self.device_ = self.device
-
-
-        # ----------------------------------------------------
-        # CLASSES
+        # Classes
         # ----------------------------------------------------
 
         self.classes_ = np.unique(y)
@@ -237,106 +213,56 @@ class DINOv2Classifier(
             in enumerate(self.classes_)
         }
 
-        self.index_to_class_ = {
-            index: label
-            for label, index
-            in self.class_to_index_.items()
-        }
-
-        y_encoded = np.asarray(
-            [
-                self.class_to_index_[label]
-                for label in y
-            ],
-            dtype=np.int64
-        )
+        y_encoded = self._encode_labels(y)
 
         if has_validation:
-
-            unknown_labels = (
-                set(y_val)
-                - set(self.classes_)
+            X_val = np.asarray(
+                X_val,
+                dtype=object
             )
 
-            if unknown_labels:
-                raise ValueError(
-                    "Validation set contains labels "
-                    "not present in training set: "
-                    f"{unknown_labels}"
+            y_val_encoded = (
+                self._encode_labels(
+                    np.asarray(y_val),
+                    validate=True
                 )
-
-            y_val_encoded = np.asarray(
-                [
-                    self.class_to_index_[label]
-                    for label in y_val
-                ],
-                dtype=np.int64
             )
 
-
         # ----------------------------------------------------
-        # MODELO
+        # Modelo
         # ----------------------------------------------------
 
-        self.model_ = DINOv2Net(
+        self.model_ = _DINOv2Net(
             num_classes=len(self.classes_),
             model_name=self.model_name,
             dropout=self.dropout,
             local_files_only=self.local_files_only
         ).to(self.device_)
 
-
         # ----------------------------------------------------
-        # DATA LOADERS
+        # DataLoaders
         # ----------------------------------------------------
 
-        train_dataset = SpectrogramDataset(
+        train_loader = self._create_loader(
             X,
             y_encoded,
-            image_size=self.image_size
-        )
-
-        train_loader = DataLoader(
-            train_dataset,
-            batch_size=self.batch_size,
-            shuffle=True,
-            num_workers=self.num_workers,
-            pin_memory=(
-                self.device_ == "cuda"
-            )
+            shuffle=True
         )
 
         val_loader = None
 
         if has_validation:
-
-            val_dataset = SpectrogramDataset(
+            val_loader = self._create_loader(
                 X_val,
                 y_val_encoded,
-                image_size=self.image_size
+                shuffle=False
             )
-
-            val_loader = DataLoader(
-                val_dataset,
-                batch_size=self.batch_size,
-                shuffle=False,
-                num_workers=self.num_workers,
-                pin_memory=(
-                    self.device_ == "cuda"
-                )
-            )
-
 
         # ----------------------------------------------------
-        # LOSS
+        # Otimização
         # ----------------------------------------------------
 
         criterion = nn.CrossEntropyLoss()
-
-
-        # ----------------------------------------------------
-        # ADAMW
-        # ----------------------------------------------------
 
         optimizer = torch.optim.AdamW(
             self.model_.parameters(),
@@ -344,115 +270,85 @@ class DINOv2Classifier(
             weight_decay=self.weight_decay
         )
 
-
-        # ----------------------------------------------------
-        # SCHEDULER
-        # ----------------------------------------------------
-
         scheduler = (
-            torch.optim.lr_scheduler.ReduceLROnPlateau(
+            torch.optim.lr_scheduler
+            .ReduceLROnPlateau(
                 optimizer,
                 mode="min",
                 factor=self.scheduler_factor
             )
         )
 
-
-        # ----------------------------------------------------
-        # ÉPOCAS
-        #
-        # Com validação:
-        #     30 épocas
-        #
-        # Treinamento final:
-        #     20 épocas
-        # ----------------------------------------------------
-
-        if has_validation:
-            number_of_epochs = self.cv_epochs
-        else:
-            number_of_epochs = self.final_epochs
-
-
-        # ----------------------------------------------------
-        # EARLY STOPPING
-        # ----------------------------------------------------
-
-        best_val_loss = float("inf")
-        best_epoch = 0
-        best_model_state = None
-
-        epochs_without_improvement = 0
-
+        num_epochs = (
+            self.cv_epochs
+            if has_validation
+            else self.final_epochs
+        )
 
         self.history_ = {
             "train_loss": [],
             "train_accuracy": [],
             "val_loss": [],
-            "val_accuracy": []
+            "val_accuracy": [],
         }
 
+        best_val_loss = float("inf")
+        best_epoch = 0
+        best_model_state = None
+        epochs_without_improvement = 0
 
         # ====================================================
         # TREINAMENTO
         # ====================================================
 
-        for epoch in range(number_of_epochs):
+        for epoch in range(num_epochs):
 
             train_loss, train_accuracy = (
-                self._train_one_epoch(
+                self._train_epoch(
                     train_loader,
                     criterion,
                     optimizer
                 )
             )
 
-            self.history_[
-                "train_loss"
-            ].append(train_loss)
+            self.history_["train_loss"].append(
+                train_loss
+            )
+            self.history_["train_accuracy"].append(
+                train_accuracy
+            )
 
-            self.history_[
-                "train_accuracy"
-            ].append(train_accuracy)
-
+            val_loss = None
+            val_accuracy = None
 
             # ------------------------------------------------
-            # VALIDAÇÃO
+            # Validação
             # ------------------------------------------------
 
             if has_validation:
-
                 val_loss, val_accuracy = (
-                    self._evaluate_loader(
+                    self._evaluate(
                         val_loader,
                         criterion
                     )
                 )
 
-                self.history_[
-                    "val_loss"
-                ].append(val_loss)
+                self.history_["val_loss"].append(
+                    val_loss
+                )
+                self.history_["val_accuracy"].append(
+                    val_accuracy
+                )
 
-                self.history_[
-                    "val_accuracy"
-                ].append(val_accuracy)
-
-
-                # Scheduler acompanha validation loss
                 scheduler.step(val_loss)
-
 
                 improved = (
                     val_loss
-                    <
-                    best_val_loss
-                    - self.min_delta
+                    < best_val_loss - self.min_delta
                 )
 
                 if improved:
-
                     best_val_loss = val_loss
-
                     best_epoch = epoch + 1
 
                     epochs_without_improvement = 0
@@ -461,119 +357,73 @@ class DINOv2Classifier(
                         self.model_.state_dict()
                     )
 
-
-                    if self.checkpoint_path is not None:
-
-                        torch.save(
-                            {
-                                "epoch": best_epoch,
-                                "model_state_dict":
-                                    best_model_state,
-                                "optimizer_state_dict":
-                                    optimizer.state_dict(),
-                                "val_loss":
-                                    best_val_loss,
-                                "classes":
-                                    self.classes_,
-                                "class_to_index":
-                                    self.class_to_index_,
-                                "model_name":
-                                    self.model_name
-                            },
-                            self.checkpoint_path
-                        )
+                    self._save_checkpoint(
+                        best_epoch,
+                        best_val_loss,
+                        best_model_state,
+                        optimizer
+                    )
 
                 else:
-
                     epochs_without_improvement += 1
 
-
             else:
-
-                val_loss = None
-                val_accuracy = None
-
                 scheduler.step(train_loss)
 
-
             # ------------------------------------------------
-            # LOG
+            # Log
             # ------------------------------------------------
 
             if self.verbose:
-
-                current_lr = (
-                    optimizer.param_groups[0]["lr"]
+                self._print_epoch(
+                    epoch=epoch,
+                    num_epochs=num_epochs,
+                    train_loss=train_loss,
+                    train_accuracy=train_accuracy,
+                    val_loss=val_loss,
+                    val_accuracy=val_accuracy,
+                    optimizer=optimizer,
+                    best_epoch=best_epoch
                 )
 
-                if has_validation:
-
-                    print(
-                        f"Epoch "
-                        f"[{epoch + 1}/{number_of_epochs}] - "
-                        f"Loss: {train_loss:.4f} - "
-                        f"Train Acc: {train_accuracy:.4f} - "
-                        f"Val Loss: {val_loss:.4f} - "
-                        f"Val Acc: {val_accuracy:.4f} - "
-                        f"LR: {current_lr:.2e} - "
-                        f"Best Epoch: {best_epoch}"
-                    )
-
-                else:
-
-                    print(
-                        f"Epoch "
-                        f"[{epoch + 1}/{number_of_epochs}] - "
-                        f"Loss: {train_loss:.4f} - "
-                        f"Train Acc: {train_accuracy:.4f} - "
-                        f"LR: {current_lr:.2e}"
-                    )
-
-
             # ------------------------------------------------
-            # EARLY STOPPING
-            #
-            # Apenas quando existe conjunto de validação.
+            # Early stopping
             # ------------------------------------------------
 
             if (
                 has_validation
-                and self.early_stopping_patience is not None
+                and self.early_stopping_patience
+                is not None
                 and epochs_without_improvement
-                    >= self.early_stopping_patience
+                >= self.early_stopping_patience
             ):
-
                 if self.verbose:
-
                     print(
-                        f"Early stopping at epoch "
+                        "Early stopping at epoch "
                         f"{epoch + 1}. "
                         f"Best epoch: {best_epoch} - "
-                        f"Best Val Loss: "
+                        "Best Val Loss: "
                         f"{best_val_loss:.4f}"
                     )
 
                 break
 
-
         # ----------------------------------------------------
-        # RESTAURA MELHOR CHECKPOINT
+        # Recupera melhor modelo
         # ----------------------------------------------------
 
         if (
             has_validation
             and best_model_state is not None
         ):
-
             self.model_.load_state_dict(
                 best_model_state
             )
 
-
         self.best_epoch_ = (
             best_epoch
             if has_validation
-            else number_of_epochs
+            else num_epochs
         )
 
         self.best_score_ = (
@@ -584,34 +434,16 @@ class DINOv2Classifier(
 
         self.used_validation_ = has_validation
 
-
         return self
-
 
     # ========================================================
     # PREDICT
     # ========================================================
 
     def predict(self, X):
-
-        X = np.asarray(
+        loader = self._create_loader(
             X,
-            dtype=object
-        )
-
-        dataset = SpectrogramDataset(
-            X,
-            image_size=self.image_size
-        )
-
-        loader = DataLoader(
-            dataset,
-            batch_size=self.batch_size,
-            shuffle=False,
-            num_workers=self.num_workers,
-            pin_memory=(
-                self.device_ == "cuda"
-            )
+            shuffle=False
         )
 
         self.model_.eval()
@@ -619,9 +451,7 @@ class DINOv2Classifier(
         predictions = []
 
         with torch.inference_mode():
-
             for xb in loader:
-
                 xb = xb.to(
                     self.device_,
                     non_blocking=True
@@ -629,54 +459,57 @@ class DINOv2Classifier(
 
                 outputs = self.model_(xb)
 
-                preds = torch.argmax(
+                indices = torch.argmax(
                     outputs,
                     dim=1
                 )
 
                 predictions.extend(
-                    preds.cpu().numpy()
+                    indices.cpu().numpy()
                 )
 
-
-        return np.asarray(
-            [
-                self.index_to_class_[index]
-                for index in predictions
-            ]
-        )
-
+        # O índice produzido pela rede corresponde diretamente
+        # à posição em self.classes_.
+        return self.classes_[
+            np.asarray(predictions)
+        ]
 
     # ========================================================
-    # SCORE
+    # DATA LOADER
     # ========================================================
 
-    def score(
+    def _create_loader(
         self,
         X,
-        y
+        y=None,
+        shuffle=False
     ):
-
-        y_pred = self.predict(X)
-
-        return np.mean(
-            y_pred
-            ==
-            np.asarray(y)
+        dataset = _SpectrogramDataset(
+            X,
+            y,
+            image_size=self.image_size
         )
 
+        return DataLoader(
+            dataset,
+            batch_size=self.batch_size,
+            shuffle=shuffle,
+            num_workers=self.num_workers,
+            pin_memory=(
+                self.device_ == "cuda"
+            )
+        )
 
     # ========================================================
     # TREINAMENTO DE UMA ÉPOCA
     # ========================================================
 
-    def _train_one_epoch(
+    def _train_epoch(
         self,
         loader,
         criterion,
         optimizer
     ):
-
         self.model_.train()
 
         total_loss = 0.0
@@ -684,7 +517,6 @@ class DINOv2Classifier(
         total = 0
 
         for xb, yb in loader:
-
             xb = xb.to(
                 self.device_,
                 non_blocking=True
@@ -700,60 +532,37 @@ class DINOv2Classifier(
             )
 
             outputs = self.model_(xb)
-
-            loss = criterion(
-                outputs,
-                yb
-            )
+            loss = criterion(outputs, yb)
 
             loss.backward()
-
             optimizer.step()
 
-
-            batch_size = xb.size(0)
+            batch_size = yb.size(0)
 
             total_loss += (
-                loss.item()
-                * batch_size
-            )
-
-            predictions = torch.argmax(
-                outputs,
-                dim=1
+                loss.item() * batch_size
             )
 
             correct += (
-                predictions == yb
+                outputs.argmax(dim=1) == yb
             ).sum().item()
 
             total += batch_size
 
-
-        average_loss = (
-            total_loss / total
-        )
-
-        accuracy = (
+        return (
+            total_loss / total,
             correct / total
         )
-
-        return (
-            average_loss,
-            accuracy
-        )
-
 
     # ========================================================
     # VALIDAÇÃO
     # ========================================================
 
-    def _evaluate_loader(
+    def _evaluate(
         self,
         loader,
         criterion
     ):
-
         self.model_.eval()
 
         total_loss = 0.0
@@ -761,9 +570,7 @@ class DINOv2Classifier(
         total = 0
 
         with torch.inference_mode():
-
             for xb, yb in loader:
-
                 xb = xb.to(
                     self.device_,
                     non_blocking=True
@@ -775,66 +582,215 @@ class DINOv2Classifier(
                 )
 
                 outputs = self.model_(xb)
+                loss = criterion(outputs, yb)
 
-                loss = criterion(
-                    outputs,
-                    yb
-                )
-
-
-                batch_size = xb.size(0)
+                batch_size = yb.size(0)
 
                 total_loss += (
-                    loss.item()
-                    * batch_size
-                )
-
-                predictions = torch.argmax(
-                    outputs,
-                    dim=1
+                    loss.item() * batch_size
                 )
 
                 correct += (
-                    predictions == yb
+                    outputs.argmax(dim=1) == yb
                 ).sum().item()
 
                 total += batch_size
 
-
-        average_loss = (
-            total_loss / total
-        )
-
-        accuracy = (
+        return (
+            total_loss / total,
             correct / total
         )
 
-        return (
-            average_loss,
-            accuracy
+    # ========================================================
+    # LABELS
+    # ========================================================
+
+    def _encode_labels(
+        self,
+        y,
+        validate=False
+    ):
+        if validate:
+            unknown_labels = (
+                set(np.unique(y))
+                - set(self.classes_)
+            )
+
+            if unknown_labels:
+                raise ValueError(
+                    "Validation set contains labels "
+                    "not present in training set: "
+                    f"{unknown_labels}"
+                )
+
+        return np.asarray(
+            [
+                self.class_to_index_[label]
+                for label in y
+            ],
+            dtype=np.int64
         )
 
+    # ========================================================
+    # DEVICE
+    # ========================================================
+
+    def _resolve_device(self):
+        requested_device = torch.device(
+            self.device
+        )
+
+        if (
+            requested_device.type == "cuda"
+            and not torch.cuda.is_available()
+        ):
+            if self.verbose:
+                print(
+                    "CUDA is not available. "
+                    "Using CPU instead."
+                )
+
+            return "cpu"
+
+        if self.verbose:
+            print(
+                f"Using device: "
+                f"{requested_device}"
+            )
+
+        return str(requested_device)
+
+    # ========================================================
+    # CHECKPOINT
+    # ========================================================
+
+    def _save_checkpoint(
+        self,
+        epoch,
+        val_loss,
+        model_state,
+        optimizer
+    ):
+        if self.checkpoint_path is None:
+            return
+
+        torch.save(
+            {
+                "epoch": epoch,
+                "model_state_dict": model_state,
+                "optimizer_state_dict":
+                    optimizer.state_dict(),
+                "val_loss": val_loss,
+                "classes": self.classes_,
+                "model_name": self.model_name,
+            },
+            self.checkpoint_path
+        )
+
+    # ========================================================
+    # LOG
+    # ========================================================
+
+    def _print_epoch(
+        self,
+        epoch,
+        num_epochs,
+        train_loss,
+        train_accuracy,
+        val_loss,
+        val_accuracy,
+        optimizer,
+        best_epoch
+    ):
+        current_lr = (
+            optimizer.param_groups[0]["lr"]
+        )
+
+        message = (
+            f"Epoch [{epoch + 1}/{num_epochs}] - "
+            f"Loss: {train_loss:.4f} - "
+            f"Train Acc: {train_accuracy:.4f}"
+        )
+
+        if val_loss is not None:
+            message += (
+                f" - Val Loss: {val_loss:.4f}"
+                f" - Val Acc: {val_accuracy:.4f}"
+                f" - Best Epoch: {best_epoch}"
+            )
+
+        message += (
+            f" - LR: {current_lr:.2e}"
+        )
+
+        print(message)
 
     # ========================================================
     # REPRODUTIBILIDADE
     # ========================================================
 
     def _set_seed(self):
-
-        random.seed(
-            self.random_state
-        )
-
-        np.random.seed(
-            self.random_state
-        )
-
-        torch.manual_seed(
-            self.random_state
-        )
+        random.seed(self.random_state)
+        np.random.seed(self.random_state)
+        torch.manual_seed(self.random_state)
 
         if torch.cuda.is_available():
-
             torch.cuda.manual_seed_all(
                 self.random_state
             )
+
+
+# ============================================================
+# PIPELINE DO MÉTODO
+# ============================================================
+
+class _IdentityFeatures:
+    """
+    Transformador identidade utilizado porque os espectrogramas
+    já foram previamente gerados.
+    """
+
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        return X
+
+
+class DINOv2Method:
+    """
+    Define o DINOv2 como método executável pelo framework.
+
+    Essa classe encapsula a construção do pipeline e mantém
+    esses detalhes fora da main.py e do executor experimental.
+    """
+
+    name = "dinov2"
+
+    def configurations(self):
+        yield {}
+
+    def build(self, configuration=None):
+        steps = [
+            (
+                "feature_extraction",
+                _IdentityFeatures()
+            ),
+            (
+                "classifier",
+                DINOv2Classifier()
+            ),
+        ]
+
+        pipeline = Pipeline(steps)
+
+        pipeline.train_loader = spectrogram_vanilla
+        pipeline.validation_loader = spectrogram_vanilla
+        pipeline.evaluate_loader = spectrogram_vanilla
+
+        return pipeline
+
+    def metadata(self, configuration=None):
+        return {
+            "method": self.name
+        }
