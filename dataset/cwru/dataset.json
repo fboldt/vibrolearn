@@ -1,0 +1,9 @@
+{
+    "name": "cwru",
+    "config_file": "dataset/cwru/config.csv",
+    "raw_dir_path": "raw_data/cwru",
+    "channels_columns": {
+        "faulty_bearing:['Drive End', 'None']": ["DE"]
+    },
+    "load_acquisition_func": "load_matlab_acquisition"
+}

@@ -10,7 +10,7 @@ MAP_LOAD_TO_RPM = {
     '3': 1730,
 }
 
-def get_agumented_data(list_of_registers, experimental_setup, repetitions=1):
+def get_augmented_data(list_of_registers, experimental_setup, repetitions=1):
     X, y = [], []
     for _ in range(repetitions):
         X_aug, y_aug = augment_acquisition(list_of_registers, experimental_setup)
@@ -28,7 +28,7 @@ def augment_acquisition(list_of_registers, experimental_setup):
         # X_agregated_sev, y_agregated_sev = aggregate_severity_acquisitions(list_of_registers, condition, experimental_setup)
         # if X_agregated_sev is None or y_agregated_sev is None:
         #     continue
-        X_agregated_load, y_agregated_load = aggregate_load_acquistions(list_of_registers, condition, experimental_setup)
+        X_agregated_load, y_agregated_load = aggregate_load_acquisitions(list_of_registers, condition, experimental_setup)
         if X_agregated_load is None or y_agregated_load is None:
             continue
         # X_agregated = np.concatenate([X_agregated_sev, X_agregated_load], axis=0)
@@ -40,7 +40,12 @@ def augment_acquisition(list_of_registers, experimental_setup):
     return X, y
 
 
-def aggregate_load_acquistions(list_of_registers, condition, experimental_setup):
+# BY THE LOAD
+def aggregate_load_acquisitions(
+    list_of_registers,
+    condition,
+    experimental_setup
+):
     X, y = [], []
     loads = (list(get_values_by_key(list_of_registers, "load")))
     for load in loads:
@@ -93,6 +98,7 @@ def mix_severity_data(condition_registers, experimental_setup):
             acquisitions.append(acquisition)
     X, y = mix_acquisitions(condition_registers, segment_length, acquisitions)
     return X, y
+
 
 def align_acquisitions(acq_1, acq_2, load_1, load_2,fs=48_000):
     rpm_i = MAP_LOAD_TO_RPM.get(load_1)

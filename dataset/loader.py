@@ -1,6 +1,4 @@
-# from dataset.utils import get_X_y, get_X_y_domains, load_matlab_acquisition
-# from preprocessing.augmentation import get_agumented_data
-# import numpy as np
+import numpy as np
 
 from dataset.utils import (
     get_X_y,
@@ -10,7 +8,6 @@ from dataset.utils import (
     get_acquisition_data,
     prepare_segments_and_targets
 )
-import numpy as np
 
 
 def vanilla(registers, experimental_setup, get_domains=True):
@@ -200,9 +197,6 @@ def augmented(registers, experimental_setup, get_domains=True):
             y = np.concatenate([y, y_aug], axis=0)
 
         return X, y
-
-
-
 
 
 # SPECTROGRAMAS

@@ -8,7 +8,9 @@ from sklearn.base import BaseEstimator, ClassifierMixin
 from torch.utils.data import DataLoader, TensorDataset
 
 from estimators.pipeline import Pipeline
-
+from preprocessing.signal_adapter import (
+    SignalAdapter
+)
 
 # ============================================================
 # REDE
@@ -806,52 +808,42 @@ class CNNLSTMClassifier(
 
 
 # ============================================================
-# TRANSFORMADOR IDENTIDADE
-# ============================================================
-
-class _IdentityFeatures:
-    """
-    Mantém os segmentos de vibração sem extração explícita
-    de características antes da CNN-LSTM.
-    """
-
-    def fit(self, X, y=None):
-        return self
-
-    def transform(self, X):
-        return X
-
-
-# ============================================================
 # MÉTODO
 # ============================================================
 
 class CNNLSTMMethod:
-    """
-    Apresenta a CNN-LSTM ao framework por meio da
-    interface comum utilizada pelos métodos experimentais.
-    """
 
     name = "cnn_lstm"
 
     def configurations(self):
         yield {}
 
-    def build(self, configuration=None):
+    def build(
+        self,
+        configuration=None
+    ):
+        data_adapter = SignalAdapter(
+            segment_length=2048,
+            use_domains=False,
+            augment_training=True
+        )
+
         steps = [
-            (
-                "feature_extraction",
-                _IdentityFeatures()
-            ),
             (
                 "classifier",
                 CNNLSTMClassifier()
             )
         ]
 
-        return Pipeline(steps)
+        return Pipeline(
+            steps=steps,
+            data_adapter=data_adapter
+        )
 
-    def metadata(self, configuration=None):
+    def metadata(
+        self,
+        configuration=None
+    ):
         return {
             "method": self.name
         }

@@ -12,7 +12,9 @@ from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms as T
 from transformers import Dinov2WithRegistersModel
 
-from dataset.loader import spectrogram_vanilla
+from preprocessing.spectrogram_adapter import (
+    SpectrogramAdapter
+)
 from estimators.pipeline import Pipeline
 
 
@@ -744,53 +746,49 @@ class DINOv2Classifier(
 # PIPELINE DO MÉTODO
 # ============================================================
 
-class _IdentityFeatures:
-    """
-    Transformador identidade utilizado porque os espectrogramas
-    já foram previamente gerados.
-    """
-
-    def fit(self, X, y=None):
-        return self
-
-    def transform(self, X):
-        return X
-
-
 class DINOv2Method:
-    """
-    Define o DINOv2 como método executável pelo framework.
-
-    Essa classe encapsula a construção do pipeline e mantém
-    esses detalhes fora da main.py e do executor experimental.
-    """
 
     name = "dinov2"
 
     def configurations(self):
         yield {}
 
-    def build(self, configuration=None):
+    def build(
+        self,
+        configuration=None
+    ):
+        data_adapter = (
+            SpectrogramAdapter(
+                segment_length=12000,
+                normalization="rms",
+                nperseg=1024,
+                noverlap=896,
+                nfft=2048,
+                db_min=-100.0,
+                db_max=0.0,
+                image_size=(224, 224),
+                cache_dir=(
+                    "cache/spectrograms"
+                )
+            )
+        )
+
         steps = [
-            (
-                "feature_extraction",
-                _IdentityFeatures()
-            ),
             (
                 "classifier",
                 DINOv2Classifier()
-            ),
+            )
         ]
 
-        pipeline = Pipeline(steps)
+        return Pipeline(
+            steps=steps,
+            data_adapter=data_adapter
+        )
 
-        pipeline.train_loader = spectrogram_vanilla
-        pipeline.validation_loader = spectrogram_vanilla
-        pipeline.evaluate_loader = spectrogram_vanilla
-
-        return pipeline
-
-    def metadata(self, configuration=None):
+    def metadata(
+        self,
+        configuration=None
+    ):
         return {
             "method": self.name
         }

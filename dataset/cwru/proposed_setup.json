@@ -1,15 +1,9 @@
-{
-    "config_file": "dataset/cwru/config.csv",
-    "raw_dir_path": "raw_data/cwru",
-    "channels_columns": {
-        "faulty_bearing:['Drive End']": ["DE"]
-    },
-    "segment_length": 2048,
-    "load_acquisition_func": "load_matlab_acquisition",
-    "type": "cross_validation",
-    "experiment_name": "My Proposed Protocol",
+{   
+    "dataset": "dataset/cwru/dataset.json",
+    "experiment_name": "proposed_protocol_without_normal",
     "repetitions": 10,
-    "output_dir": "results/proposed_protocol",
+    "output_dir": "results/proposed_protocol_without_normal",
+    "type": "cross_validation",
     "setup": {
         "cross_validation_0": {
             "fold_0_0": [ 

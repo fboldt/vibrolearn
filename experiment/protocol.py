@@ -1,18 +1,46 @@
 import json
+
 from pathlib import Path
 
 
 class ExperimentalProtocol:
 
-    def __init__(self, path):
+    def __init__(
+        self,
+        path
+    ):
         self.path = Path(path)
 
+        self.config = (
+            self._load_json(
+                self.path
+            )
+        )
+
+        dataset_path = (
+            self.config.get(
+                "dataset"
+            )
+        )
+
+        if dataset_path is None:
+            self.dataset_config = {}
+        else:
+            self.dataset_config = (
+                self._load_json(
+                    Path(dataset_path)
+                )
+            )
+
+    @staticmethod
+    def _load_json(path):
+
         with open(
-            self.path,
+            path,
             "r",
             encoding="utf-8"
         ) as file:
-            self.config = json.load(file)
+            return json.load(file)
 
     @property
     def name(self):
@@ -38,4 +66,15 @@ class ExperimentalProtocol:
         )
 
     def get_setup(self):
-        return self.config
+
+        setup = {
+            **self.dataset_config,
+            **self.config
+        }
+
+        setup.pop(
+            "dataset",
+            None
+        )
+
+        return setup

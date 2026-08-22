@@ -6,6 +6,10 @@ from estimators.pipeline import Pipeline
 from feature.extraction import WaveletFeatures
 from feature.feature_selector import StableDomainFeatureSelector
 
+from preprocessing.signal_adapter import (
+    SignalAdapter
+)
+
 
 class WPD_SCED_RF:
 
@@ -53,7 +57,16 @@ class WPD_SCED_RF:
             )
         ]
 
-        return Pipeline(steps)
+        data_adapter = SignalAdapter(
+            segment_length=2048,
+            use_domains=True,
+            augment_training=True
+        )
+
+        return Pipeline(
+            steps=steps,
+            data_adapter=data_adapter
+        )
 
     def metadata(self, configuration):
         return {
